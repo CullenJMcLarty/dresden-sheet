@@ -3,6 +3,7 @@ import { MagicTab } from './components/MagicTab'
 import { NotesTab } from './components/NotesTab'
 import { PhasesTab } from './components/PhasesTab'
 import { RosterDrawer } from './components/RosterDrawer'
+import { RulesTab } from './components/RulesTab'
 import { AspectsPlate } from './components/sheet/AspectsPlate'
 import { ConsequencesPlate } from './components/sheet/ConsequencesPlate'
 import { IntakePlate } from './components/sheet/IntakePlate'
@@ -16,13 +17,13 @@ import { ThemeBackdrop } from './themes/Backdrops'
 import { useCopy } from './themes/ThemeContext'
 import { ThemePicker } from './themes/ThemePicker'
 
-type Tab = 'phases' | 'sheet' | 'magic' | 'notes'
+type Tab = 'phases' | 'sheet' | 'magic' | 'notes' | 'rules'
 const TAB_KEY = 'steel-city-casefile:tab'
 
 function loadTab(): Tab {
   try {
     const t = localStorage.getItem(TAB_KEY)
-    if (t === 'phases' || t === 'sheet' || t === 'magic' || t === 'notes') return t
+    if (t === 'phases' || t === 'sheet' || t === 'magic' || t === 'notes' || t === 'rules') return t
   } catch {
     /* storage unavailable */
   }
@@ -41,6 +42,7 @@ export default function App() {
     { id: 'sheet', label: 'Sheet', glyph: '▣' },
     ...(a.magic ? [{ id: 'magic' as const, label: 'Magic', glyph: '✶' }] : []),
     { id: 'notes', label: 'Gear & Notes', glyph: '≡' },
+    { id: 'rules', label: 'Rules', glyph: '§' },
   ]
   const current: Tab = tab === 'magic' && !a.magic ? 'sheet' : tab
 
@@ -125,7 +127,11 @@ export default function App() {
             type="button"
             className={`tabs__tab ${current === t.id ? 'is-on' : ''}`}
             aria-current={current === t.id ? 'page' : undefined}
-            onClick={() => setTab(t.id)}
+            onClick={() => {
+              setTab(t.id)
+              // A new tab should start at its top, not wherever the last tab was scrolled.
+              window.scrollTo({ top: 0 })
+            }}
           >
             <span className="tabs__glyph" aria-hidden>
               {t.glyph}
@@ -155,6 +161,7 @@ export default function App() {
         )}
         {current === 'magic' && <MagicTab c={c} a={a} update={update} />}
         {current === 'notes' && <NotesTab c={c} update={update} />}
+        {current === 'rules' && <RulesTab />}
       </main>
 
       <footer className="foot">
