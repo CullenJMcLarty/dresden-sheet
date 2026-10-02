@@ -1,0 +1,977 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Illuminated: the sheet as a page from a knight's book of hours.
+   Vellum pages in a dark nave, blackletter titles with gilded drop caps,
+   red rubrics, a marginal vine, stained-glass tabs, and stress boxes that are
+   lit windows: taking stress darkens and cracks the glass. Refresh is candles.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media screen {
+  [data-theme='holy'] {
+    color-scheme: light;
+    --vellum: #f1e6cc;
+    --vellum-hi: #f8f0dc;
+    --stone: #1c1712;
+    --ink: #2a1d12;
+    --ink-dim: #5e4a35;
+    --ink-faint: #8f7a5e;
+    --rubric: #a4161a;
+    --gild: #c9a227;
+    --gild-hi: #f0d77a;
+    --lapis: #1f3a8a;
+    --ruby: #b0122c;
+    --sapphire: #1d4fb8;
+    --emerald: #1d7a4a;
+    --amber: #e0a020;
+    --gold: var(--rubric);
+    --seam: #d6c6a0;
+    --molten: var(--rubric);
+    --danger: var(--rubric);
+    --verdigris: var(--lapis);
+
+    --f-stencil: 'UnifrakturMaguntia', 'Old English Text MT', serif;
+    --f-cond: 'EB Garamond', 'Garamond', 'Georgia', serif;
+    --f-mono: 'EB Garamond', 'Garamond', 'Georgia', serif;
+    --f-marker: 'EB Garamond', 'Garamond', 'Georgia', serif;
+    --cut: 0px;
+    --glass: linear-gradient(135deg, #ff5a6e, var(--ruby) 45%, #5e0614);
+    --lead: #1a1410;
+    --vine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 80'%3E%3Cpath d='M12 0 C 4 20, 20 40, 12 60 S 8 76, 12 80' fill='none' stroke='%23c9a227' stroke-width='1.6'/%3E%3Cpath d='M12 18 q -10 -6 -10 4 q 6 2 10 -4z' fill='%231d7a4a'/%3E%3Cpath d='M13 46 q 10 -6 10 4 q -6 2 -10 -4z' fill='%231d7a4a'/%3E%3Ccircle cx='5' cy='34' r='2.6' fill='%23a4161a'/%3E%3Ccircle cx='19' cy='66' r='2.6' fill='%231f3a8a'/%3E%3Ccircle cx='19' cy='8' r='1.6' fill='%23c9a227'/%3E%3C/svg%3E");
+  }
+
+  [data-theme='holy'] body {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    background: var(--stone);
+    font-variant-numeric: oldstyle-nums;
+  }
+  [data-theme='holy'] body::after {
+    display: none;
+  }
+  [data-theme='holy'] ::selection {
+    background: var(--gild-hi);
+    color: var(--ink);
+  }
+
+  /* ── The nave ── */
+  .backdrop--sanctum {
+    background:
+      radial-gradient(ellipse 60% 40% at 75% 0%, rgba(255, 215, 140, 0.18), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 128px),
+      linear-gradient(180deg, #231d17, #14100c);
+  }
+  .sanctum__rays {
+    position: absolute;
+    inset: -20% -10% 0 30%;
+    background: repeating-linear-gradient(115deg, rgba(255, 220, 150, 0.07) 0 60px, transparent 60px 150px, rgba(255, 200, 120, 0.05) 150px 190px, transparent 190px 300px);
+    mask-image: linear-gradient(200deg, #000 10%, transparent 70%);
+  }
+  .sanctum__rose {
+    position: absolute;
+    top: -12vmax;
+    right: -10vmax;
+    width: 44vmax;
+    fill: none;
+    stroke: var(--gild);
+    stroke-width: 1.2;
+    opacity: 0.18;
+  }
+
+  /* ── Top bar: a stained-glass clerestory ── */
+  [data-theme='holy'] .topbar {
+    background: linear-gradient(180deg, #1a1410, #120d0a);
+    border-bottom: 0;
+    box-shadow: 0 6px 0 -1px var(--lead);
+  }
+  [data-theme='holy'] .topbar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, var(--ruby) 0 38px, var(--lead) 38px 40px, var(--sapphire) 40px 78px, var(--lead) 78px 80px, var(--amber) 80px 118px, var(--lead) 118px 120px, var(--emerald) 120px 158px, var(--lead) 158px 160px);
+    opacity: 0.9;
+  }
+  [data-theme='holy'] .topbar__files {
+    background: linear-gradient(180deg, var(--gild-hi), var(--gild));
+    color: var(--ink);
+    clip-path: none;
+    border-radius: 3px;
+    font: 600 16px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+  [data-theme='holy'] .topbar__eyebrow {
+    font: italic 15px var(--f-cond);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--gild);
+  }
+  [data-theme='holy'] .topbar__name {
+    font: 400 clamp(24px, 3vw, 38px) / 1.1 var(--f-stencil);
+    text-transform: none;
+    color: var(--gild-hi);
+    text-shadow: 0 0 18px rgba(240, 215, 122, 0.35);
+  }
+  [data-theme='holy'] .topbar__stats div {
+    background: transparent;
+    border-left: 1px solid rgba(201, 162, 39, 0.35);
+  }
+  [data-theme='holy'] .topbar__stats dt {
+    font: 500 13px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: #b8a37a;
+  }
+  [data-theme='holy'] .topbar__stats dd {
+    font: 500 26px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--vellum);
+  }
+  [data-theme='holy'] .topbar__stats .is-bad,
+  [data-theme='holy'] .topbar__stats .is-warn {
+    background: none;
+    animation: none;
+    border-color: #ff6b6b;
+  }
+  [data-theme='holy'] .topbar__stats .is-bad dd,
+  [data-theme='holy'] .topbar__stats .is-warn dd {
+    color: #ff8a80;
+  }
+  [data-theme='holy'] .theme-btn,
+  [data-theme='holy'] .topbar .topbar__export {
+    border-color: rgba(201, 162, 39, 0.4);
+    color: #d9c79a;
+    font: 500 15px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+
+  /* ── Tabs: arched windows of coloured glass ── */
+  [data-theme='holy'] .tabs {
+    gap: 8px;
+    margin-top: 30px;
+  }
+  [data-theme='holy'] .tabs__tab {
+    clip-path: none;
+    padding: 20px 24px 10px;
+    border: 3px solid var(--lead);
+    border-bottom: 0;
+    border-radius: 999px 999px 0 0 / 40px 40px 0 0;
+    background: var(--glass);
+    color: rgba(255, 255, 255, 0.85);
+    font: 600 17px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    filter: brightness(0.55) saturate(0.8);
+    transition: filter 0.2s, transform 0.2s;
+  }
+  [data-theme='holy'] .tabs__tab:nth-child(4n + 2) {
+    --glass: linear-gradient(135deg, #6f9bff, var(--sapphire) 45%, #0b245e);
+  }
+  [data-theme='holy'] .tabs__tab:nth-child(4n + 3) {
+    --glass: linear-gradient(135deg, #5fd69a, var(--emerald) 45%, #0b3a22);
+  }
+  [data-theme='holy'] .tabs__tab:nth-child(4n + 4) {
+    --glass: linear-gradient(135deg, #ffd66b, var(--amber) 45%, #7a4f06);
+  }
+  [data-theme='holy'] .tabs__tab:hover {
+    filter: brightness(0.8);
+    transform: none;
+  }
+  [data-theme='holy'] .tabs__tab.is-on {
+    filter: none;
+    box-shadow: 0 -10px 30px -6px rgba(255, 220, 150, 0.55);
+  }
+  [data-theme='holy'] .tabs__glyph {
+    display: none;
+  }
+  [data-theme='holy'] .stencil-banner {
+    top: -30px;
+    font-family: var(--f-stencil);
+    -webkit-text-stroke: 0;
+    color: var(--gild);
+    opacity: 0.1;
+    text-transform: none;
+    transform: none;
+  }
+
+  /* ── Pages ── */
+  [data-theme='holy'] .plate {
+    clip-path: none;
+    padding: 30px 30px 30px 58px;
+    border: 0;
+    color: var(--ink);
+    background: radial-gradient(ellipse at 40% 20%, var(--vellum-hi), var(--vellum) 60%, #e6d5ad);
+    box-shadow:
+      inset 0 0 0 10px var(--vellum),
+      inset 0 0 0 11px var(--gild),
+      inset 0 0 0 14px var(--vellum),
+      inset 0 0 0 15px rgba(164, 22, 26, 0.6),
+      inset 0 0 50px rgba(120, 80, 30, 0.2),
+      0 14px 30px rgba(0, 0, 0, 0.55);
+  }
+  /* the illuminated margin */
+  [data-theme='holy'] .plate::before {
+    top: 24px;
+    bottom: 24px;
+    left: 22px;
+    width: 24px;
+    background: var(--vine) repeat-y center top / 24px 80px;
+  }
+  [data-theme='holy'] .rivet {
+    display: none;
+  }
+  [data-theme='holy'] .plate__kicker {
+    order: 2;
+    font: italic 500 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .plate__head > div {
+    display: flex;
+    flex-direction: column;
+  }
+  [data-theme='holy'] .plate__title {
+    margin: 0;
+    font: 400 clamp(30px, 3vw, 42px) / 1.1 var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+    text-shadow: none;
+    transform: none;
+  }
+  /* gilded drop cap */
+  [data-theme='holy'] .plate__title::first-letter {
+    float: left;
+    margin: 2px 8px 0 0;
+    padding: 4px 9px 6px;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.5), transparent 40%),
+      linear-gradient(135deg, var(--gild-hi), var(--gild) 50%, #9b7a12);
+    border: 2px solid var(--rubric);
+    outline: 1px solid var(--gild);
+    outline-offset: 2px;
+    color: var(--lapis);
+    font-size: 1.25em;
+    line-height: 1;
+  }
+  [data-theme='holy'] .plate--hot {
+    animation: none;
+  }
+
+  /* warnings: a rubricated nota bene with a pointing hand */
+  [data-theme='holy'] .hazard {
+    position: relative;
+    margin: 0 0 18px;
+    padding: 8px 12px 8px 40px;
+    border-left: 2px solid var(--rubric);
+  }
+  [data-theme='holy'] .hazard::before {
+    content: '☞';
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    font-size: 26px;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .hazard__tape {
+    display: none;
+  }
+  [data-theme='holy'] .hazard__lead {
+    display: block;
+    font: italic 600 18px var(--f-cond);
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .hazard__list {
+    padding: 0;
+    background: none;
+    border: 0;
+    font: italic 17px var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='holy'] .hazard__list li::before {
+    content: '¶ ';
+    margin: 0;
+    color: var(--rubric);
+  }
+
+  /* ── Fields: rubric labels, ink on vellum ── */
+  [data-theme='holy'] .field label,
+  [data-theme='holy'] .conseq__body label,
+  [data-theme='holy'] .stepper__label {
+    font: 600 15px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] input,
+  [data-theme='holy'] textarea,
+  [data-theme='holy'] select {
+    padding: 6px 6px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #c8b58a;
+    color: var(--ink);
+    font: 18px var(--f-cond);
+  }
+  [data-theme='holy'] textarea {
+    background: repeating-linear-gradient(180deg, transparent 0 25px, rgba(94, 74, 53, 0.14) 25px 26px);
+    line-height: 26px;
+  }
+  [data-theme='holy'] input:focus,
+  [data-theme='holy'] textarea:focus,
+  [data-theme='holy'] select:focus {
+    background-color: rgba(240, 215, 122, 0.18);
+    border-bottom-color: var(--gild);
+    box-shadow: none;
+  }
+  [data-theme='holy'] input::placeholder,
+  [data-theme='holy'] textarea::placeholder {
+    color: #b3a07c;
+    font-style: italic;
+  }
+  [data-theme='holy'] .field--aspect input,
+  [data-theme='holy'] .conseq input {
+    border-bottom: 1px solid #c8b58a;
+    font: italic 500 22px var(--f-cond);
+    color: var(--lapis);
+    transform: none;
+  }
+  [data-theme='holy'] .field--aspect input:focus {
+    background: rgba(240, 215, 122, 0.18);
+    border-bottom: 1px solid var(--gild);
+  }
+
+  /* ── Buttons: gold leaf ── */
+  [data-theme='holy'] .btn {
+    background: transparent;
+    border: 1px solid var(--gild);
+    border-radius: 2px;
+    color: var(--ink);
+    font: 600 16px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+  [data-theme='holy'] .btn:hover {
+    background: rgba(240, 215, 122, 0.25);
+    transform: none;
+  }
+  [data-theme='holy'] .btn--primary {
+    background: linear-gradient(180deg, var(--gild-hi), var(--gild));
+    border-color: #9b7a12;
+    color: var(--ink);
+  }
+  [data-theme='holy'] .btn--ghost {
+    border-color: transparent;
+    color: var(--ink-dim);
+  }
+  [data-theme='holy'] .stepper button,
+  [data-theme='holy'] .stepper__value {
+    background: transparent;
+    border-color: #d1bf93;
+    color: var(--ink);
+  }
+  [data-theme='holy'] .stepper button:hover:not(:disabled) {
+    background: var(--gild);
+  }
+  [data-theme='holy'] .stepper__value {
+    font: 600 18px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--lapis);
+  }
+  [data-theme='holy'] .seg {
+    gap: 4px 16px;
+  }
+  [data-theme='holy'] .seg button {
+    padding: 4px 2px;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    transform: none;
+    font: italic 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='holy'] .seg button.is-on {
+    background: none;
+    border-bottom-color: var(--gild);
+    color: var(--rubric);
+    font-weight: 600;
+  }
+  [data-theme='holy'] .seg button.is-on::before {
+    content: '✠ ';
+    color: var(--gild);
+  }
+  [data-theme='holy'] .toggle {
+    font: italic 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='holy'] .toggle__switch {
+    background: transparent;
+    border-color: var(--gild);
+  }
+  [data-theme='holy'] .toggle input:checked + .toggle__switch::after {
+    background: var(--rubric);
+    box-shadow: none;
+  }
+  [data-theme='holy'] .tag {
+    border-color: var(--gild);
+    font: italic 13px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='holy'] .tag--warn {
+    border-color: var(--rubric);
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .empty,
+  [data-theme='holy'] .hint {
+    font: italic 17px var(--f-cond);
+    color: var(--ink-faint);
+  }
+
+  /* ── Intake: candles ── */
+  [data-theme='holy'] .intake__dials {
+    background: linear-gradient(180deg, #2a2119, #1a140f);
+    border: 3px solid var(--lead);
+    border-radius: 999px 999px 6px 6px / 120px 120px 6px 6px;
+    padding-top: 30px;
+    box-shadow: inset 0 0 0 1px var(--gild);
+    color: var(--vellum);
+  }
+  [data-theme='holy'] .intake__dials .readout dt {
+    color: #b8a37a;
+  }
+  [data-theme='holy'] .intake__dials .readout dd {
+    color: var(--vellum);
+  }
+  [data-theme='holy'] .intake__dials .stepper__label {
+    color: #d9c79a;
+  }
+  [data-theme='holy'] .intake__dials .stepper button,
+  [data-theme='holy'] .intake__dials .stepper__value {
+    color: var(--vellum);
+    border-color: rgba(201, 162, 39, 0.4);
+  }
+  [data-theme='holy'] .intake__dials .btn--ghost {
+    color: #d9c79a;
+  }
+  [data-theme='holy'] .readout dt {
+    font: 13px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+  }
+  [data-theme='holy'] .readout dd {
+    font: 600 17px var(--f-cond);
+  }
+  .candles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+  }
+  .candles svg {
+    width: 100%;
+    max-height: 90px;
+    overflow: visible;
+  }
+  .candle__wax {
+    fill: #f3ead6;
+    stroke: #b8a37a;
+    stroke-width: 0.6;
+  }
+  .candle__dish {
+    fill: var(--gild);
+  }
+  .candle__wick {
+    stroke: #2a1d12;
+    stroke-width: 1.2;
+  }
+  .candle__flame {
+    fill: #ffd66b;
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    filter: drop-shadow(0 0 3px #ffb347);
+  }
+  .candle__halo {
+    fill: rgba(255, 210, 120, 0.25);
+  }
+  .candle__smoke {
+    fill: none;
+    stroke: rgba(200, 190, 175, 0.5);
+    stroke-width: 1;
+    opacity: 0;
+  }
+  .candle.is-lit .candle__flame {
+    animation: flicker 1.3s steps(6) infinite;
+    animation-delay: inherit;
+  }
+  .candle.is-out .candle__flame,
+  .candle.is-out .candle__halo {
+    display: none;
+  }
+  .candle.is-out .candle__smoke {
+    opacity: 1;
+  }
+  .candle.is-out .candle__wax {
+    fill: #cfc3a8;
+  }
+  [data-ambient='off'] .candle__flame {
+    animation: none !important;
+  }
+  @keyframes flicker {
+    0%,
+    100% {
+      transform: scale(1, 1);
+    }
+    30% {
+      transform: scale(0.92, 1.08) skewX(2deg);
+    }
+    60% {
+      transform: scale(1.05, 0.94) skewX(-2deg);
+    }
+  }
+  .candles figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .candles__value {
+    font: 600 38px/1 var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--gild-hi);
+  }
+  .candles__label {
+    font: 500 14px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: #d9c79a;
+  }
+  .candles--danger .candles__value {
+    color: #ff8a80;
+  }
+  .candles__omen {
+    font: italic 16px var(--f-cond);
+    color: #ff8a80;
+  }
+
+  /* ── Phases: stations in Roman numerals ── */
+  [data-theme='holy'] .rail {
+    counter-reset: station;
+  }
+  [data-theme='holy'] .rail__stop {
+    counter-increment: station;
+  }
+  [data-theme='holy'] .rail::before {
+    left: 26px;
+    width: 6px;
+    background: linear-gradient(90deg, var(--gild) 0 1px, transparent 1px 5px, var(--gild) 5px);
+    opacity: 0.6;
+  }
+  [data-theme='holy'] .rail__marker {
+    background: radial-gradient(circle at 35% 30%, var(--gild-hi), var(--gild) 55%, #8a6a0e);
+    border: 2px solid var(--rubric);
+    color: transparent;
+    font-size: 0;
+  }
+  [data-theme='holy'] .rail__marker span {
+    display: none;
+  }
+  [data-theme='holy'] .rail__marker::after {
+    content: counter(station, upper-roman);
+    font: 600 20px var(--f-cond);
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .rail__stop--done .rail__marker {
+    border-color: var(--lapis);
+    box-shadow: 0 0 0 4px var(--stone), 0 0 26px rgba(255, 215, 120, 0.7);
+  }
+  [data-theme='holy'] .rail__stop--done .rail__marker::after {
+    color: var(--lapis);
+  }
+
+  /* ── Skills ── */
+  [data-theme='holy'] .meter {
+    height: 24px;
+    background: transparent;
+    border: 1px solid var(--gild);
+  }
+  [data-theme='holy'] .meter__fill {
+    background: linear-gradient(180deg, var(--gild-hi), var(--gild));
+    box-shadow: none;
+  }
+  [data-theme='holy'] .meter__fill.is-over {
+    background: var(--rubric);
+  }
+  [data-theme='holy'] .meter__text {
+    font: 600 15px/22px var(--f-cond);
+    color: var(--ink);
+    text-shadow: 0 0 4px var(--vellum);
+  }
+  [data-theme='holy'] .pyramid__row {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px solid #dccca3;
+  }
+  [data-theme='holy'] .pyramid__row.is-bad {
+    background: rgba(164, 22, 26, 0.06);
+    box-shadow: inset 3px 0 0 var(--rubric);
+  }
+  [data-theme='holy'] .pyramid__rank {
+    font: 600 15px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .pyramid__rank .mono {
+    color: var(--ink);
+  }
+  [data-theme='holy'] .chip {
+    padding: 0 6px;
+    background: none;
+    clip-path: none;
+    color: var(--lapis);
+    font: italic 500 19px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  [data-theme='holy'] .chip + .chip::before {
+    content: '· ';
+    color: var(--gild);
+  }
+  [data-theme='holy'] .skill {
+    border-left: 0;
+    border-bottom: 1px dotted #d6c49a;
+  }
+  [data-theme='holy'] .skill__name {
+    font: 500 16px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: var(--ink-faint);
+  }
+  [data-theme='holy'] .skill.is-set .skill__name {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  [data-theme='holy'] .skill.is-bad .skill__name {
+    color: var(--rubric);
+  }
+
+  /* ── Lists ── */
+  [data-theme='holy'] .power,
+  [data-theme='holy'] .bonus,
+  [data-theme='holy'] .rote,
+  [data-theme='holy'] .gear {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid #d6c49a;
+    border-left: 3px solid var(--gild);
+  }
+  [data-theme='holy'] .power__name {
+    border-color: transparent;
+    font: 400 24px var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  [data-theme='holy'] .cost {
+    font-family: var(--f-cond);
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .cost--refund {
+    color: var(--emerald);
+  }
+
+  /* ── Stress: lit windows that darken and crack ── */
+  [data-theme='holy'] .track {
+    border-bottom: 1px solid #dccca3;
+    --pane: linear-gradient(160deg, #ff8a96, var(--ruby) 50%, #6a0618);
+  }
+  [data-theme='holy'] .track--mental {
+    --pane: linear-gradient(160deg, #8fb4ff, var(--sapphire) 50%, #0b245e);
+  }
+  [data-theme='holy'] .track--social {
+    --pane: linear-gradient(160deg, #8de8b6, var(--emerald) 50%, #0b3a22);
+  }
+  [data-theme='holy'] .track--hunger {
+    --pane: linear-gradient(160deg, #ffe08a, var(--amber) 50%, #7a4f06);
+  }
+  [data-theme='holy'] .track__head h3 {
+    font: 400 26px var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  [data-theme='holy'] .track__math {
+    font: italic 14px var(--f-cond);
+  }
+  [data-theme='holy'] .box {
+    width: 38px;
+    height: 52px;
+    border: 3px solid var(--lead);
+    border-radius: 999px 999px 3px 3px / 26px 26px 3px 3px;
+    background:
+      linear-gradient(90deg, transparent calc(50% - 1px), var(--lead) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+      linear-gradient(0deg, transparent 54%, var(--lead) 54% 58%, transparent 58%),
+      var(--pane);
+    box-shadow: 0 0 14px -2px rgba(255, 220, 150, 0.7), inset 0 0 6px rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font: 700 14px var(--f-cond);
+    text-shadow: 0 1px 2px #000;
+    place-items: end center;
+    padding-bottom: 2px;
+  }
+  [data-theme='holy'] .box:hover {
+    transform: none;
+    filter: brightness(1.15);
+  }
+  [data-theme='holy'] .box.is-on,
+  [data-theme='holy'] .track--mental .box.is-on,
+  [data-theme='holy'] .track--hunger .box.is-on {
+    border-color: var(--lead);
+    background:
+      linear-gradient(90deg, transparent calc(50% - 1px), var(--lead) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)),
+      linear-gradient(0deg, transparent 54%, var(--lead) 54% 58%, transparent 58%),
+      var(--pane);
+    filter: brightness(0.32) saturate(0.5);
+    box-shadow: none;
+    color: #fff;
+    animation: darken 0.4s ease-out;
+  }
+  /* cracks in the darkened glass */
+  [data-theme='holy'] .box.is-on::before,
+  [data-theme='holy'] .box.is-on::after {
+    content: '';
+    position: absolute;
+    left: 30%;
+    top: 12%;
+    width: 1.5px;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.9);
+    transform: rotate(28deg);
+  }
+  [data-theme='holy'] .box.is-on::after {
+    left: 52%;
+    top: 30%;
+    height: 45%;
+    transform: rotate(-36deg);
+  }
+
+  /* ── Consequences: gilded ribbon ── */
+  [data-theme='holy'] .conseq {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px solid #dccca3;
+  }
+  [data-theme='holy'] .conseq__value {
+    font: 600 24px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--ink-faint);
+  }
+  [data-theme='holy'] .conseq.is-logged .conseq__value {
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .conseq--extreme {
+    background: none;
+  }
+  [data-theme='holy'] .stamp {
+    top: 4px;
+    right: 6px;
+    padding: 1px 16px;
+    border: 0;
+    background: linear-gradient(180deg, var(--gild-hi), var(--gild));
+    clip-path: polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 8% 50%);
+    color: var(--rubric);
+    font: italic 600 14px var(--f-cond);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    opacity: 1;
+    transform: rotate(-3deg);
+  }
+
+  /* ── Mysteries ── */
+  [data-theme='holy'] .magic .plate__title {
+    color: var(--ink);
+    text-shadow: none;
+  }
+  [data-theme='holy'] .art-stat {
+    background: radial-gradient(circle, rgba(240, 215, 122, 0.25), transparent 70%);
+    border: 1px solid var(--gild);
+    border-radius: 50%;
+    aspect-ratio: 1;
+    justify-content: center;
+    max-width: 170px;
+    width: 100%;
+    justify-self: center;
+    font: 600 16px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: var(--rubric);
+    text-align: center;
+  }
+  [data-theme='holy'] .art-stat__n {
+    font: 600 44px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--lapis);
+  }
+  [data-theme='holy'] .art-stat small {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-faint);
+    text-transform: none;
+  }
+  [data-theme='holy'] .casting,
+  [data-theme='holy'] .casting caption,
+  [data-theme='holy'] .casting thead th {
+    font-family: var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='holy'] .casting caption,
+  [data-theme='holy'] .casting thead th {
+    font-variant: small-caps;
+    text-transform: lowercase;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .casting th,
+  [data-theme='holy'] .casting td {
+    border-color: #dccca3;
+  }
+  [data-theme='holy'] .casting tbody th {
+    color: var(--lapis);
+  }
+  [data-theme='holy'] .portrait {
+    border: 6px solid var(--gild);
+    border-radius: 999px 999px 4px 4px / 140px 140px 4px 4px;
+    outline: 2px solid var(--rubric);
+    outline-offset: 3px;
+    filter: sepia(0.25);
+    transform: none;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* ── Dialogs ── */
+  [data-theme='holy'] dialog::backdrop {
+    background: rgba(10, 6, 2, 0.65);
+    backdrop-filter: none;
+  }
+  [data-theme='holy'] .palette,
+  [data-theme='holy'] .drawer {
+    background: radial-gradient(ellipse at 40% 20%, var(--vellum-hi), var(--vellum) 60%, #e6d5ad);
+    color: var(--ink);
+    border: 0;
+    border-top: 4px solid var(--gild);
+    box-shadow: 0 30px 80px #000;
+  }
+  [data-theme='holy'] .drawer {
+    border-top: 0;
+    border-right: 4px solid var(--gild);
+  }
+  [data-theme='holy'] .palette__search {
+    color: var(--rubric);
+    border-color: #d6c49a;
+  }
+  [data-theme='holy'] .palette__search input {
+    border: 0;
+    font: italic 22px var(--f-cond);
+  }
+  [data-theme='holy'] .palette__cat {
+    font: 600 14px var(--f-cond);
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .palette__item {
+    font: 19px var(--f-cond);
+  }
+  [data-theme='holy'] .palette__item.is-cursor {
+    background: linear-gradient(90deg, rgba(240, 215, 122, 0.6), transparent);
+    color: var(--ink);
+  }
+  [data-theme='holy'] .palette__item.is-cursor .cost {
+    color: var(--rubric);
+  }
+  [data-theme='holy'] .palette__foot,
+  [data-theme='holy'] .drawer__foot {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-dim);
+    border-color: #d6c49a;
+  }
+  [data-theme='holy'] .drawer__head h2 {
+    font: 400 36px var(--f-stencil);
+    text-transform: none;
+    color: var(--ink);
+  }
+  [data-theme='holy'] .file {
+    background: rgba(255, 255, 255, 0.4);
+    border-left: 3px solid #d6c49a;
+  }
+  [data-theme='holy'] .file.is-active {
+    border-left-color: var(--rubric);
+    background: rgba(240, 215, 122, 0.3);
+  }
+  [data-theme='holy'] .file__name {
+    font: 400 24px var(--f-stencil);
+    color: var(--ink);
+  }
+  [data-theme='holy'] .file__meta {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-dim);
+  }
+  [data-theme='holy'] .foot {
+    font: italic 14px var(--f-cond);
+    color: #8f7a5e;
+  }
+  [data-theme='holy'] .save-fail {
+    background: var(--rubric);
+    font-family: var(--f-cond);
+  }
+
+  @media (max-width: 720px) {
+    [data-theme='holy'] .tabs {
+      gap: 3px;
+      margin: 0;
+      background: var(--stone);
+      border-top: 0;
+    }
+    [data-theme='holy'] .tabs__tab {
+      padding: 12px 4px 6px;
+      font-size: 13px;
+      border-radius: 999px 999px 0 0 / 24px 24px 0 0;
+    }
+    [data-theme='holy'] .tabs__glyph {
+      display: block;
+    }
+    [data-theme='holy'] .plate {
+      padding: 26px 18px 24px 44px;
+    }
+    [data-theme='holy'] .plate::before {
+      left: 14px;
+      width: 18px;
+      background-size: 18px 60px;
+    }
+  }
+}
+
+@keyframes darken {
+  from {
+    filter: brightness(1.6);
+  }
+}

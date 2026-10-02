@@ -1,4 +1,13 @@
-export type ThemeId = 'steel' | 'casefile' | 'modern' | 'fey-summer' | 'fey-winter'
+export type ThemeId =
+  | 'steel'
+  | 'casefile'
+  | 'modern'
+  | 'fey-spring'
+  | 'fey-summer'
+  | 'fey-fall'
+  | 'fey-winter'
+  | 'illuminated'
+  | 'ghost'
 
 /** Flavor text that changes with the theme. Game terms (Aspects, Skills…) stay fixed. */
 export interface ThemeCopy {
@@ -30,8 +39,8 @@ export interface ThemeCopy {
 export interface Theme {
   id: ThemeId
   /** The CSS family, set as html[data-theme]. Fey courts share one family. */
-  family: 'steel' | 'casefile' | 'modern' | 'fey'
-  variant?: 'summer' | 'winter'
+  family: 'steel' | 'casefile' | 'modern' | 'fey' | 'holy' | 'ghost'
+  variant?: FeyCourt
   name: string
   tagline: string
   /** Swatches for the picker preview. */
@@ -118,7 +127,16 @@ const modern: ThemeCopy = {
   refreshLabel: 'Refresh',
 }
 
-const fey = (court: 'Summer' | 'Winter'): ThemeCopy => ({
+export type FeyCourt = 'spring' | 'summer' | 'fall' | 'winter'
+
+const COURT_LIGHT: Record<FeyCourt, string> = {
+  spring: 'Dawn remaining',
+  summer: 'Light remaining',
+  fall: 'Harvest remaining',
+  winter: 'Moon remaining',
+}
+
+const fey = (court: 'Spring' | 'Summer' | 'Autumn' | 'Winter', key: FeyCourt): ThemeCopy => ({
   eyebrow: `By leave of the ${court} Court`,
   unnamed: 'One Without a Name',
   intakeTitle: 'The Name Given',
@@ -141,8 +159,60 @@ const fey = (court: 'Summer' | 'Winter'): ThemeCopy => ({
   notesKicker: 'Names, debts, favors owed',
   warningLead: 'The bargain frays:',
   drawerTitle: 'Names Known',
-  refreshLabel: court === 'Summer' ? 'Light remaining' : 'Moon remaining',
+  refreshLabel: COURT_LIGHT[key],
 })
+
+const illuminated: ThemeCopy = {
+  eyebrow: 'Liber Vitae',
+  unnamed: 'A Soul Unrecorded',
+  intakeTitle: 'The Record',
+  intakeKicker: 'Here begins the book of',
+  conceptTitle: 'The Calling',
+  conceptKicker: 'What were you set upon this earth to do?',
+  aspectsKicker: 'Virtues & vices, set down in ink',
+  skillsKicker: 'Talents entrusted',
+  stressKicker: 'Let the light hold',
+  consequencesKicker: 'Wounds borne',
+  stamp: 'Borne',
+  magicTitle: 'The Mysteries',
+  magicKicker: 'Power is a trust',
+  fociKicker: 'Relics & instruments',
+  rotesKicker: 'Orisons by heart',
+  gearTitle: 'Arms & Relics',
+  gearKicker: 'What you carry into the dark',
+  gearEmpty: 'Nothing but faith.',
+  notesTitle: 'Marginalia',
+  notesKicker: 'Names to pray for, debts to settle',
+  warningLead: 'Nota bene:',
+  drawerTitle: 'The Book of Names',
+  refreshLabel: 'Candles lit',
+}
+
+const ghost: ThemeCopy = {
+  eyebrow: 'Beyond the Veil',
+  unnamed: 'The Unremembered',
+  intakeTitle: 'Who Calls',
+  intakeKicker: 'Speak your name into the dark',
+  conceptTitle: 'The Haunting',
+  conceptKicker: 'What binds you to this world?',
+  aspectsKicker: 'What lingers',
+  skillsKicker: 'What you could do in life',
+  stressKicker: 'How thin the veil wears',
+  consequencesKicker: 'Marks that will not fade',
+  stamp: 'Lingers',
+  magicTitle: 'The Art',
+  magicKicker: 'Ectoplasm & intent',
+  fociKicker: 'Talismans',
+  rotesKicker: 'Words that echo',
+  gearTitle: 'Earthly Possessions',
+  gearKicker: 'Some things are buried with you',
+  gearEmpty: 'You cannot take it with you.',
+  notesTitle: 'Whispers',
+  notesKicker: 'Who still remembers you',
+  warningLead: 'The spirits object:',
+  drawerTitle: 'The Departed',
+  refreshLabel: 'The board answers',
+}
 
 export const THEMES: Theme[] = [
   {
@@ -173,6 +243,16 @@ export const THEMES: Theme[] = [
     copy: modern,
   },
   {
+    id: 'fey-spring',
+    family: 'fey',
+    variant: 'spring',
+    name: 'Fey · Spring Court',
+    tagline: 'Blossom and dawn, promises newly made',
+    swatch: ['#16302a', '#ffd6e4', '#b8f0a0'],
+    sampleFont: "'Cinzel Decorative'",
+    copy: fey('Spring', 'spring'),
+  },
+  {
     id: 'fey-summer',
     family: 'fey',
     variant: 'summer',
@@ -180,7 +260,17 @@ export const THEMES: Theme[] = [
     tagline: 'Rose-gold dusk, fireflies, a bargain in bloom',
     swatch: ['#2a1238', '#f2b880', '#ff8fb1'],
     sampleFont: "'Cinzel Decorative'",
-    copy: fey('Summer'),
+    copy: fey('Summer', 'summer'),
+  },
+  {
+    id: 'fey-fall',
+    family: 'fey',
+    variant: 'fall',
+    name: 'Fey · Autumn Court',
+    tagline: 'Harvest moon, falling leaves, debts come due',
+    swatch: ['#2a140a', '#ffb347', '#d2452b'],
+    sampleFont: "'Cinzel Decorative'",
+    copy: fey('Autumn', 'fall'),
   },
   {
     id: 'fey-winter',
@@ -190,7 +280,25 @@ export const THEMES: Theme[] = [
     tagline: 'Moonlit frost, silver thorns, cold mercy',
     swatch: ['#0b1430', '#cfe6ff', '#8fb7ff'],
     sampleFont: "'Cinzel Decorative'",
-    copy: fey('Winter'),
+    copy: fey('Winter', 'winter'),
+  },
+  {
+    id: 'illuminated',
+    family: 'holy',
+    name: 'Illuminated',
+    tagline: 'Vellum, gold leaf and stained glass',
+    swatch: ['#f1e6cc', '#a4161a', '#c9a227'],
+    sampleFont: "'UnifrakturMaguntia'",
+    copy: illuminated,
+  },
+  {
+    id: 'ghost',
+    family: 'ghost',
+    name: 'The Veil',
+    tagline: 'A séance by candlelight, fog and ectoplasm',
+    swatch: ['#0c1012', '#9ff5d6', '#c9b79c'],
+    sampleFont: "'IM Fell English SC'",
+    copy: ghost,
   },
 ]
 

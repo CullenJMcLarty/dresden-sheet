@@ -14,7 +14,11 @@ export function RefreshMeter({ a }: { a: Analysis }) {
     case 'modern':
       return <Rings a={a} label={label} />
     case 'fey':
-      return <Moon value={value} max={max} label={label} sun={theme.variant === 'summer'} />
+      return <Moon value={value} max={max} label={label} sun={theme.variant === 'summer' || theme.variant === 'spring'} />
+    case 'holy':
+      return <Candles value={value} max={max} label={label} />
+    case 'ghost':
+      return <SpiritBoard value={value} max={max} label={label} />
     default:
       return <Gauge value={value} max={max} label={label} />
   }
@@ -138,6 +142,84 @@ function Moon({ value, max, label, sun }: { value: number; max: number; label: s
         <span className="moon__value">{value}</span>
         <span className="moon__label">{label}</span>
         {danger && <span className="moon__omen">{sun ? 'The light has gone out' : 'New moon. You belong to them now'}</span>}
+      </figcaption>
+    </figure>
+  )
+}
+
+// ── Illuminated: a row of votive candles, snuffed as refresh is spent ───────
+
+function Candles({ value, max, label }: { value: number; max: number; label: string }) {
+  const total = Math.max(max, value, 1)
+  const lit = Math.max(0, value)
+  const w = 22
+  const width = total * w + 4
+  const danger = value < 1
+  return (
+    <figure className={`candles ${danger ? 'candles--danger' : ''}`} aria-label={`${label}: ${value} of ${max}`}>
+      <svg viewBox={`0 0 ${width} 70`} aria-hidden>
+        {Array.from({ length: total }, (_, i) => {
+          const x = 2 + i * w + w / 2
+          const h = 26 + ((i * 7) % 3) * 4 // slightly uneven, like real candles
+          const on = i < lit
+          return (
+            <g key={i} className={`candle ${on ? 'is-lit' : 'is-out'}`} style={{ animationDelay: `${-(i * 0.37) % 1.3}s` }}>
+              <ellipse cx={x} cy={46 - h / 2 - 9} rx="9" ry="12" className="candle__halo" />
+              <path className="candle__flame" d={`M${x} ${46 - h - 14} C ${x + 4.5} ${46 - h - 7}, ${x + 3.5} ${46 - h - 1}, ${x} ${46 - h - 1} C ${x - 3.5} ${46 - h - 1}, ${x - 4.5} ${46 - h - 7}, ${x} ${46 - h - 14} Z`} />
+              <path className="candle__smoke" d={`M${x} ${46 - h - 2} c 3 -5 -3 -8 0 -13 c 3 -5 -2 -7 1 -11`} />
+              <line x1={x} y1={46 - h} x2={x} y2={46 - h - 3} className="candle__wick" />
+              <rect x={x - 6} y={46 - h} width="12" height={h} rx="2" className="candle__wax" />
+              <rect x={x - 9} y="46" width="18" height="5" rx="1.5" className="candle__dish" />
+            </g>
+          )
+        })}
+      </svg>
+      <figcaption>
+        <span className="candles__value">{value}</span>
+        <span className="candles__label">{label}</span>
+        {danger && <span className="candles__omen">The last light is out</span>}
+      </figcaption>
+    </figure>
+  )
+}
+
+// ── The Veil: a spirit board; the planchette answers with your refresh ──────
+
+function SpiritBoard({ value, max, label }: { value: number; max: number; label: string }) {
+  const top = Math.max(max, value, 1)
+  const pos = (n: number) => {
+    // Numbers sit on an arc across the board, like the 0–9 row on a talking board.
+    const t = n / top
+    const a = Math.PI + Math.PI * 0.12 + t * Math.PI * 0.76
+    return { x: 110 + Math.cos(a) * 88, y: 104 + Math.sin(a) * 70 }
+  }
+  const danger = value < 1
+  const target = danger ? { x: 110, y: 118 } : pos(value)
+  return (
+    <figure className={`board ${danger ? 'board--danger' : ''}`} aria-label={`${label}: ${value} of ${max}`}>
+      <svg viewBox="0 0 220 134" aria-hidden>
+        <rect x="2" y="2" width="216" height="130" rx="14" className="board__wood" />
+        <rect x="8" y="8" width="204" height="118" rx="10" className="board__rule" />
+        <text x="26" y="28" className="board__word">YES</text>
+        <text x="194" y="28" className="board__word" textAnchor="end">NO</text>
+        <circle cx="110" cy="26" r="9" className="board__sun" />
+        {Array.from({ length: top + 1 }, (_, n) => {
+          const p = pos(n)
+          return (
+            <text key={n} x={p.x} y={p.y} className={`board__num ${n === value ? 'is-on' : ''}`} textAnchor="middle" dominantBaseline="middle">
+              {n}
+            </text>
+          )
+        })}
+        <text x="110" y="122" className={`board__word board__bye ${danger ? 'is-on' : ''}`} textAnchor="middle">GOODBYE</text>
+        <g className="board__planchette" style={{ transform: `translate(${target.x}px, ${target.y}px)` }}>
+          <path d="M0 -20 C 14 -20 20 -4 14 8 C 10 16 4 20 0 22 C -4 20 -10 16 -14 8 C -20 -4 -14 -20 0 -20 Z" transform="translate(0 4)" />
+          <circle r="7" cx="0" cy="0" className="board__lens" />
+        </g>
+      </svg>
+      <figcaption>
+        <span className="board__value">{value}</span>
+        <span className="board__label">{label}</span>
       </figcaption>
     </figure>
   )

@@ -10,6 +10,10 @@ export function ThemeBackdrop() {
       return <div className="backdrop backdrop--modern" aria-hidden />
     case 'fey':
       return <FeyBackdrop />
+    case 'holy':
+      return <SanctumBackdrop />
+    case 'ghost':
+      return <VeilBackdrop />
     default:
       return <SteelBackdrop />
   }
@@ -82,6 +86,49 @@ function FeyBackdrop() {
         ))}
       </svg>
       <div className="fey__motes">{motes}</div>
+    </div>
+  )
+}
+
+/** Light falling through a rose window onto the page. Static. */
+function SanctumBackdrop() {
+  const petals = Array.from({ length: 12 }, (_, i) => i * 30)
+  return (
+    <div className="backdrop backdrop--sanctum" aria-hidden>
+      <div className="sanctum__rays" />
+      <svg className="sanctum__rose" viewBox="-110 -110 220 220">
+        <circle r="104" />
+        <circle r="96" />
+        <circle r="40" />
+        <circle r="16" />
+        {petals.map((a) => (
+          <g key={a} transform={`rotate(${a})`}>
+            <path d="M0 -40 C 18 -52 22 -82 0 -96 C -22 -82 -18 -52 0 -40 Z" />
+            <circle cy="-70" r="9" />
+            <path d="M0 -16 L 0 -40" />
+          </g>
+        ))}
+      </svg>
+    </div>
+  )
+}
+
+/** Fog, a moonlit window, and the faint oval of a portrait that watches back. */
+function VeilBackdrop() {
+  return (
+    <div className="backdrop backdrop--veil" aria-hidden>
+      <svg className="veil__window" viewBox="0 0 200 300">
+        <circle cx="132" cy="82" r="26" className="veil__moon" />
+        <path d="M10 300 V110 C10 40 60 10 100 10 C140 10 190 40 190 110 V300" />
+        <path d="M100 10 V300 M10 150 H190 M10 225 H190" />
+      </svg>
+      <svg className="veil__portrait" viewBox="0 0 120 160">
+        <ellipse cx="60" cy="80" rx="54" ry="74" />
+        <ellipse cx="60" cy="80" rx="46" ry="66" />
+        <path d="M60 46 c-14 0 -20 12 -20 24 c0 14 8 22 20 22 c12 0 20 -8 20 -22 c0 -12 -6 -24 -20 -24 Z M30 140 c4 -26 18 -36 30 -36 c12 0 26 10 30 36" className="veil__sitter" />
+      </svg>
+      <div className="veil__fog veil__fog--a" />
+      <div className="veil__fog veil__fog--b" />
     </div>
   )
 }

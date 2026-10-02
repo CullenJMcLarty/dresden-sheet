@@ -1,6 +1,6 @@
 # Steel City Casefile
 
-A character sheet for the *Dresden Files RPG* (Evil Hat, Fate 3.0) with switchable themes: **Steel City** (post-Fall Pittsburgh), **Case File** (a wizard PI's desk), **Modern** (clean, follows light/dark), and **Fey** (Summer or Winter Court). Each theme has its own refresh meter, stress boxes, warnings and phases layout.
+A character sheet for the *Dresden Files RPG* (Evil Hat, Fate 3.0) with switchable themes: **Steel City** (post-Fall Pittsburgh), **Case File** (a wizard PI's desk), **Modern** (clean, follows light/dark), and **Fey** (Spring, Summer, Autumn or Winter Court), **Illuminated** (a gilded, stained-glass manuscript), and **The Veil** (a candlelit séance). Each theme has its own refresh meter, stress boxes, warnings and phases layout.
 
 - **Phases worksheet:** high concept, trouble, and the five phases, each producing an aspect.
 - **Smart sheet:** refresh, skill points, cap and column rule, stress boxes from Endurance/Conviction/Presence, and extra consequence slots are all computed. Rule breaks show as warnings and never block you.

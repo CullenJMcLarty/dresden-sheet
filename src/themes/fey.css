@@ -1028,3 +1028,150 @@
     text-shadow: 0 0 3px #000, 0 0 8px #000, 0 1px 2px #000;
   }
 }
+
+/* ── Spring & Autumn Courts ─────────────────────────────────────────────── */
+
+@media screen {
+  [data-theme='fey'][data-variant='spring'] {
+    --sky: linear-gradient(180deg, #0c2422 0%, #1f4a40 38%, #8a7f8e 70%, #f2b8c6 88%, #ffe3c4 100%);
+    --sky-glow: rgba(255, 220, 200, 0.4);
+    --surface: rgba(14, 44, 38, 0.84);
+    --surface-hi: rgba(30, 74, 62, 0.82);
+    --line: rgba(255, 214, 228, 0.32);
+    --ink: #f5fff7;
+    --ink-dim: #c3dccd;
+    --ink-faint: #87a898;
+    --accent: #ffd6e4;
+    --accent-2: #b8f0a0;
+    --accent-deep: #3d7a5c;
+    --sheen: linear-gradient(100deg, #ffffff 0%, #ffd6e4 30%, #d8f7c4 60%, #ffffff 85%);
+    --mote: #ffd6e4;
+    --danger: #ff7a90;
+  }
+  [data-theme='fey'][data-variant='fall'] {
+    --sky: linear-gradient(180deg, #120609 0%, #331210 35%, #6e2914 70%, #b85a1c 92%, #d98a2b 100%);
+    --sky-glow: rgba(255, 170, 80, 0.38);
+    --surface: rgba(48, 20, 12, 0.85);
+    --surface-hi: rgba(84, 36, 18, 0.82);
+    --line: rgba(255, 179, 71, 0.32);
+    --ink: #fff1e0;
+    --ink-dim: #e3c3a3;
+    --ink-faint: #a8876a;
+    --accent: #ffb347;
+    --accent-2: #e8603c;
+    --accent-deep: #7a2e14;
+    --sheen: linear-gradient(100deg, #ffe0a3 0%, #ffb347 30%, #e8603c 60%, #ffe0a3 85%);
+    --mote: #e8742c;
+    --danger: #ff6a5a;
+  }
+  [data-theme='fey'][data-variant='spring'] body {
+    background: #0c2422;
+  }
+  [data-theme='fey'][data-variant='fall'] body {
+    background: #120609;
+  }
+  [data-variant='spring'] .topbar {
+    background: linear-gradient(180deg, rgba(6, 22, 20, 0.94), rgba(6, 22, 20, 0.74));
+  }
+  [data-variant='fall'] .topbar {
+    background: linear-gradient(180deg, rgba(16, 6, 6, 0.94), rgba(16, 6, 6, 0.74));
+  }
+  [data-variant='spring'] .palette,
+  [data-variant='spring'] .drawer {
+    background: linear-gradient(170deg, #1c463c, #0a201c);
+  }
+  [data-variant='fall'] .palette,
+  [data-variant='fall'] .drawer {
+    background: linear-gradient(170deg, #4a1d10, #1a0a06);
+  }
+  [data-variant='spring'] .btn--primary,
+  [data-variant='spring'] .stepper button:hover:not(:disabled) {
+    color: #0c2422;
+  }
+  [data-variant='fall'] .btn--primary,
+  [data-variant='fall'] .stepper button:hover:not(:disabled) {
+    color: #2a0e06;
+  }
+  @media (max-width: 720px) {
+    [data-variant='spring'] .tabs {
+      background: #071816;
+    }
+    [data-variant='fall'] .tabs {
+      background: #0e0504;
+    }
+  }
+
+  /* Spring: five-petal blossoms. Autumn: leaves. */
+  [data-variant='spring'] .box {
+    clip-path: path('M19.3 17.5 C8.5 -2.8 39.5 -2.8 28.7 17.5 C44.7 1.0 54.3 30.4 31.6 26.5 C52.3 36.6 27.2 54.8 24.0 32.0 C20.8 54.8 -4.3 36.6 16.4 26.5 C-6.3 30.4 3.3 1.0 19.3 17.5 Z');
+  }
+  [data-variant='fall'] .box {
+    clip-path: polygon(50% 0, 60% 22%, 78% 12%, 73% 36%, 98% 32%, 82% 52%, 92% 62%, 63% 64%, 56% 80%, 53% 100%, 47% 100%, 44% 80%, 37% 64%, 8% 62%, 18% 52%, 2% 32%, 27% 36%, 22% 12%, 40% 22%);
+  }
+  [data-variant='spring'] .box.is-on {
+    background: radial-gradient(circle, #fff7b0 0 12%, #fff 22%, var(--accent) 48%, #e88aa8 80%);
+  }
+  [data-variant='fall'] .box.is-on {
+    background: radial-gradient(circle at 50% 40%, #ffe0a3 0 12%, var(--accent) 38%, var(--accent-2) 70%, #6e1f0c);
+  }
+
+  /* Spring sun is a pale dawn; autumn moon is a harvest moon. */
+  [data-variant='spring'] .moon--sun .moon__lit-a {
+    stop-color: #ffffff;
+  }
+  [data-variant='spring'] .moon--sun .moon__lit-b {
+    stop-color: #ffb8cf;
+  }
+  [data-variant='fall'] .moon__lit-a {
+    stop-color: #ffe6b0;
+  }
+  [data-variant='fall'] .moon__lit-b {
+    stop-color: #e8742c;
+  }
+
+  /* Drifting petals and leaves instead of fireflies or snow. */
+  [data-variant='spring'] .mote,
+  [data-variant='fall'] .mote {
+    top: -20px;
+    bottom: auto;
+    width: 10px !important;
+    height: 7px !important;
+    box-shadow: none;
+    animation-name: mote-tumble;
+  }
+  [data-variant='spring'] .mote {
+    border-radius: 80% 0 80% 0;
+    background: linear-gradient(135deg, #fff, var(--mote));
+  }
+  [data-variant='fall'] .mote {
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 0;
+    clip-path: polygon(50% 0, 60% 22%, 78% 12%, 73% 36%, 98% 32%, 82% 52%, 92% 62%, 63% 64%, 56% 80%, 53% 100%, 47% 100%, 44% 80%, 37% 64%, 8% 62%, 18% 52%, 2% 32%, 27% 36%, 22% 12%, 40% 22%);
+  }
+  [data-variant='fall'] .mote:nth-child(3n) {
+    background: #c43d22;
+  }
+  [data-variant='fall'] .mote:nth-child(3n + 1) {
+    background: #e8a33c;
+  }
+  @keyframes mote-tumble {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0);
+      opacity: 0;
+    }
+    8% {
+      opacity: 0.85;
+    }
+    50% {
+      transform: translate3d(-50px, 55vh, 0) rotate(260deg);
+    }
+    90% {
+      opacity: 0.7;
+    }
+    100% {
+      transform: translate3d(30px, 112vh, 0) rotate(540deg);
+      opacity: 0;
+    }
+  }
+}

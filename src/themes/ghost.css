@@ -1,0 +1,904 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The Veil: a séance by candlelight.
+   Fog drifting past a moonlit window, mourning-card panels with double sepia
+   rules, titles that leave an ectoplasmic afterimage, cameo-oval stress boxes
+   that light with ectoplasm when checked, and refresh read off a spirit board.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media screen {
+  [data-theme='ghost'] {
+    color-scheme: dark;
+    --bg: #0a0d0f;
+    --surface: rgba(16, 21, 23, 0.9);
+    --surface-hi: rgba(26, 33, 35, 0.9);
+    --ink: #e4ece6;
+    --ink-dim: #9fb1a9;
+    --ink-faint: #627069;
+    --ecto: #9ff5d6;
+    --ecto-deep: #2f8f74;
+    --sepia: #c9b79c;
+    --sepia-dim: rgba(201, 183, 156, 0.28);
+    --danger: #ff8f8f;
+    --gold: var(--ecto);
+    --seam: var(--sepia-dim);
+    --molten: var(--danger);
+    --verdigris: var(--ecto);
+
+    --f-stencil: 'IM Fell English SC', 'Georgia', serif;
+    --f-cond: 'IM Fell English', 'Georgia', serif;
+    --f-mono: 'IM Fell English', 'Georgia', serif;
+    --f-marker: 'IM Fell English', 'Georgia', serif;
+    --cut: 0px;
+    --afterimage: 2px 0 0 rgba(159, 245, 214, 0.25), -3px 1px 8px rgba(159, 245, 214, 0.35);
+  }
+
+  [data-theme='ghost'] body {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  [data-theme='ghost'] body::after {
+    display: none;
+  }
+  [data-theme='ghost'] ::selection {
+    background: var(--ecto);
+    color: var(--bg);
+  }
+
+  /* ── The parlour ── */
+  .backdrop--veil {
+    background:
+      radial-gradient(ellipse 50% 40% at 85% 15%, rgba(159, 245, 214, 0.08), transparent 70%),
+      radial-gradient(ellipse at 50% 120%, rgba(47, 143, 116, 0.12), transparent 60%),
+      linear-gradient(180deg, #0d1214, #070909);
+  }
+  .backdrop--veil svg {
+    position: absolute;
+    fill: none;
+    stroke: var(--sepia);
+  }
+  .veil__window {
+    top: 6vh;
+    right: 3vw;
+    width: 220px;
+    stroke-width: 3;
+    opacity: 0.13;
+  }
+  .veil__moon {
+    fill: rgba(220, 255, 240, 0.6);
+    stroke: none;
+    filter: blur(2px);
+  }
+  .veil__portrait {
+    bottom: 8vh;
+    left: 2vw;
+    width: 150px;
+    stroke-width: 2;
+    opacity: 0.1;
+  }
+  .veil__sitter {
+    fill: rgba(201, 183, 156, 0.6);
+    stroke: none;
+  }
+  .veil__fog {
+    position: absolute;
+    left: -30%;
+    width: 160%;
+    height: 50vh;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200, 225, 215, 0.07), transparent 60%),
+      radial-gradient(ellipse at 70% 40%, rgba(200, 225, 215, 0.06), transparent 55%);
+    animation: fog-drift 70s linear infinite alternate;
+  }
+  .veil__fog--a {
+    bottom: -10vh;
+  }
+  .veil__fog--b {
+    top: 20vh;
+    opacity: 0.7;
+    animation-duration: 95s;
+    animation-direction: alternate-reverse;
+  }
+  @keyframes fog-drift {
+    from {
+      transform: translate3d(-8%, 0, 0);
+    }
+    to {
+      transform: translate3d(8%, -3vh, 0);
+    }
+  }
+
+  /* ── Top bar ── */
+  [data-theme='ghost'] .topbar {
+    background: linear-gradient(180deg, rgba(6, 8, 9, 0.96), rgba(6, 8, 9, 0.82));
+    border-bottom: 1px solid var(--sepia-dim);
+    box-shadow: 0 1px 0 #000, 0 3px 0 -1px var(--sepia-dim);
+  }
+  [data-theme='ghost'] .topbar__files {
+    background: transparent;
+    color: var(--sepia);
+    clip-path: none;
+    border: 1px solid var(--sepia-dim);
+    font: 16px var(--f-stencil);
+    text-transform: none;
+  }
+  [data-theme='ghost'] .topbar__files:hover {
+    transform: none;
+    color: var(--ecto);
+    border-color: var(--ecto);
+  }
+  [data-theme='ghost'] .topbar__eyebrow {
+    font: italic 15px var(--f-cond);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .topbar__name {
+    font: 400 clamp(22px, 3vw, 36px) / 1.1 var(--f-stencil);
+    text-transform: none;
+    color: var(--ink);
+    text-shadow: var(--afterimage);
+  }
+  [data-theme='ghost'] .topbar__stats div {
+    background: transparent;
+    border-left: 1px solid var(--sepia-dim);
+  }
+  [data-theme='ghost'] .topbar__stats dt {
+    font: 13px var(--f-stencil);
+    letter-spacing: 0.06em;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .topbar__stats dd {
+    font: 26px var(--f-cond);
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .topbar__stats .is-bad,
+  [data-theme='ghost'] .topbar__stats .is-warn {
+    background: none;
+    animation: none;
+    border-color: var(--danger);
+  }
+  [data-theme='ghost'] .topbar__stats .is-bad dd,
+  [data-theme='ghost'] .topbar__stats .is-warn dd {
+    color: var(--danger);
+    text-shadow: 0 0 10px rgba(255, 143, 143, 0.6);
+  }
+  [data-theme='ghost'] .theme-btn,
+  [data-theme='ghost'] .topbar__export {
+    border-color: var(--sepia-dim);
+    color: var(--ink-dim);
+    font: 15px var(--f-stencil);
+    text-transform: none;
+  }
+
+  /* ── Tabs: calling cards ── */
+  [data-theme='ghost'] .tabs {
+    gap: 12px;
+  }
+  [data-theme='ghost'] .tabs__tab {
+    clip-path: none;
+    padding: 10px 20px;
+    background: var(--surface);
+    border: 1px solid var(--sepia-dim);
+    box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--sepia-dim);
+    font: 17px var(--f-stencil);
+    letter-spacing: 0.06em;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='ghost'] .tabs__tab:hover {
+    transform: none;
+    color: var(--ink);
+  }
+  [data-theme='ghost'] .tabs__tab.is-on {
+    background: var(--surface-hi);
+    color: var(--ecto);
+    border-color: var(--ecto);
+    text-shadow: 0 0 10px var(--ecto);
+    box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px rgba(159, 245, 214, 0.4), 0 0 24px -8px var(--ecto);
+  }
+  [data-theme='ghost'] .tabs__glyph {
+    display: none;
+  }
+  [data-theme='ghost'] .stencil-banner {
+    font-family: var(--f-stencil);
+    -webkit-text-stroke: 0;
+    color: var(--ecto);
+    opacity: 0.05;
+    text-transform: none;
+    transform: none;
+    filter: blur(1.5px);
+  }
+
+  /* ── Mourning cards ── */
+  [data-theme='ghost'] .plate {
+    clip-path: none;
+    padding: 32px 32px;
+    background: linear-gradient(170deg, var(--surface-hi), var(--surface) 60%);
+    border: 1px solid var(--sepia-dim);
+    box-shadow: 0 24px 50px -20px #000;
+  }
+  /* inner rule of the mourning card's double border */
+  [data-theme='ghost'] .plate::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--sepia-dim);
+    pointer-events: none;
+  }
+  [data-theme='ghost'] .plate::before {
+    content: '✦';
+    top: 2px;
+    left: 50%;
+    bottom: auto;
+    width: auto;
+    background: none;
+    transform: translateX(-50%);
+    color: var(--sepia);
+    font-size: 13px;
+    opacity: 0.6;
+  }
+  [data-theme='ghost'] .rivet {
+    display: none;
+  }
+  [data-theme='ghost'] .plate__kicker {
+    order: 2;
+    font: italic 17px var(--f-cond);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .plate__head > div {
+    display: flex;
+    flex-direction: column;
+  }
+  [data-theme='ghost'] .plate__title {
+    margin: 0;
+    font: 400 clamp(26px, 2.8vw, 38px) / 1.1 var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-shadow: var(--afterimage);
+    transform: none;
+  }
+  [data-theme='ghost'] .plate--hot {
+    animation: none;
+    border-color: rgba(255, 143, 143, 0.5);
+    box-shadow: 0 0 40px -12px var(--danger);
+  }
+  [data-theme='ghost'] .plate--hot::after {
+    border-color: rgba(255, 143, 143, 0.35);
+  }
+
+  /* warnings spelled out by the spirits */
+  [data-theme='ghost'] .hazard {
+    margin: 0 0 18px;
+    text-align: center;
+  }
+  [data-theme='ghost'] .hazard__tape {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--danger), transparent);
+    box-shadow: 0 0 10px var(--danger);
+    transform: none;
+  }
+  [data-theme='ghost'] .hazard__lead {
+    display: block;
+    margin-top: 10px;
+    font: 15px var(--f-stencil);
+    letter-spacing: 0.4em;
+    color: var(--danger);
+    text-shadow: 0 0 8px rgba(255, 143, 143, 0.6);
+    animation: spirit-flicker 1.2s steps(1) 1;
+  }
+  [data-theme='ghost'] .hazard__list {
+    padding: 4px 0 0;
+    background: none;
+    border: 0;
+    font: italic 18px var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='ghost'] .hazard__list li::before {
+    content: none;
+  }
+  @keyframes spirit-flicker {
+    0%,
+    20%,
+    45% {
+      opacity: 0.2;
+    }
+    10%,
+    30%,
+    60%,
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* ── Fields ── */
+  [data-theme='ghost'] .field label,
+  [data-theme='ghost'] .conseq__body label,
+  [data-theme='ghost'] .stepper__label {
+    font: 15px var(--f-stencil);
+    letter-spacing: 0.06em;
+    text-transform: none;
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] input,
+  [data-theme='ghost'] textarea,
+  [data-theme='ghost'] select {
+    padding: 6px 4px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px dotted var(--sepia-dim);
+    color: var(--ink);
+    font: 18px var(--f-cond);
+  }
+  [data-theme='ghost'] select {
+    background: var(--bg);
+  }
+  [data-theme='ghost'] textarea {
+    padding: 8px;
+    border: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] input:focus,
+  [data-theme='ghost'] textarea:focus,
+  [data-theme='ghost'] select:focus {
+    background-color: rgba(159, 245, 214, 0.04);
+    border-color: var(--ecto);
+    box-shadow: 0 8px 18px -12px var(--ecto);
+  }
+  [data-theme='ghost'] input::placeholder,
+  [data-theme='ghost'] textarea::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  [data-theme='ghost'] .field--aspect input,
+  [data-theme='ghost'] .conseq input {
+    border-bottom: 1px dotted var(--sepia-dim);
+    font: italic 23px var(--f-cond);
+    color: var(--ecto);
+    text-shadow: 0 0 12px rgba(159, 245, 214, 0.45);
+    transform: none;
+  }
+  [data-theme='ghost'] .field--aspect input:focus {
+    background: rgba(159, 245, 214, 0.04);
+    border-bottom: 1px solid var(--ecto);
+  }
+
+  /* ── Buttons & controls ── */
+  [data-theme='ghost'] .btn {
+    background: transparent;
+    border: 1px solid var(--sepia-dim);
+    color: var(--ink);
+    font: 16px var(--f-stencil);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  [data-theme='ghost'] .btn:hover {
+    background: rgba(159, 245, 214, 0.06);
+    border-color: var(--ecto);
+    color: var(--ecto);
+    transform: none;
+  }
+  [data-theme='ghost'] .btn--primary {
+    border-color: var(--ecto);
+    color: var(--ecto);
+    box-shadow: 0 0 18px -6px var(--ecto), inset 0 0 12px -6px var(--ecto);
+  }
+  [data-theme='ghost'] .btn--ghost {
+    border-color: transparent;
+    color: var(--ink-dim);
+    box-shadow: none;
+  }
+  [data-theme='ghost'] .stepper button,
+  [data-theme='ghost'] .stepper__value {
+    background: transparent;
+    border-color: var(--sepia-dim);
+    color: var(--ink);
+  }
+  [data-theme='ghost'] .stepper button:hover:not(:disabled) {
+    background: transparent;
+    color: var(--ecto);
+    border-color: var(--ecto);
+  }
+  [data-theme='ghost'] .stepper__value {
+    font: 19px var(--f-cond);
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .seg {
+    gap: 4px 14px;
+  }
+  [data-theme='ghost'] .seg button {
+    padding: 4px 2px;
+    background: none;
+    border: 0;
+    transform: none;
+    font: italic 18px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .seg button.is-on {
+    background: none;
+    color: var(--ecto);
+    text-shadow: 0 0 12px var(--ecto);
+  }
+  [data-theme='ghost'] .seg button + button::before {
+    content: '·';
+    margin-right: 14px;
+    color: var(--sepia-dim);
+    text-shadow: none;
+  }
+  [data-theme='ghost'] .toggle {
+    font: italic 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='ghost'] .toggle__switch {
+    border-radius: 99px;
+    background: transparent;
+    border-color: var(--sepia-dim);
+  }
+  [data-theme='ghost'] .toggle__switch::after {
+    border-radius: 50%;
+  }
+  [data-theme='ghost'] .toggle input:checked + .toggle__switch {
+    border-color: var(--ecto);
+  }
+  [data-theme='ghost'] .toggle input:checked + .toggle__switch::after {
+    background: var(--ecto);
+  }
+  [data-theme='ghost'] .tag {
+    border-color: var(--sepia-dim);
+    font: italic 13px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  [data-theme='ghost'] .tag--warn {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  [data-theme='ghost'] .empty,
+  [data-theme='ghost'] .hint {
+    font: italic 17px var(--f-cond);
+    color: var(--ink-faint);
+  }
+
+  /* ── Intake & the spirit board ── */
+  [data-theme='ghost'] .intake__dials {
+    background: transparent;
+    border: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .readout dt {
+    font: 12px var(--f-stencil);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .readout dd {
+    font: 17px var(--f-cond);
+  }
+  .board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+  }
+  .board svg {
+    width: 100%;
+    max-width: 260px;
+    overflow: visible;
+  }
+  .board__wood {
+    fill: #b99a6c;
+    stroke: #5e4529;
+    stroke-width: 2;
+  }
+  .board__rule {
+    fill: none;
+    stroke: #5e4529;
+    stroke-width: 0.8;
+  }
+  .board__word,
+  .board__num {
+    fill: #3b2a18;
+    font: 15px 'IM Fell English SC', serif;
+  }
+  .board__num {
+    font-size: 17px;
+  }
+  .board__num.is-on,
+  .board__bye.is-on {
+    fill: #0d3b2f;
+    font-weight: 700;
+  }
+  .board__sun {
+    fill: none;
+    stroke: #5e4529;
+    stroke-width: 1;
+  }
+  .board__planchette {
+    transition: transform 0.6s cubic-bezier(0.3, 1.3, 0.5, 1);
+  }
+  .board__planchette path {
+    fill: rgba(245, 235, 215, 0.55);
+    stroke: #3b2a18;
+    stroke-width: 1;
+  }
+  .board__lens {
+    fill: rgba(159, 245, 214, 0.35);
+    stroke: #3b2a18;
+    stroke-width: 1;
+    filter: drop-shadow(0 0 4px rgba(159, 245, 214, 0.9));
+  }
+  .board figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .board__value {
+    font: 36px/1 'IM Fell English', serif;
+    color: var(--ecto);
+    text-shadow: 0 0 14px rgba(159, 245, 214, 0.6);
+  }
+  .board__label {
+    font: italic 15px 'IM Fell English', serif;
+    color: var(--ink-faint);
+  }
+  .board--danger .board__value {
+    color: var(--danger);
+    text-shadow: 0 0 14px rgba(255, 143, 143, 0.6);
+  }
+
+  /* ── Phases: a trail of ectoplasm between cameos ── */
+  [data-theme='ghost'] .rail::before {
+    left: 28px;
+    width: 2px;
+    background: repeating-linear-gradient(180deg, rgba(159, 245, 214, 0.35) 0 2px, transparent 2px 10px);
+  }
+  [data-theme='ghost'] .rail__marker {
+    width: 46px;
+    height: 58px;
+    left: -58px;
+    background: var(--bg);
+    border: 1px solid var(--sepia-dim);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--sepia-dim);
+    font: 20px var(--f-stencil);
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .rail__stop--done .rail__marker {
+    border-color: var(--ecto);
+    color: var(--bg);
+    background: radial-gradient(ellipse, #eafff7, var(--ecto) 50%, var(--ecto-deep));
+    box-shadow: 0 0 26px -2px var(--ecto);
+  }
+
+  /* ── Skills ── */
+  [data-theme='ghost'] .meter {
+    height: 24px;
+    background: transparent;
+    border: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .meter__fill {
+    background: linear-gradient(90deg, rgba(47, 143, 116, 0.2), rgba(159, 245, 214, 0.55));
+    box-shadow: 0 0 18px -4px var(--ecto);
+  }
+  [data-theme='ghost'] .meter__fill.is-over {
+    background: rgba(255, 143, 143, 0.5);
+  }
+  [data-theme='ghost'] .meter__text {
+    font: 16px/22px var(--f-cond);
+    text-shadow: 0 0 4px #000;
+  }
+  [data-theme='ghost'] .pyramid__row {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .pyramid__row.is-bad {
+    background: rgba(255, 143, 143, 0.06);
+    box-shadow: inset 2px 0 0 var(--danger);
+  }
+  [data-theme='ghost'] .pyramid__rank {
+    font: 15px var(--f-stencil);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .pyramid__rank .mono {
+    color: var(--ink);
+  }
+  [data-theme='ghost'] .chip {
+    padding: 0 6px;
+    background: none;
+    clip-path: none;
+    color: var(--ecto);
+    font: italic 19px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    text-shadow: 0 0 10px rgba(159, 245, 214, 0.4);
+  }
+  [data-theme='ghost'] .skill {
+    border-left: 0;
+    border-bottom: 1px dotted rgba(201, 183, 156, 0.12);
+  }
+  [data-theme='ghost'] .skill__name {
+    font: 16px var(--f-stencil);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .skill.is-set .skill__name {
+    color: var(--ink);
+    text-shadow: var(--afterimage);
+  }
+  [data-theme='ghost'] .skill.is-bad .skill__name {
+    color: var(--danger);
+  }
+
+  /* ── Lists ── */
+  [data-theme='ghost'] .power,
+  [data-theme='ghost'] .bonus,
+  [data-theme='ghost'] .rote,
+  [data-theme='ghost'] .gear {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px dotted var(--sepia-dim);
+    border-left: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .power__name {
+    border-color: transparent;
+    font: 21px var(--f-stencil);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-shadow: var(--afterimage);
+  }
+  [data-theme='ghost'] .cost {
+    font-family: var(--f-cond);
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .cost--refund {
+    color: var(--ecto);
+  }
+
+  /* ── Stress: cameo ovals that fill with ectoplasm ── */
+  [data-theme='ghost'] .track {
+    border-bottom: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .track__head h3 {
+    font: 22px var(--f-stencil);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  [data-theme='ghost'] .track__math {
+    font: italic 14px var(--f-cond);
+  }
+  [data-theme='ghost'] .box {
+    width: 40px;
+    height: 52px;
+    background: radial-gradient(ellipse, #12181a, #0a0d0f);
+    border: 1px solid var(--sepia-dim);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--sepia-dim);
+    color: var(--ink-faint);
+    font: 17px var(--f-cond);
+  }
+  [data-theme='ghost'] .box:hover {
+    transform: none;
+    border-color: var(--ecto);
+  }
+  [data-theme='ghost'] .box.is-on,
+  [data-theme='ghost'] .track--mental .box.is-on,
+  [data-theme='ghost'] .track--hunger .box.is-on {
+    background: radial-gradient(ellipse at 50% 40%, #f2fffa 0 10%, var(--ecto) 40%, var(--ecto-deep) 80%, #0a2a22);
+    border-color: var(--ecto);
+    color: #062019;
+    box-shadow: 0 0 22px -2px var(--ecto), 0 0 50px -10px var(--ecto);
+    animation: manifest 0.6s ease-out;
+  }
+  [data-theme='ghost'] .track--hunger .box.is-on {
+    background: radial-gradient(ellipse at 50% 40%, #fff0f0 0 10%, var(--danger) 45%, #5a1010);
+    box-shadow: 0 0 22px -2px var(--danger);
+  }
+  @keyframes manifest {
+    0% {
+      filter: blur(6px);
+      opacity: 0;
+    }
+    100% {
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
+
+  /* ── Consequences: what lingers ── */
+  [data-theme='ghost'] .conseq {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .conseq__value {
+    font: 24px var(--f-cond);
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .conseq.is-logged .conseq__value {
+    color: var(--ecto);
+    text-shadow: 0 0 12px var(--ecto);
+  }
+  [data-theme='ghost'] .conseq--extreme {
+    background: none;
+    box-shadow: inset 2px 0 0 rgba(255, 143, 143, 0.5);
+  }
+  [data-theme='ghost'] .stamp {
+    top: 6px;
+    right: 8px;
+    padding: 2px 12px;
+    border: 1px solid rgba(159, 245, 214, 0.5);
+    border-radius: 50%;
+    color: var(--ecto);
+    font: italic 14px var(--f-cond);
+    letter-spacing: 0.06em;
+    text-transform: none;
+    opacity: 0.85;
+    text-shadow: 0 0 8px var(--ecto);
+    transform: rotate(-6deg);
+    animation: manifest 0.8s ease-out;
+  }
+
+  /* ── Magic ── */
+  [data-theme='ghost'] .magic .plate__title {
+    color: var(--ink);
+    text-shadow: var(--afterimage);
+  }
+  [data-theme='ghost'] .art-stat {
+    background: radial-gradient(ellipse, rgba(159, 245, 214, 0.08), transparent 70%);
+    border: 1px solid var(--sepia-dim);
+    border-radius: 50%;
+    padding: 26px 10px;
+    font: 16px var(--f-stencil);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .art-stat__n {
+    font: 46px var(--f-cond);
+    color: var(--ecto);
+    text-shadow: 0 0 18px rgba(159, 245, 214, 0.6);
+  }
+  [data-theme='ghost'] .art-stat small {
+    font: italic 14px var(--f-cond);
+  }
+  [data-theme='ghost'] .casting {
+    font: 17px var(--f-cond);
+  }
+  [data-theme='ghost'] .casting caption,
+  [data-theme='ghost'] .casting thead th {
+    font: 15px var(--f-stencil);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .casting th,
+  [data-theme='ghost'] .casting td {
+    border-color: var(--sepia-dim);
+  }
+  [data-theme='ghost'] .casting tbody th {
+    color: var(--ecto);
+  }
+  [data-theme='ghost'] .portrait {
+    border: 1px solid var(--sepia);
+    border-radius: 50%;
+    outline: 1px solid var(--sepia-dim);
+    outline-offset: 5px;
+    filter: grayscale(1) sepia(0.4) contrast(1.1) brightness(0.9);
+    opacity: 0.85;
+    transform: none;
+    box-shadow: 0 0 40px -10px var(--ecto);
+  }
+
+  /* ── Dialogs ── */
+  [data-theme='ghost'] dialog::backdrop {
+    background: rgba(3, 5, 6, 0.7);
+    backdrop-filter: none;
+  }
+  [data-theme='ghost'] .palette,
+  [data-theme='ghost'] .drawer {
+    background: #0e1315;
+    color: var(--ink);
+    border: 1px solid var(--sepia-dim);
+    box-shadow: 0 30px 80px #000, 0 0 60px -30px var(--ecto);
+  }
+  [data-theme='ghost'] .palette__search {
+    color: var(--ecto);
+    border-color: var(--sepia-dim);
+  }
+  [data-theme='ghost'] .palette__search input {
+    border: 0;
+    font: italic 22px var(--f-cond);
+    box-shadow: none;
+  }
+  [data-theme='ghost'] .palette__cat {
+    font: 14px var(--f-stencil);
+    letter-spacing: 0.04em;
+    color: var(--sepia);
+  }
+  [data-theme='ghost'] .palette__item {
+    font: 19px var(--f-cond);
+  }
+  [data-theme='ghost'] .palette__item.is-cursor {
+    background: rgba(159, 245, 214, 0.08);
+    color: var(--ecto);
+    text-shadow: 0 0 10px rgba(159, 245, 214, 0.5);
+  }
+  [data-theme='ghost'] .palette__item.is-cursor .cost {
+    color: var(--ecto);
+  }
+  [data-theme='ghost'] .palette__foot,
+  [data-theme='ghost'] .drawer__foot {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-faint);
+    border-color: var(--sepia-dim);
+  }
+  [data-theme='ghost'] .drawer__head h2 {
+    font: 34px var(--f-stencil);
+    text-transform: none;
+    color: var(--ink);
+    text-shadow: var(--afterimage);
+  }
+  [data-theme='ghost'] .file {
+    background: transparent;
+    border: 1px dotted var(--sepia-dim);
+    border-left: 1px dotted var(--sepia-dim);
+  }
+  [data-theme='ghost'] .file.is-active {
+    border: 1px solid var(--ecto);
+    box-shadow: 0 0 20px -8px var(--ecto);
+  }
+  [data-theme='ghost'] .file__name {
+    font: italic 22px var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='ghost'] .file__meta {
+    font: 14px var(--f-cond);
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .foot {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-faint);
+  }
+  [data-theme='ghost'] .save-fail {
+    background: #6a1a1a;
+    font-family: var(--f-cond);
+  }
+
+  @media (max-width: 720px) {
+    [data-theme='ghost'] .tabs {
+      gap: 4px;
+      margin: 0;
+      background: #060809;
+      border-top: 1px solid var(--sepia-dim);
+    }
+    [data-theme='ghost'] .tabs__tab {
+      padding: 8px 4px;
+      font-size: 13px;
+    }
+    [data-theme='ghost'] .tabs__glyph {
+      display: block;
+    }
+    [data-theme='ghost'] .plate {
+      padding: 28px 20px;
+    }
+    [data-theme='ghost'] .rail__marker {
+      left: -44px;
+      width: 30px;
+      height: 38px;
+      font-size: 15px;
+    }
+    .veil__portrait {
+      display: none;
+    }
+  }
+}
