@@ -10,6 +10,7 @@ import { IntakePlate } from './components/sheet/IntakePlate'
 import { PowersPlate } from './components/sheet/PowersPlate'
 import { SkillsPlate } from './components/sheet/SkillsPlate'
 import { StressPlate } from './components/sheet/StressPlate'
+import { DiceRoller } from './dice/DiceRoller'
 import { analyze } from './model/rules'
 import { exportCharacter } from './store/storage'
 import { useRoster } from './store/useRoster'
@@ -184,6 +185,8 @@ export default function App() {
         onDuplicate={duplicate}
         onRemove={remove}
       />
+
+      <DiceRoller />
     </>
   )
 }

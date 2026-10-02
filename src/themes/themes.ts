@@ -33,6 +33,8 @@ export interface ThemeCopy {
   notesKicker: string
   warningLead: string
   drawerTitle: string
+  /** Heading over the recent dice rolls. */
+  rollsTitle: string
   refreshLabel: string
 }
 
@@ -72,6 +74,7 @@ const steel: ThemeCopy = {
   notesKicker: 'Contacts, debts, secrets',
   warningLead: '',
   drawerTitle: 'Casefiles',
+  rollsTitle: 'Ward log',
   refreshLabel: 'Adjusted refresh',
 }
 
@@ -98,6 +101,7 @@ const casefile: ThemeCopy = {
   notesKicker: 'Leads, debts, people who owe you',
   warningLead: 'Fix before filing:',
   drawerTitle: 'Filing Cabinet',
+  rollsTitle: 'Rolls on file',
   refreshLabel: 'Refresh',
 }
 
@@ -124,6 +128,7 @@ const modern: ThemeCopy = {
   notesKicker: 'Anything else',
   warningLead: 'Needs attention',
   drawerTitle: 'Characters',
+  rollsTitle: 'Recent rolls',
   refreshLabel: 'Refresh',
 }
 
@@ -159,6 +164,7 @@ const fey = (court: 'Spring' | 'Summer' | 'Autumn' | 'Winter', key: FeyCourt): T
   notesKicker: 'Names, debts, favors owed',
   warningLead: 'The bargain frays:',
   drawerTitle: 'Names Known',
+  rollsTitle: 'Lots cast',
   refreshLabel: COURT_LIGHT[key],
 })
 
@@ -185,6 +191,7 @@ const illuminated: ThemeCopy = {
   notesKicker: 'Names to pray for, debts to settle',
   warningLead: 'Nota bene:',
   drawerTitle: 'The Book of Names',
+  rollsTitle: 'The register of lots',
   refreshLabel: 'Candles lit',
 }
 
@@ -211,6 +218,7 @@ const ghost: ThemeCopy = {
   notesKicker: 'Who still remembers you',
   warningLead: 'The spirits object:',
   drawerTitle: 'The Departed',
+  rollsTitle: 'What the board said',
   refreshLabel: 'The board answers',
 }
 

@@ -6,6 +6,7 @@ A character sheet for the *Dresden Files RPG* (Evil Hat, Fate 3.0) with switchab
 - **Smart sheet:** refresh, skill points, cap and column rule, stress boxes from Endurance/Conviction/Presence, and extra consequence slots are all computed. Rule breaks show as warnings and never block you.
 - **Stunts & powers:** a searchable catalog with default refresh costs, plus custom entries.
 - **Magic tab:** appears for spellcasters. It covers foci, specializations, effective power/control by element, and rotes.
+- **Dice roller:** a Roll button on every tab (or press R) rolls four Fate dice with an animation for each theme: a drop forge in Steel City, dice thrown across the desk in Case File, slot reels in Modern, enchanted dice settling on a fairy ring for each Fey court, stained-glass windows lit by a shaft of light in Illuminated, and a planchette on a spirit board in The Veil. The result is decided before the animation starts, and a tap or Esc skips to it. The chip beside the button shows the last 10 rolls, a "Reroll all four" button, and the animation speed (Instant, Quick or Cinematic). Code is in `src/dice/`.
 - **Themes:** picked per browser from the top bar. An "Ambient motion" switch turns off background animation on slow machines. Theme code is in `src/themes/`: the Steel City styles are the base in `styles.css`, and each other theme overrides them in its own CSS file.
 - **Storage:** everything is saved to the browser's localStorage. Export/import uses JSON files.
 

@@ -6,6 +6,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: './',
   plugins: [react()],
+  // Listen on all interfaces so other devices on the LAN can connect.
+  server: { host: true },
+  preview: { host: true },
   test: {
     environment: 'node',
   },
