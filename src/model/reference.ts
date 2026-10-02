@@ -29,10 +29,11 @@ export interface PowerLevel {
   skillCap: number
 }
 
+// Refresh, skill points and skill cap per power level (YS53).
 export const POWER_LEVELS: PowerLevel[] = [
-  { id: 'feet', name: 'Feet in the Water', refresh: 6, skillPoints: 20, skillCap: 3 },
+  { id: 'feet', name: 'Feet in the Water', refresh: 6, skillPoints: 20, skillCap: 4 },
   { id: 'waist', name: 'Up to Your Waist', refresh: 7, skillPoints: 25, skillCap: 4 },
-  { id: 'chest', name: 'Chest-Deep', refresh: 8, skillPoints: 30, skillCap: 4 },
+  { id: 'chest', name: 'Chest-Deep', refresh: 8, skillPoints: 30, skillCap: 5 },
   { id: 'submerged', name: 'Submerged', refresh: 10, skillPoints: 35, skillCap: 5 },
 ]
 

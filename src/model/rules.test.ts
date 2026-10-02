@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { CATALOG } from './catalog'
+import { POWER_LEVELS } from './reference'
 import { ImportError, newCharacter, normalizeCharacter } from './character'
 import { analyze, consequenceSlots, isCaster, magic, refresh, skills, stressBonusFromSkill, stressTracks } from './rules'
 
@@ -36,6 +37,17 @@ describe('refresh', () => {
   })
 })
 
+describe('power levels', () => {
+  it('match the book (YS53)', () => {
+    expect(POWER_LEVELS.map((l) => [l.refresh, l.skillPoints, l.skillCap])).toEqual([
+      [6, 20, 4],
+      [7, 25, 4],
+      [8, 30, 5],
+      [10, 35, 5],
+    ])
+  })
+})
+
 describe('pure mortals', () => {
   it('get +2 refresh (YS73)', () => {
     const c = newCharacter() // Chest-Deep: 8
@@ -57,7 +69,8 @@ describe('pure mortals', () => {
 
 describe('skills', () => {
   it('counts points and checks the cap', () => {
-    const c = newCharacter() // cap Great (4), 30 points
+    const c = newCharacter()
+    c.powerLevel = 'waist' // cap Great (4), 25 points
     c.skills.Lore = 5
     c.skills.Conviction = 4
     expect(skills(c).spent).toBe(9)
