@@ -1,5 +1,6 @@
 import { Backdrop as SteelBackdrop } from '../components/Backdrop'
 import { useTheme } from './ThemeContext'
+import type { FeyCourt } from './themes'
 import { VeilBackdrop } from './VeilBackdrop'
 
 export function ThemeBackdrop() {
@@ -49,6 +50,7 @@ function DeskBackdrop() {
 
 /** Twilight glade: a faint fairy ring and a handful of drifting motes (petals or snow). */
 function FeyBackdrop() {
+  const court = useTheme().theme.variant ?? 'summer'
   const motes = Array.from({ length: 14 }, (_, i) => {
     // Spread motes deterministically across the screen with varied timing.
     const left = (i * 37 + 11) % 100
@@ -74,8 +76,8 @@ function FeyBackdrop() {
           )
         })}
       </svg>
-      <Vine side="l" segments={VINE_LEFT} />
-      <Vine side="r" segments={VINE_RIGHT} />
+      <Vine side="l" segments={VINE_LEFT} court={court} />
+      <Vine side="r" segments={VINE_RIGHT} court={court} />
       <div className="fey__motes">{motes}</div>
     </div>
   )
@@ -131,8 +133,65 @@ function bezier([a, b, c, d]: Segment, t: number): { p: Pt; angle: number } {
   return { p, angle: (Math.atan2(dy, dx) * 180) / Math.PI }
 }
 
-function Vine({ side, segments }: { side: 'l' | 'r'; segments: Segment[] }) {
+/**
+ * Each court grows its own vine. Leaf paths point along +x from the stem at the
+ * origin, so the same placement code works for every shape.
+ */
+const LEAVES: Record<FeyCourt, { leaf: string; veins: string }> = {
+  // slender cherry leaf
+  spring: {
+    leaf: 'M6 0 C 12 -8 26 -11 38 -6 C 42 -4 45 -2 47 0 C 45 2 42 4 38 6 C 26 11 12 8 6 0 Z',
+    veins: 'M7 0 L44 0 M16 0 L22 -6 M26 0 L32 -6 M16 0 L22 6 M26 0 L32 6',
+  },
+  // broad, heart-shaped summer leaf
+  summer: {
+    leaf: 'M6 0 C 6 -9 14 -17 26 -16 C 38 -15 45 -7 49 0 C 45 7 38 15 26 16 C 14 17 6 9 6 0 Z',
+    veins: 'M7 0 L46 0 M16 0 L24 -11 M27 0 L35 -10 M16 0 L24 11 M27 0 L35 10',
+  },
+  // five-pointed maple
+  fall: {
+    leaf: 'M6 0 L13 -5 L20 -21 L25 -10 L37 -16 L34 -5 L48 0 L34 5 L37 16 L25 10 L20 21 L13 5 Z',
+    veins: 'M7 0 L46 0 M12 0 L21 -19 M12 0 L21 19 M18 0 L35 -14 M18 0 L35 14',
+  },
+  // spiky holly
+  winter: {
+    leaf: 'M6 0 L10 -6 L15 -5 L19 -11 L23 -7 L28 -12 L31 -7 L37 -10 L38 -4 L47 0 L38 4 L37 10 L31 7 L28 12 L23 7 L19 11 L15 5 L10 6 Z',
+    veins: 'M7 0 L44 0',
+  },
+}
+
+/** Seasonal accent drawn between leaves: blossom, rosebud or berries. */
+function Accent({ court }: { court: FeyCourt }) {
+  if (court === 'spring')
+    return (
+      <g className="fey__blossom">
+        {[0, 72, 144, 216, 288].map((a) => (
+          <ellipse key={a} cx="0" cy="-5.5" rx="3.6" ry="5" transform={`rotate(${a})`} />
+        ))}
+        <circle r="2.2" className="fey__blossom-heart" />
+      </g>
+    )
+  if (court === 'summer')
+    return (
+      <g className="fey__rose">
+        <circle r="6.5" />
+        <path d="M0 -3.5 C 3 -3.5 3.5 1 0 2 C -3 2.5 -4 -1 -1.5 -2.5 M-5 1 C -2 5 3 5 5 1" />
+      </g>
+    )
+  if (court === 'winter')
+    return (
+      <g className="fey__berries">
+        <circle cx="-3" cy="0" r="3.4" />
+        <circle cx="3" cy="-1" r="3.4" />
+        <circle cx="0" cy="4" r="3.4" />
+      </g>
+    )
+  return null
+}
+
+function Vine({ side, segments, court }: { side: 'l' | 'r'; segments: Segment[]; court: FeyCourt }) {
   const d = segments.map(([a, b, c, e], i) => `${i === 0 ? `M${a[0]} ${a[1]} ` : ''}C ${b[0]} ${b[1]}, ${c[0]} ${c[1]}, ${e[0]} ${e[1]}`).join(' ')
+  const shape = LEAVES[court]
   // Three leaves per segment, alternating sides of the stem, each with a short petiole.
   const leaves = segments.flatMap((seg, si) =>
     [0.22, 0.52, 0.82].map((t, li) => {
@@ -143,18 +202,21 @@ function Vine({ side, segments }: { side: 'l' | 'r'; segments: Segment[] }) {
       return { p, rot: angle + flip * 50, scale: 0.85 + ((n * 7) % 4) * 0.1, tone: n % 3, key: `${si}-${li}` }
     }),
   )
+  // Accents sit on the vine between leaves.
+  const accents = segments.flatMap((seg, si) => [0.37, 0.67].map((t, ai) => ({ p: bezier(seg, t).p, key: `${si}-${ai}` })))
   return (
     <svg className={`fey__vine fey__vine--${side}`} viewBox="0 0 120 900" preserveAspectRatio={side === 'l' ? 'xMinYMin slice' : 'xMaxYMin slice'}>
       <path d={d} />
       {leaves.map(({ p, rot, scale, tone, key }) => (
         <g key={key} transform={`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${scale})`}>
           <path className="fey__petiole" d="M0 0 L7 0" />
-          {/* three-lobed ivy leaf pointing along +x, with midrib and side veins */}
-          <path
-            className={`fey__leaf fey__leaf--${tone}`}
-            d="M6 0 C 5 -6 9 -10 15 -10 Q 21 -13 28 -19 Q 29 -12 34 -9 Q 40 -6 47 0 Q 40 6 34 9 Q 29 12 28 19 Q 21 13 15 10 C 9 10 5 6 6 0 Z"
-          />
-          <path className="fey__vein" d="M7 0 L43 0 M16 0 L27 -15 M16 0 L27 15" />
+          <path className={`fey__leaf fey__leaf--${tone}`} d={shape.leaf} />
+          <path className="fey__vein" d={shape.veins} />
+        </g>
+      ))}
+      {accents.map(({ p, key }) => (
+        <g key={key} transform={`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)})`}>
+          <Accent court={court} />
         </g>
       ))}
     </svg>

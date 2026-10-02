@@ -104,7 +104,7 @@
     fill: none;
     stroke: var(--accent);
     stroke-width: 1.8;
-    opacity: 0.3;
+    opacity: 0.45;
   }
   .fey__vine--l {
     left: 0;
@@ -1206,5 +1206,60 @@
   }
   [data-variant='spring'] .fey__leaf--1 {
     fill: #b8f0a0;
+  }
+}
+
+/* ── Seasonal vines ── */
+@media screen {
+  .fey__blossom ellipse {
+    fill: #ffb0c8;
+  }
+  .fey__blossom-heart {
+    fill: #e889a6;
+  }
+  .fey__rose circle {
+    fill: #e2557d;
+  }
+  .fey__rose path {
+    fill: none;
+    stroke: #8e1f43;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+  .fey__berries circle {
+    fill: #d4304a;
+    stroke: #6e0f22;
+    stroke-width: 0.8;
+  }
+  /* summer: lush greens */
+  [data-variant='summer'] .fey__leaf--0,
+  [data-variant='summer'] .fey__leaf--2 {
+    fill: #6f9d4e;
+  }
+  [data-variant='summer'] .fey__leaf--1 {
+    fill: #9cbf5e;
+  }
+  [data-variant='summer'] .fey__vein {
+    stroke: #3d5a2a;
+  }
+  /* winter: dark holly rimed with frost */
+  [data-variant='winter'] .fey__leaf {
+    fill: #3f6b62;
+    stroke: #cfe6ff;
+    stroke-width: 1;
+    stroke-linejoin: round;
+  }
+  [data-variant='winter'] .fey__leaf--1 {
+    fill: #4f7f75;
+  }
+  [data-variant='winter'] .fey__vein {
+    stroke: #cfe6ff;
+    stroke-width: 0.8;
+  }
+  [data-variant='spring'] .fey__vein {
+    stroke: #3f7a47;
+  }
+  [data-variant='fall'] .fey__vein {
+    stroke: #6e2a10;
   }
 }
