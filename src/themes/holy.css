@@ -975,3 +975,18 @@
     filter: brightness(1.6);
   }
 }
+
+@media screen {
+  [data-theme='holy'] {
+    --k-physical: var(--ruby);
+    --k-mental: var(--sapphire);
+    --k-social: var(--emerald);
+    --k-hunger: var(--amber);
+  }
+  [data-theme='holy'] .conseq__kind {
+    border-color: #d6c49a;
+    font: italic 14px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}

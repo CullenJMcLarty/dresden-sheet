@@ -117,6 +117,8 @@ export interface Character {
   hungerEnabled: boolean
   /** Consequence text keyed by slot id (see rules.consequenceSlots). */
   consequences: Record<string, string>
+  /** Which kind of harm each consequence absorbed. Slots are shared across all tracks. */
+  consequenceTypes: Record<string, StressTrackId>
   extraMildManual: number
 
   magic: {

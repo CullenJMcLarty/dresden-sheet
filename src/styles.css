@@ -2012,3 +2012,82 @@ dialog::backdrop {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ── Consequence kinds (shared by all themes; colors overridable) ───────── */
+
+.conseq__head {
+  display: contents;
+}
+.conseq__body label {
+  order: 1;
+}
+.conseq__body input {
+  order: 2;
+}
+.conseq__kinds {
+  order: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+.conseq__kind {
+  --kc: var(--k-physical, #e4572e);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  background: transparent;
+  border: 1px solid var(--seam);
+  border-radius: var(--chip-radius, 0);
+  cursor: pointer;
+  font: 600 12px var(--f-cond);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+.conseq__kind[data-k='mental'] {
+  --kc: var(--k-mental, #5b8cff);
+}
+.conseq__kind[data-k='social'] {
+  --kc: var(--k-social, #f2b134);
+}
+.conseq__kind[data-k='hunger'] {
+  --kc: var(--k-hunger, #c2185b);
+}
+.conseq__kind::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--kc);
+  opacity: 0.5;
+}
+.conseq__kind:hover {
+  color: var(--ink);
+  border-color: var(--kc);
+}
+.conseq__kind.is-on {
+  color: var(--ink);
+  border-color: var(--kc);
+  background: color-mix(in srgb, var(--kc) 16%, transparent);
+}
+.conseq__kind.is-on::before {
+  opacity: 1;
+}
+.conseq__kind.is-locked {
+  cursor: default;
+}
+.consequences .hint {
+  margin-top: -6px;
+}
+@media print {
+  .conseq__kind:not(.is-on) {
+    display: none;
+  }
+  .conseq__kind {
+    border-color: #000;
+    color: #000;
+  }
+}

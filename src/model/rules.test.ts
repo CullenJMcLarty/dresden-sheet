@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { ImportError, newCharacter, normalizeCharacter } from './character'
-import { analyze, consequenceSlots, isCaster, magic, refresh, skills, stressBonusFromSkill, stressTracks } from './rules'
+import { analyze, consequenceKind, consequenceSlots, isCaster, magic, refresh, skills, stressBonusFromSkill, stressTracks } from './rules'
 
 const power = (cost: number, catalogId = '') => ({
   id: Math.random().toString(),
@@ -114,6 +114,30 @@ describe('stress', () => {
       'severe',
       'extreme',
     ])
+  })
+})
+
+describe('consequence kinds', () => {
+  it('lets shared slots take any kind of harm, chosen per slot', () => {
+    const c = newCharacter()
+    const [mild, , , ] = consequenceSlots(c)
+    expect(consequenceKind(c, mild)).toBeNull()
+    c.consequenceTypes.mild = 'social'
+    expect(consequenceKind(c, mild)).toBe('social')
+  })
+
+  it('locks the extra mild slot from a Superb skill to that track', () => {
+    const c = newCharacter()
+    c.skills.Presence = 5
+    c.consequenceTypes['mild-social'] = 'physical' // stale or tampered choice is ignored
+    const slot = consequenceSlots(c).find((s) => s.id === 'mild-social')!
+    expect(slot.lockedTo).toBe('social')
+    expect(consequenceKind(c, slot)).toBe('social')
+  })
+
+  it('keeps only valid kinds when importing', () => {
+    const c = normalizeCharacter({ consequenceTypes: { mild: 'mental', moderate: 'bogus', severe: 3 } })
+    expect(c.consequenceTypes).toEqual({ mild: 'mental' })
   })
 })
 

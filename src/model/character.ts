@@ -1,5 +1,5 @@
 import { PHASE_DEFS, SKILLS } from './reference'
-import { SCHEMA_VERSION, type Character, type StressTrack } from './types'
+import { SCHEMA_VERSION, type Character, type StressTrack, type StressTrackId } from './types'
 
 export function uid(): string {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4)
@@ -36,6 +36,7 @@ export function newCharacter(): Character {
     },
     hungerEnabled: false,
     consequences: {},
+    consequenceTypes: {},
     extraMildManual: 0,
     magic: { forceShow: false, slotsAvailable: 0, bonuses: [], rotes: [] },
     fatePoints: 0,
@@ -66,6 +67,9 @@ function fill<T>(base: T, raw: unknown): T {
 
 export class ImportError extends Error {}
 
+const TRACK_IDS = new Set<unknown>(['physical', 'mental', 'social', 'hunger'])
+const isTrack = (v: unknown): v is StressTrackId => TRACK_IDS.has(v)
+
 /** Turn untrusted JSON (localStorage or an imported file) into a valid Character. */
 export function normalizeCharacter(raw: unknown): Character {
   if (!isObj(raw)) throw new ImportError('Not a character file.')
@@ -83,6 +87,10 @@ export function normalizeCharacter(raw: unknown): Character {
   c.consequences = {}
   if (isObj(raw.consequences)) {
     for (const [k, v] of Object.entries(raw.consequences)) if (typeof v === 'string') c.consequences[k] = v
+  }
+  c.consequenceTypes = {}
+  if (isObj(raw.consequenceTypes)) {
+    for (const [k, v] of Object.entries(raw.consequenceTypes)) if (isTrack(v)) c.consequenceTypes[k] = v
   }
 
   // Phases: always the five defined phases, in order, with saved text merged in.
