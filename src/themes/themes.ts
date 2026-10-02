@@ -79,7 +79,7 @@ const casefile: ThemeCopy = {
   eyebrow: 'Open Case',
   unnamed: 'John or Jane Doe',
   intakeTitle: 'Client Intake',
-  intakeKicker: 'Confidential · do not leave on the desk',
+  intakeKicker: 'Do not leave on the desk',
   conceptTitle: 'Who Walked In',
   conceptKicker: 'First impressions, written down fast',
   aspectsKicker: 'Scribbled in the margins',

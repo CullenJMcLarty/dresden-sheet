@@ -48,49 +48,197 @@
     color: var(--ink);
   }
 
-  /* ── Desk props ── */
-  .backdrop--desk svg {
-    fill: none;
-  }
-  .desk__ring {
+  /* ── The desk (parallax layers set in DeskBackdrop) ── */
+  .desk-layer {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    will-change: transform;
+  }
+  .desk-layer > * {
+    position: absolute;
+  }
+  /* streetlight cut into slats by the blinds, falling across the desk */
+  .desk-blinds {
+    top: -10%;
+    left: -20%;
+    width: 140%;
+    height: 120%;
+    background: repeating-linear-gradient(180deg, transparent 0 4px, rgba(255, 226, 170, 0.045) 12px 30px, transparent 38px 58px);
+    transform: rotate(-14deg) skewX(-18deg);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 70%, transparent 100%);
+  }
+  .desk-map {
+    left: 50%;
+    width: min(760px, 70vw);
+    transform: translateX(-50%) rotate(-3deg);
+    opacity: 0.28;
+  }
+  .desk-map__paper {
+    fill: #d9cba6;
+  }
+  .desk-map__lake {
+    fill: #c9cfc4;
+    stroke: #5f7a80;
+    stroke-width: 2;
+  }
+  .desk-map__waves {
+    fill: none;
+    stroke: #5f7a80;
+    stroke-width: 1.2;
+  }
+  .desk-map__label--lake {
+    fill: #5f7a80;
+  }
+  .desk-map__river {
+    fill: none;
+    stroke: #8fa3a6;
+    stroke-width: 3;
+  }
+  .desk-map__grid {
+    fill: none;
+    stroke: #a8977a;
+    stroke-width: 1;
+  }
+  .desk-map__string {
+    fill: none;
+    stroke: #c1121f;
+    stroke-width: 1.6;
+  }
+  .desk-map__pin {
+    fill: #c1121f;
+    stroke: #6d0a11;
+  }
+  .desk-map__label {
+    font: 11px var(--f-stencil);
+    fill: #5c5345;
+    letter-spacing: 0.2em;
+  }
+  .desk-ring {
+    width: 230px;
+    fill: none;
     stroke: rgba(92, 52, 20, 0.5);
     stroke-width: 7;
     filter: blur(0.6px);
   }
-  .desk__ring .desk__ring-inner {
+  .desk-ring__inner {
     stroke-width: 2;
     stroke: rgba(92, 52, 20, 0.35);
   }
-  .desk__ring .desk__drip {
+  .desk-ring__drip {
     stroke-width: 5;
     stroke-linecap: round;
   }
-  .desk__ring--a {
-    width: 230px;
-    right: 3vw;
-    top: 120px;
-  }
-  .desk__ring--b {
+  .desk-ring--faint {
     width: 190px;
-    left: 1vw;
-    bottom: 6vh;
     opacity: 0.7;
   }
-  .desk__doodle {
-    position: absolute;
-    width: 160px;
-    left: 2vw;
-    top: 38vh;
-    stroke: rgba(240, 230, 210, 0.16);
+  .desk-ink {
+    width: 120px;
+    height: 90px;
+    border-radius: 48% 52% 40% 60% / 55% 45% 55% 45%;
+    background: radial-gradient(ellipse at 40% 45%, rgba(10, 14, 30, 0.6), rgba(10, 14, 30, 0.25) 60%, transparent 72%);
+    filter: none;
+  }
+  .desk-scorch {
+    width: 170px;
+    fill: none;
+    stroke: rgba(240, 230, 210, 0.13);
     stroke-width: 1.6;
     stroke-linejoin: round;
-    transform: rotate(-12deg);
   }
-  .desk__matchbook {
-    position: absolute;
-    right: 4vw;
-    bottom: 10vh;
+  .desk-item {
+    filter: drop-shadow(3px 6px 6px rgba(0, 0, 0, 0.55));
+  }
+  .desk-polaroid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 170px;
+    padding: 10px 10px 8px;
+    background: #f4f1ea;
+  }
+  .desk-polaroid__photo svg {
+    display: block;
+    width: 100%;
+  }
+  .desk-polaroid__caption {
+    font: 600 17px var(--f-marker);
+    color: #1f3d9a;
+    text-align: center;
+  }
+  .desk-photo__night {
+    fill: #10161c;
+  }
+  .desk-photo__ground {
+    fill: #1d2520;
+  }
+  .desk-photo__stone {
+    fill: #3a423e;
+  }
+  .desk-photo__blur {
+    fill: rgba(220, 255, 240, 0.45);
+    filter: blur(3px);
+  }
+  .desk-photo__day {
+    fill: #b8a888;
+  }
+  .desk-photo__figure {
+    fill: #5b4a3a;
+  }
+  .desk-photo__redact {
+    stroke: #c1121f;
+    stroke-width: 3;
+  }
+  .desk-clipping {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 230px;
+    padding: 14px 16px 16px;
+    background: #e3dccb;
+    clip-path: polygon(0 2%, 8% 0, 22% 2%, 40% 0, 63% 2%, 82% 0, 100% 3%, 98% 30%, 100% 62%, 99% 100%, 70% 98%, 45% 100%, 20% 98%, 0 100%, 2% 66%, 0 34%);
+    color: #2a2620;
+  }
+  .desk-clipping__paper {
+    font: 10px var(--f-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #8a8070;
+    padding-bottom: 4px;
+  }
+  .desk-clipping b {
+    font: 400 19px/1.05 var(--f-stencil);
+  }
+  .desk-clipping__body {
+    font: 11px/1.35 var(--f-mono);
+    color: #4a443a;
+  }
+  .desk-card {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 210px;
+    padding: 14px 16px;
+    background: #f6f2e6;
+    border: 1px solid #d8cfb8;
+    color: #2a2620;
+    text-align: center;
+  }
+  .desk-card b {
+    font: 400 15px var(--f-stencil);
+    letter-spacing: 0.08em;
+  }
+  .desk-card span {
+    font: 11px var(--f-mono);
+  }
+  .desk-card__small {
+    font-style: italic;
+    color: #6a6050;
+  }
+  .desk-matchbook {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,15 +247,52 @@
     height: 110px;
     background: linear-gradient(180deg, #7d1d17 0 72%, #e9dcc1 72% 76%, #7d1d17 76%);
     color: #f1d9a6;
-    font: 11px var(--f-stencil);
-    letter-spacing: 0.1em;
-    transform: rotate(18deg);
-    box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.5);
-    opacity: 0.85;
+    font: 10px var(--f-stencil);
+    letter-spacing: 0.08em;
   }
-  .desk__matchbook b {
+  .desk-matchbook b {
     font: 700 16px var(--f-marker);
     letter-spacing: 0;
+  }
+  .desk-pencil {
+    width: 240px;
+  }
+  .desk-pencil__tip {
+    fill: #e2c290;
+  }
+  .desk-pencil__lead {
+    fill: #333;
+  }
+  .desk-pencil__body {
+    fill: #e8b31c;
+  }
+  .desk-pencil__band {
+    fill: #b9b9b9;
+  }
+  .desk-pencil__eraser {
+    fill: #e58b8b;
+  }
+  .desk-key {
+    width: 110px;
+    fill: #b08d43;
+  }
+  .desk-key__hole {
+    fill: #2b1d14;
+  }
+  .desk-dust {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 228, 180, 0.8);
+    box-shadow: 0 0 4px rgba(255, 228, 180, 0.6);
+  }
+  /* the desk lamp's pool of light and the dark room around it */
+  .desk-lamp {
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 0%, rgba(255, 214, 150, 0.2), transparent 70%),
+      radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+    pointer-events: none;
   }
 
   /* ── Top bar: the folder's edge ── */
@@ -953,8 +1138,8 @@
       height: 24px;
       font-size: 12px;
     }
-    .desk__matchbook,
-    .desk__doodle {
+    .desk-item,
+    .desk-map {
       display: none;
     }
   }
@@ -982,17 +1167,62 @@
     text-align: center;
   }
 }
-/* The matchbook only fits beside the content on very wide screens. */
-@media screen and (max-width: 1640px) {
-  .desk__matchbook {
-    display: none;
-  }
-}
 
 @media screen {
   .tally__marks path.is-spent {
     stroke: var(--pencil);
     stroke-width: 1.6;
     opacity: 0.35;
+  }
+}
+
+/* ── Case File design pass ── */
+@media screen {
+  .desk-lamp {
+    position: absolute;
+  }
+  /* each panel is the top sheet of a small stack of papers */
+  [data-theme='casefile'] .plate {
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.2),
+      4px 5px 0 -1px #e8dcbf,
+      4px 5px 0 0 rgba(60, 40, 20, 0.18),
+      8px 10px 0 -1px #ddcfab,
+      8px 10px 0 0 rgba(60, 40, 20, 0.18),
+      0 16px 28px rgba(0, 0, 0, 0.5);
+  }
+  /* the intake card is stamped */
+  [data-theme='casefile'] .intake .plate__head::after {
+    content: 'Confidential';
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 4px 14px;
+    border: 3px double var(--redpen);
+    border-radius: 4px;
+    font: 20px var(--f-stencil);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--redpen);
+    opacity: 0.7;
+    transform: rotate(-6deg);
+    mix-blend-mode: multiply;
+  }
+  @media (max-width: 720px) {
+    [data-theme='casefile'] .intake .plate__head::after {
+      display: none;
+    }
+  }
+}
+
+@media screen {
+  /* the disclaimer is typed on a slip so it reads over anything on the desk */
+  [data-theme='casefile'] .foot {
+    width: fit-content;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #e9e0c8;
+    color: #5c5345;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.45);
+    transform: rotate(-0.6deg);
   }
 }

@@ -1,6 +1,7 @@
 import { Backdrop as SteelBackdrop } from '../components/Backdrop'
 import { useTheme } from './ThemeContext'
 import type { FeyCourt } from './themes'
+import { DeskBackdrop } from './DeskBackdrop'
 import { VeilBackdrop } from './VeilBackdrop'
 
 export function ThemeBackdrop() {
@@ -19,33 +20,6 @@ export function ThemeBackdrop() {
     default:
       return <SteelBackdrop />
   }
-}
-
-/** A desk at midnight: coffee rings, a pencil pentacle doodle, a matchbook. All static. */
-function DeskBackdrop() {
-  return (
-    <div className="backdrop backdrop--desk" aria-hidden>
-      <svg className="desk__ring desk__ring--a" viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="78" />
-        <circle cx="100" cy="100" r="72" className="desk__ring-inner" />
-        <path d="M30 120 q 10 30 40 44" className="desk__drip" />
-      </svg>
-      <svg className="desk__ring desk__ring--b" viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="80" />
-        <circle cx="104" cy="96" r="74" className="desk__ring-inner" />
-      </svg>
-      <svg className="desk__doodle" viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="86" />
-        <circle cx="100" cy="100" r="80" />
-        <path d="M100 18 L148 166 L22 74 L178 74 L52 166 Z" />
-        <path d="M150 40 q 20 -10 34 6" />
-      </svg>
-      <div className="desk__matchbook">
-        <span>CHICAGO</span>
-        <b>Matches</b>
-      </div>
-    </div>
-  )
 }
 
 /** Twilight glade: a faint fairy ring and a handful of drifting motes (petals or snow). */

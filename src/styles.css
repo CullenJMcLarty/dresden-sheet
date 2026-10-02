@@ -2111,3 +2111,11 @@ dialog::backdrop {
     columns: 2;
   }
 }
+
+/* the "(+2 mortal)" note under the base refresh sits on its own line */
+.readout dd small {
+  display: block;
+  font-size: 0.72em;
+  line-height: 1.1;
+  opacity: 0.8;
+}

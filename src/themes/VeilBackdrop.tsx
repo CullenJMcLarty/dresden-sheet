@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react'
-import { useTheme } from './ThemeContext'
+import { useParallax } from './useParallax'
 
 /**
  * The Veil: a night descent from a moonlit sky, past a house on the hill, into a
@@ -41,50 +40,7 @@ function stone([x, w, h, tilt, shape]: (typeof STONES)[number], i: number) {
 }
 
 export function VeilBackdrop() {
-  const { ambient } = useTheme()
-  const layerRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const els = layerRefs.current.filter((el): el is HTMLDivElement => !!el)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!ambient || reduce) {
-      for (const el of els) {
-        el.style.height = ''
-        el.style.transform = ''
-      }
-      return
-    }
-    let frame = 0
-    const apply = () => {
-      frame = 0
-      const y = window.scrollY
-      els.forEach((el, i) => (el.style.transform = `translate3d(0, ${(-LAYERS[i].speed * y).toFixed(1)}px, 0)`))
-    }
-    const layout = () => {
-      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
-      els.forEach((el, i) => (el.style.height = `${window.innerHeight + LAYERS[i].speed * max}px`))
-      apply()
-    }
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(apply)
-    }
-    layout()
-    // Page height changes with tabs and content, so re-measure when it does.
-    const ro = new ResizeObserver(layout)
-    ro.observe(document.body)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', layout)
-    return () => {
-      cancelAnimationFrame(frame)
-      ro.disconnect()
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', layout)
-    }
-  }, [ambient])
-
-  const setRef = (i: number) => (el: HTMLDivElement | null) => {
-    layerRefs.current[i] = el
-  }
+  const setRef = useParallax(LAYERS.map((l) => l.speed))
 
   return (
     <div className="backdrop backdrop--veil" aria-hidden>
