@@ -69,9 +69,7 @@ export default function App() {
           <span className="topbar__files-label">Files</span>
         </button>
         <div className="topbar__id">
-          <div className="topbar__eyebrow">
-            {copy.eyebrow} · No. {c.id.slice(0, 6).toUpperCase()}
-          </div>
+          <div className="topbar__eyebrow">{copy.eyebrow}</div>
           <h1 className="topbar__name">{c.name || copy.unnamed}</h1>
         </div>
         <dl className="topbar__stats">
