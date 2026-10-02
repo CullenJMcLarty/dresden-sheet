@@ -988,3 +988,11 @@
     display: none;
   }
 }
+
+@media screen {
+  .tally__marks path.is-spent {
+    stroke: var(--pencil);
+    stroke-width: 1.6;
+    opacity: 0.35;
+  }
+}

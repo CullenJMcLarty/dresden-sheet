@@ -73,18 +73,8 @@ function FeyBackdrop() {
           )
         })}
       </svg>
-      <svg className="fey__vine fey__vine--l" viewBox="0 0 120 900" preserveAspectRatio="xMinYMin slice">
-        <path d="M20 0 C 90 120, -30 240, 50 380 S 10 640, 60 900" />
-        {[120, 260, 420, 560, 720].map((y, i) => (
-          <path key={y} className="fey__leaf" d={`M40 ${y} q ${i % 2 ? 30 : -26} -18 ${i % 2 ? 46 : -40} -4 q ${i % 2 ? -18 : 16} 16 ${i % 2 ? -46 : 40} 4 z`} />
-        ))}
-      </svg>
-      <svg className="fey__vine fey__vine--r" viewBox="0 0 120 900" preserveAspectRatio="xMaxYMin slice">
-        <path d="M100 0 C 30 150, 140 300, 70 450 S 110 700, 60 900" />
-        {[180, 340, 500, 660, 820].map((y, i) => (
-          <path key={y} className="fey__leaf" d={`M80 ${y} q ${i % 2 ? -30 : 26} -18 ${i % 2 ? -46 : 40} -4 q ${i % 2 ? 18 : -16} 16 ${i % 2 ? 46 : -40} 4 z`} />
-        ))}
-      </svg>
+      <Vine side="l" segments={VINE_LEFT} />
+      <Vine side="r" segments={VINE_RIGHT} />
       <div className="fey__motes">{motes}</div>
     </div>
   )
@@ -130,5 +120,55 @@ function VeilBackdrop() {
       <div className="veil__fog veil__fog--a" />
       <div className="veil__fog veil__fog--b" />
     </div>
+  )
+}
+
+// ── Fey vines: leaves are placed on the curve itself so every one attaches ──
+
+type Pt = [number, number]
+/** A chain of cubic Bézier segments: start, control 1, control 2, end. */
+type Segment = [Pt, Pt, Pt, Pt]
+
+// Kept within ~45 units of the outer edge so the vines stay in the page gutter.
+const VINE_LEFT: Segment[] = [
+  [[14, 0], [46, 120], [0, 240], [28, 380]],
+  [[28, 380], [56, 520], [6, 640], [30, 900]],
+]
+const VINE_RIGHT: Segment[] = [
+  [[106, 0], [74, 120], [120, 240], [92, 380]],
+  [[92, 380], [64, 520], [114, 640], [90, 900]],
+]
+
+function bezier([a, b, c, d]: Segment, t: number): { p: Pt; angle: number } {
+  const u = 1 - t
+  const p: Pt = [
+    u * u * u * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * c[0] + t * t * t * d[0],
+    u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t * t * t * d[1],
+  ]
+  const dx = 3 * u * u * (b[0] - a[0]) + 6 * u * t * (c[0] - b[0]) + 3 * t * t * (d[0] - c[0])
+  const dy = 3 * u * u * (b[1] - a[1]) + 6 * u * t * (c[1] - b[1]) + 3 * t * t * (d[1] - c[1])
+  return { p, angle: (Math.atan2(dy, dx) * 180) / Math.PI }
+}
+
+function Vine({ side, segments }: { side: 'l' | 'r'; segments: Segment[] }) {
+  const d = segments.map(([a, b, c, e], i) => `${i === 0 ? `M${a[0]} ${a[1]} ` : ''}C ${b[0]} ${b[1]}, ${c[0]} ${c[1]}, ${e[0]} ${e[1]}`).join(' ')
+  // Three leaves per segment, alternating sides of the stem, each with a short petiole.
+  const leaves = segments.flatMap((seg, si) =>
+    [0.22, 0.52, 0.82].map((t, li) => {
+      const { p, angle } = bezier(seg, t)
+      const flip = (si * 3 + li) % 2 === 0 ? 1 : -1
+      return { p, rot: angle + flip * 55, key: `${si}-${li}` }
+    }),
+  )
+  return (
+    <svg className={`fey__vine fey__vine--${side}`} viewBox="0 0 120 900" preserveAspectRatio={side === 'l' ? 'xMinYMin slice' : 'xMaxYMin slice'}>
+      <path d={d} />
+      {leaves.map(({ p, rot, key }) => (
+        <g key={key} transform={`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${rot.toFixed(1)})`}>
+          <path className="fey__petiole" d="M0 0 L6 0" />
+          <path className="fey__leaf" d="M5 0 Q 13 -8 25 0 Q 13 8 5 0 Z" />
+        </g>
+      ))}
+    </svg>
   )
 }

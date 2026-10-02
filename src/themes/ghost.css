@@ -110,7 +110,7 @@
 
   /* ── Top bar ── */
   [data-theme='ghost'] .topbar {
-    background: linear-gradient(180deg, rgba(6, 8, 9, 0.96), rgba(6, 8, 9, 0.82));
+    background: linear-gradient(180deg, #060809, #0b0f10);
     border-bottom: 1px solid var(--sepia-dim);
     box-shadow: 0 1px 0 #000, 0 3px 0 -1px var(--sepia-dim);
   }
@@ -891,5 +891,16 @@
     .veil__portrait {
       display: none;
     }
+  }
+}
+
+@media screen {
+  .board__moon {
+    fill: none;
+    stroke: #5e4529;
+    stroke-width: 1;
+  }
+  .board__num.is-on {
+    font-size: 18px;
   }
 }

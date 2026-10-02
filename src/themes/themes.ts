@@ -133,7 +133,7 @@ const COURT_LIGHT: Record<FeyCourt, string> = {
   spring: 'Dawn remaining',
   summer: 'Light remaining',
   fall: 'Harvest remaining',
-  winter: 'Moon remaining',
+  winter: 'Moonlight remaining',
 }
 
 const fey = (court: 'Spring' | 'Summer' | 'Autumn' | 'Winter', key: FeyCourt): ThemeCopy => ({

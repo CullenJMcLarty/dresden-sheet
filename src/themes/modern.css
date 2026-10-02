@@ -78,7 +78,7 @@
 
   /* ── Top bar ── */
   [data-theme='modern'] .topbar {
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
     box-shadow: none;
   }
@@ -999,5 +999,27 @@
   }
   60% {
     transform: scale(1.06);
+  }
+}
+
+/* Number the sheet's sections in reading order (row by row), not DOM order. */
+@media screen {
+  [data-theme='modern'] .plate.intake::before {
+    content: '01';
+  }
+  [data-theme='modern'] .plate.aspects::before {
+    content: '02';
+  }
+  [data-theme='modern'] .plate.skills::before {
+    content: '03';
+  }
+  [data-theme='modern'] .plate.stress::before {
+    content: '04';
+  }
+  [data-theme='modern'] .plate.powers::before {
+    content: '05';
+  }
+  [data-theme='modern'] .plate.consequences::before {
+    content: '06';
   }
 }

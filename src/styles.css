@@ -180,7 +180,7 @@ select {
   align-items: center;
   gap: 16px;
   padding: 10px var(--gutter);
-  background: linear-gradient(180deg, rgba(13, 12, 11, 0.98), rgba(13, 12, 11, 0.93));
+  background: linear-gradient(180deg, #0d0c0b, #121110);
   border-bottom: 3px solid var(--gold);
   box-shadow: 0 6px 0 -3px var(--soot), 0 9px 0 -3px var(--rust);
 }
@@ -844,10 +844,8 @@ select:focus {
   stroke-width: 1.5;
 }
 .gauge figcaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
+  position: relative;
+  margin-top: -16px;
   display: flex;
   flex-direction: column;
   align-items: center;

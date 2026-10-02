@@ -31,18 +31,21 @@ const wobble = (i: number, salt: number) => Math.sin(i * 12.9898 + salt * 78.233
 
 function Tally({ value, max, label }: { value: number; max: number; label: string }) {
   const marks = Math.max(0, value)
-  const groups = Math.ceil(Math.max(marks, 1) / 5)
-  const width = Math.max(groups, 1) * 46 + 10
+  // Every point of refresh gets a mark: spent ones stay as faint pencil, live ones are inked.
+  const total = Math.max(marks, max, 1)
+  const groups = Math.ceil(total / 5)
+  const width = groups * 46 + 10
   const lines = []
-  for (let i = 0; i < marks; i++) {
+  for (let i = 0; i < total; i++) {
     const g = Math.floor(i / 5)
     const k = i % 5
     const gx = 10 + g * 46
+    const cls = `${k === 4 ? 'tally__slash ' : ''}${i < marks ? 'is-inked' : 'is-spent'}`
     if (k < 4) {
       const x = gx + k * 8
-      lines.push(<path key={i} d={`M${x + wobble(i, 1)} ${12 + wobble(i, 2)} L${x + wobble(i, 3)} ${52 + wobble(i, 4)}`} />)
+      lines.push(<path key={i} className={cls} d={`M${x + wobble(i, 1)} ${12 + wobble(i, 2)} L${x + wobble(i, 3)} ${52 + wobble(i, 4)}`} />)
     } else {
-      lines.push(<path key={i} className="tally__slash" d={`M${gx - 6} ${44 + wobble(i, 5)} L${gx + 32} ${18 + wobble(i, 6)}`} />)
+      lines.push(<path key={i} className={cls} d={`M${gx - 6} ${44 + wobble(i, 5)} L${gx + 32} ${18 + wobble(i, 6)}`} />)
     }
   }
   const danger = value < 1
@@ -187,34 +190,36 @@ function Candles({ value, max, label }: { value: number; max: number; label: str
 
 function SpiritBoard({ value, max, label }: { value: number; max: number; label: string }) {
   const top = Math.max(max, value, 1)
+  // Numbers sit on a shallow arc across the middle of the board, like a real talking board.
   const pos = (n: number) => {
-    // Numbers sit on an arc across the board, like the 0–9 row on a talking board.
-    const t = n / top
-    const a = Math.PI + Math.PI * 0.12 + t * Math.PI * 0.76
-    return { x: 110 + Math.cos(a) * 88, y: 104 + Math.sin(a) * 70 }
+    const a = ((245 + (n / top) * 50) * Math.PI) / 180
+    return { x: 110 + Math.cos(a) * 175, y: 252 + Math.sin(a) * 175 }
   }
   const danger = value < 1
-  const target = danger ? { x: 110, y: 118 } : pos(value)
+  const target = danger ? { x: 110, y: 117 } : pos(value)
   return (
     <figure className={`board ${danger ? 'board--danger' : ''}`} aria-label={`${label}: ${value} of ${max}`}>
       <svg viewBox="0 0 220 134" aria-hidden>
         <rect x="2" y="2" width="216" height="130" rx="14" className="board__wood" />
         <rect x="8" y="8" width="204" height="118" rx="10" className="board__rule" />
-        <text x="26" y="28" className="board__word">YES</text>
-        <text x="194" y="28" className="board__word" textAnchor="end">NO</text>
-        <circle cx="110" cy="26" r="9" className="board__sun" />
+        <text x="22" y="34" className="board__word">YES</text>
+        <text x="198" y="34" className="board__word" textAnchor="end">NO</text>
+        <circle cx="96" cy="28" r="7" className="board__sun" />
+        <path d="M124 21 a7 7 0 1 0 0 14 a5.5 5.5 0 1 1 0 -14 Z" className="board__moon" />
         {Array.from({ length: top + 1 }, (_, n) => {
           const p = pos(n)
           return (
-            <text key={n} x={p.x} y={p.y} className={`board__num ${n === value ? 'is-on' : ''}`} textAnchor="middle" dominantBaseline="middle">
+            <text key={n} x={p.x} y={p.y} className={`board__num ${n === value ? 'is-on' : ''}`} textAnchor="middle" dominantBaseline="central">
               {n}
             </text>
           )
         })}
-        <text x="110" y="122" className={`board__word board__bye ${danger ? 'is-on' : ''}`} textAnchor="middle">GOODBYE</text>
+        <text x="110" y="121" className={`board__word board__bye ${danger ? 'is-on' : ''}`} textAnchor="middle">GOODBYE</text>
         <g className="board__planchette" style={{ transform: `translate(${target.x}px, ${target.y}px)` }}>
-          <path d="M0 -20 C 14 -20 20 -4 14 8 C 10 16 4 20 0 22 C -4 20 -10 16 -14 8 C -20 -4 -14 -20 0 -20 Z" transform="translate(0 4)" />
-          <circle r="7" cx="0" cy="0" className="board__lens" />
+          <g transform="scale(0.62)">
+            <path d="M0 -20 C 14 -20 20 -4 14 8 C 10 16 4 20 0 22 C -4 20 -10 16 -14 8 C -20 -4 -14 -20 0 -20 Z" transform="translate(0 4)" />
+            <circle r="8" className="board__lens" />
+          </g>
         </g>
       </svg>
       <figcaption>
