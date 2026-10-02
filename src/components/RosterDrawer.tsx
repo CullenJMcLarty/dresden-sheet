@@ -4,6 +4,7 @@ import { analyze } from '../model/rules'
 import type { Character } from '../model/types'
 import { exportAll, exportCharacter, importFile } from '../store/storage'
 import { Btn } from './ui'
+import { useCopy } from '../themes/ThemeContext'
 
 export function RosterDrawer({
   open,
@@ -25,6 +26,7 @@ export function RosterDrawer({
   onRemove: (id: string) => void
 }) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const copy = useCopy()
   const fileInput = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
 
@@ -59,7 +61,7 @@ export function RosterDrawer({
     <dialog ref={dialog} className="drawer" onClose={onClose} onClick={(e) => e.target === dialog.current && onClose()}>
       <div className="drawer__inner">
         <header className="drawer__head">
-          <h2>Casefiles</h2>
+          <h2>{copy.drawerTitle}</h2>
           <Btn kind="ghost" title="Close" onClick={onClose}>
             ✕
           </Btn>

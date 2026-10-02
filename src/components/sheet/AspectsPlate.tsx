@@ -2,12 +2,14 @@ import { uid } from '../../model/character'
 import type { Character } from '../../model/types'
 import type { Updater } from '../../store/useRoster'
 import { Btn, Field, Plate } from '../ui'
+import { useCopy } from '../../themes/ThemeContext'
 
 export function AspectsPlate({ c, update }: { c: Character; update: Updater }) {
+  const copy = useCopy()
   return (
     <Plate
       title="Aspects"
-      kicker="Painted on the plate"
+      kicker={copy.aspectsKicker}
       className="aspects"
       actions={<Btn onClick={() => update((d) => void d.extraAspects.push({ id: uid(), text: '' }))}>+ Aspect</Btn>}
     >

@@ -1,0 +1,1030 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Fey: the sheet as a bargain struck in twilight.
+   Two courts share one structure: Summer (rose-gold dusk, fireflies, blooms)
+   and Winter (moonlit frost, silver thorns, snow). Arched doorway tabs,
+   filigree corners, wax seals, a moon that wanes as refresh is spent.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media screen {
+  [data-theme='fey'] {
+    color-scheme: dark;
+    /* Summer Court (default) */
+    --sky: linear-gradient(180deg, #1b0b29 0%, #3a1545 40%, #6e2c55 75%, #b45a55 100%);
+    --sky-glow: rgba(255, 190, 120, 0.35);
+    --surface: rgba(46, 18, 58, 0.82);
+    --surface-hi: rgba(78, 32, 82, 0.82);
+    --line: rgba(242, 184, 128, 0.32);
+    --ink: #fbeee4;
+    --ink-dim: #dcbccb;
+    --ink-faint: #a98a9e;
+    --accent: #f2b880;
+    --accent-2: #ff8fb1;
+    --accent-deep: #8a3b5a;
+    --sheen: linear-gradient(100deg, #f7d9a8 0%, #f2b880 30%, #ff9fbf 55%, #f7d9a8 80%);
+    --mote: #ffd27a;
+    --gold: var(--accent);
+    --molten: var(--accent-2);
+    --verdigris: var(--accent-2);
+    --verdigris-deep: var(--accent-deep);
+    --seam: var(--line);
+    --danger: #ff6b8b;
+
+    --f-stencil: 'Cinzel Decorative', 'Georgia', serif;
+    --f-label: 'Cinzel', 'Georgia', serif;
+    --f-cond: 'Cormorant Garamond', 'Georgia', serif;
+    --f-mono: 'Cormorant Garamond', 'Georgia', serif;
+    --f-marker: 'Cormorant Garamond', 'Georgia', serif;
+    --cut: 0px;
+    --corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 61 C3 30 30 3 61 3'/%3E%3Cpath d='M3 44 C12 44 18 38 18 29 C18 21 11 19 9 24'/%3E%3Cpath d='M44 3 C44 12 38 18 29 18 C21 18 19 11 24 9'/%3E%3Ccircle cx='24' cy='24' r='2.4' fill='black'/%3E%3C/g%3E%3C/svg%3E");
+    --corner-tr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg transform='translate(64 0) scale(-1 1)' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 61 C3 30 30 3 61 3'/%3E%3Cpath d='M3 44 C12 44 18 38 18 29 C18 21 11 19 9 24'/%3E%3Cpath d='M44 3 C44 12 38 18 29 18 C21 18 19 11 24 9'/%3E%3Ccircle cx='24' cy='24' r='2.4' fill='black'/%3E%3C/g%3E%3C/svg%3E");
+    --corner-bl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg transform='translate(0 64) scale(1 -1)' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 61 C3 30 30 3 61 3'/%3E%3Cpath d='M3 44 C12 44 18 38 18 29 C18 21 11 19 9 24'/%3E%3Cpath d='M44 3 C44 12 38 18 29 18 C21 18 19 11 24 9'/%3E%3Ccircle cx='24' cy='24' r='2.4' fill='black'/%3E%3C/g%3E%3C/svg%3E");
+    --corner-br: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg transform='translate(64 64) scale(-1 -1)' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 61 C3 30 30 3 61 3'/%3E%3Cpath d='M3 44 C12 44 18 38 18 29 C18 21 11 19 9 24'/%3E%3Cpath d='M44 3 C44 12 38 18 29 18 C21 18 19 11 24 9'/%3E%3Ccircle cx='24' cy='24' r='2.4' fill='black'/%3E%3C/g%3E%3C/svg%3E");
+    --thorns: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 18'%3E%3Cg fill='black'%3E%3Cpath d='M0 10 C12 4 24 16 48 10 L48 12 C24 18 12 6 0 12 Z'/%3E%3Cpath d='M9 8 L12 0 L13 8 Z'/%3E%3Cpath d='M22 12 L24 18 L26 11 Z'/%3E%3Cpath d='M36 10 L40 2 L40 10 Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  [data-theme='fey'][data-variant='winter'] {
+    --sky: linear-gradient(180deg, #03081a 0%, #0a1634 40%, #14295a 78%, #2c4a86 100%);
+    --sky-glow: rgba(200, 225, 255, 0.3);
+    --surface: rgba(10, 22, 52, 0.82);
+    --surface-hi: rgba(24, 44, 92, 0.8);
+    --line: rgba(207, 230, 255, 0.3);
+    --ink: #eef6ff;
+    --ink-dim: #b2c8e4;
+    --ink-faint: #7d93b3;
+    --accent: #cfe6ff;
+    --accent-2: #8fb7ff;
+    --accent-deep: #2c4a86;
+    --sheen: linear-gradient(100deg, #ffffff 0%, #cfe6ff 30%, #9ec3ff 55%, #ffffff 80%);
+    --mote: #ffffff;
+    --danger: #ff8fa3;
+  }
+
+  [data-theme='fey'] body {
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--ink);
+    background: #120818;
+  }
+  [data-theme='fey'][data-variant='winter'] body {
+    background: #03081a;
+  }
+  [data-theme='fey'] body::after {
+    display: none;
+  }
+  [data-theme='fey'] ::selection {
+    background: var(--accent-2);
+    color: #1b0b29;
+  }
+
+  /* ── The glade ── */
+  .backdrop--fey > * {
+    position: absolute;
+  }
+  .fey__sky {
+    inset: 0;
+    background: radial-gradient(circle at 82% 12%, var(--sky-glow), transparent 28%), var(--sky);
+  }
+  .fey__ring {
+    left: 50%;
+    bottom: -10px;
+    width: min(900px, 120vw);
+    transform: translateX(-50%);
+    opacity: 0.35;
+  }
+  .fey__cap {
+    fill: var(--accent-2);
+  }
+  .fey__stem {
+    fill: var(--ink-dim);
+  }
+  .fey__vine {
+    top: 0;
+    height: 100%;
+    width: 110px;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    opacity: 0.22;
+  }
+  .fey__vine--l {
+    left: 0;
+  }
+  .fey__vine--r {
+    right: 0;
+  }
+  .fey__leaf {
+    fill: var(--accent);
+    stroke: none;
+  }
+  .fey__motes {
+    inset: 0;
+    overflow: hidden;
+  }
+  .mote {
+    position: absolute;
+    bottom: -12px;
+    border-radius: 50%;
+    background: var(--mote);
+    box-shadow: 0 0 8px 2px var(--mote);
+    opacity: 0;
+    animation: mote-rise linear infinite;
+  }
+  [data-variant='winter'] .mote {
+    top: -12px;
+    bottom: auto;
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.6);
+    animation-name: mote-fall;
+  }
+  @keyframes mote-rise {
+    0% {
+      transform: translate3d(0, 0, 0);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.9;
+    }
+    40% {
+      opacity: 0.25;
+    }
+    55% {
+      transform: translate3d(40px, -55vh, 0);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate3d(-24px, -112vh, 0);
+      opacity: 0;
+    }
+  }
+  @keyframes mote-fall {
+    0% {
+      transform: translate3d(0, 0, 0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.85;
+    }
+    50% {
+      transform: translate3d(-36px, 55vh, 0);
+    }
+    100% {
+      transform: translate3d(20px, 112vh, 0);
+      opacity: 0;
+    }
+  }
+
+  /* ── Top bar ── */
+  [data-theme='fey'] .topbar {
+    background: linear-gradient(180deg, rgba(10, 4, 16, 0.92), rgba(10, 4, 16, 0.72));
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -10px var(--sky-glow);
+  }
+  [data-variant='winter'] .topbar {
+    background: linear-gradient(180deg, rgba(2, 6, 18, 0.94), rgba(2, 6, 18, 0.74));
+  }
+  [data-theme='fey'] .topbar__files {
+    background: transparent;
+    color: var(--accent);
+    clip-path: none;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    font: 500 14px var(--f-label);
+    letter-spacing: 0.12em;
+  }
+  [data-theme='fey'] .topbar__files:hover {
+    transform: none;
+    box-shadow: 0 0 14px -2px var(--accent);
+  }
+  [data-theme='fey'] .topbar__eyebrow {
+    font: italic 500 15px var(--f-cond);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .topbar__name,
+  [data-theme='fey'] .plate__title,
+  [data-theme='fey'] .drawer__head h2 {
+    background: var(--sheen);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+  }
+  [data-theme='fey'] .topbar__name {
+    font: 700 clamp(20px, 2.8vw, 32px) / 1.15 var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  [data-theme='fey'] .topbar__stats div {
+    background: transparent;
+    border-left: 1px solid var(--line);
+  }
+  [data-theme='fey'] .topbar__stats dt {
+    font: 500 11px var(--f-label);
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .topbar__stats dd {
+    font: 600 24px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--accent);
+  }
+  [data-theme='fey'] .topbar__stats .is-bad {
+    background: none;
+    animation: none;
+    border-color: var(--danger);
+  }
+  [data-theme='fey'] .topbar__stats .is-bad dd,
+  [data-theme='fey'] .topbar__stats .is-warn dd {
+    color: var(--danger);
+    text-shadow: 0 0 10px var(--danger);
+  }
+  [data-theme='fey'] .theme-btn,
+  [data-theme='fey'] .topbar__export {
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    color: var(--ink-dim);
+    font: 500 12px var(--f-label);
+  }
+  [data-theme='fey'] .theme-btn__swatch i {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    transform: none;
+  }
+
+  /* ── Tabs: arched doorways ── */
+  [data-theme='fey'] .tabs {
+    gap: 10px;
+    margin-top: 28px;
+  }
+  [data-theme='fey'] .tabs__tab {
+    clip-path: none;
+    padding: 18px 24px 10px;
+    background: linear-gradient(180deg, var(--surface-hi), var(--surface));
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 999px 999px 0 0 / 46px 46px 0 0;
+    font: 500 15px var(--f-label);
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .tabs__tab:hover {
+    transform: translateY(-2px);
+    color: var(--ink);
+  }
+  [data-theme='fey'] .tabs__tab.is-on {
+    background: linear-gradient(180deg, var(--accent-deep), var(--surface));
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 -6px 22px -8px var(--accent);
+  }
+  [data-theme='fey'] .tabs__glyph {
+    display: none;
+  }
+  [data-theme='fey'] .stencil-banner {
+    top: -24px;
+    font-family: var(--f-stencil);
+    font-size: clamp(56px, 10vw, 140px);
+    -webkit-text-stroke: 0;
+    color: var(--accent);
+    opacity: 0.07;
+    transform: none;
+  }
+
+  /* ── Plates with filigree corners ── */
+  [data-theme='fey'] .plate {
+    clip-path: none;
+    padding: 30px 32px;
+    background: linear-gradient(165deg, var(--surface-hi), var(--surface) 55%);
+    border: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  [data-theme='fey'] .plate::before {
+    inset: 8px;
+    width: auto;
+    background: var(--accent);
+    opacity: 0.55;
+    -webkit-mask: var(--corner) top left / 46px no-repeat, var(--corner-tr) top right / 46px no-repeat, var(--corner-bl) bottom left / 46px no-repeat, var(--corner-br) bottom right / 46px no-repeat;
+    mask: var(--corner) top left / 46px no-repeat, var(--corner-tr) top right / 46px no-repeat, var(--corner-bl) bottom left / 46px no-repeat, var(--corner-br) bottom right / 46px no-repeat;
+    pointer-events: none;
+  }
+  [data-theme='fey'] .rivet {
+    display: none;
+  }
+  [data-theme='fey'] .plate__head {
+    justify-content: center;
+    text-align: center;
+  }
+  [data-theme='fey'] .plate__head > div {
+    width: 100%;
+  }
+  [data-theme='fey'] .plate__actions {
+    width: 100%;
+    justify-content: center;
+  }
+  [data-theme='fey'] .plate__kicker {
+    order: 2;
+    font: italic 500 17px var(--f-cond);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .plate__title {
+    margin: 0 0 2px;
+    font: 700 clamp(24px, 2.6vw, 34px) / 1.15 var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    transform: none;
+  }
+  [data-theme='fey'] .plate__title::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 10px;
+    margin: 6px auto 0;
+    background: radial-gradient(circle, var(--accent) 0 2.5px, transparent 3px) center / 10px 10px no-repeat,
+      linear-gradient(90deg, transparent, var(--accent) 30%, transparent 46%, transparent 54%, var(--accent) 70%, transparent) center / 100% 1px no-repeat;
+    opacity: 0.7;
+  }
+  [data-theme='fey'] .plate--hot {
+    animation: none;
+    border-color: var(--danger);
+    box-shadow: 0 0 0 1px var(--danger), 0 0 30px -6px var(--danger);
+  }
+
+  /* warnings framed by a thorn vine */
+  [data-theme='fey'] .hazard {
+    margin: 0 0 18px;
+    text-align: center;
+  }
+  [data-theme='fey'] .hazard__tape {
+    height: 18px;
+    background: var(--danger);
+    -webkit-mask: var(--thorns) left center / 48px 18px repeat-x;
+    mask: var(--thorns) left center / 48px 18px repeat-x;
+    box-shadow: none;
+    transform: none;
+  }
+  [data-theme='fey'] .hazard__lead {
+    display: block;
+    margin-top: 6px;
+    font: 500 14px var(--f-label);
+    letter-spacing: 0.14em;
+    color: var(--danger);
+  }
+  [data-theme='fey'] .hazard__list {
+    padding: 4px 16px 0;
+    background: none;
+    border: 0;
+    font: italic 500 18px var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='fey'] .hazard__list li::before {
+    content: '❦ ';
+    margin: 0;
+    color: var(--danger);
+  }
+
+  /* ── Fields ── */
+  [data-theme='fey'] .field label,
+  [data-theme='fey'] .conseq__body label,
+  [data-theme='fey'] .stepper__label {
+    font: 500 12px var(--f-label);
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] input,
+  [data-theme='fey'] textarea,
+  [data-theme='fey'] select {
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    color: var(--ink);
+    font: 500 19px var(--f-cond);
+  }
+  [data-theme='fey'] select {
+    font-size: 16px;
+  }
+  [data-theme='fey'] input:focus,
+  [data-theme='fey'] textarea:focus,
+  [data-theme='fey'] select:focus {
+    background: rgba(0, 0, 0, 0.35);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05), 0 0 22px -6px var(--accent);
+  }
+  [data-theme='fey'] input::placeholder,
+  [data-theme='fey'] textarea::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  [data-theme='fey'] .field--aspect input,
+  [data-theme='fey'] .conseq input {
+    padding: 6px 4px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    font: italic 600 24px var(--f-cond);
+    color: var(--accent);
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.15);
+    transform: none;
+  }
+  [data-theme='fey'] .field--aspect input:focus {
+    background: transparent;
+    border-bottom: 1px solid var(--accent);
+    box-shadow: 0 10px 18px -14px var(--accent);
+  }
+
+  /* ── Buttons & controls ── */
+  [data-theme='fey'] .btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    color: var(--ink);
+    font: 500 13px var(--f-label);
+    letter-spacing: 0.12em;
+  }
+  [data-theme='fey'] .btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent);
+    transform: none;
+    box-shadow: 0 0 16px -4px var(--accent);
+  }
+  [data-theme='fey'] .btn--primary {
+    background: var(--sheen);
+    border-color: transparent;
+    color: #22102c;
+  }
+  [data-theme='fey'][data-variant='winter'] .btn--primary {
+    color: #0a1634;
+  }
+  [data-theme='fey'] .btn--ghost {
+    border-color: transparent;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .stepper button,
+  [data-theme='fey'] .stepper__value {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  [data-theme='fey'] .stepper button {
+    border-radius: 50%;
+    font-family: var(--f-cond);
+  }
+  [data-theme='fey'] .stepper button:hover:not(:disabled) {
+    background: var(--accent);
+    color: #1b0b29;
+  }
+  [data-theme='fey'] .stepper__value {
+    border: 0;
+    font: 600 20px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--accent);
+  }
+  /* power level: leaf-shaped choices */
+  [data-theme='fey'] .seg {
+    gap: 8px;
+  }
+  [data-theme='fey'] .seg button {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 22px 2px 22px 2px;
+    transform: none;
+    font: italic 500 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .seg button.is-on {
+    background: linear-gradient(135deg, var(--accent-deep), transparent);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 18px -6px var(--accent);
+  }
+  [data-theme='fey'] .toggle {
+    font: italic 500 17px var(--f-cond);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .toggle__switch {
+    border-radius: 99px;
+    background: rgba(0, 0, 0, 0.3);
+    border-color: var(--line);
+  }
+  [data-theme='fey'] .toggle__switch::after {
+    border-radius: 50%;
+  }
+  [data-theme='fey'] .toggle input:checked + .toggle__switch {
+    border-color: var(--accent);
+  }
+  [data-theme='fey'] .toggle input:checked + .toggle__switch::after {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  [data-theme='fey'] .tag {
+    border-color: var(--line);
+    border-radius: 99px;
+    font: 500 11px var(--f-label);
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .tag--warn {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  [data-theme='fey'] .empty,
+  [data-theme='fey'] .hint {
+    font: italic 500 18px var(--f-cond);
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  /* ── Intake & the moon ── */
+  [data-theme='fey'] .intake__dials {
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.06), transparent 70%);
+    border: 1px solid var(--line);
+    border-radius: 999px 999px 24px 24px / 180px 180px 24px 24px;
+    padding-top: 22px;
+  }
+  [data-theme='fey'] .readout dt {
+    font: 500 10px var(--f-label);
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .readout dd {
+    font: 600 18px var(--f-cond);
+    color: var(--ink);
+  }
+  .moon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+  }
+  .moon svg {
+    width: 150px;
+    height: 150px;
+    overflow: visible;
+    filter: drop-shadow(0 0 18px var(--sky-glow));
+  }
+  .moon__dark {
+    fill: rgba(0, 0, 0, 0.45);
+  }
+  .moon__rim {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .moon__lit-a {
+    stop-color: #ffffff;
+  }
+  .moon__lit-b {
+    stop-color: var(--accent);
+  }
+  .moon--sun .moon__lit-a {
+    stop-color: #fff3d6;
+  }
+  .moon--sun .moon__lit-b {
+    stop-color: #f29a6b;
+  }
+  .moon__lit {
+    transition: d 0.35s ease;
+  }
+  .moon__ray {
+    stroke: var(--accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    opacity: 0.6;
+  }
+  .moon__value {
+    font: 600 40px/1 var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--accent);
+  }
+  .moon__label {
+    font: 500 11px var(--f-label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .moon--danger .moon__value {
+    color: var(--danger);
+  }
+  .moon--danger .moon__rim {
+    stroke: var(--danger);
+    stroke-width: 2;
+  }
+  .moon__omen {
+    max-width: 200px;
+    text-align: center;
+    font: italic 500 17px var(--f-cond);
+    color: var(--danger);
+  }
+
+  /* ── Phases: a path of stepping stones ── */
+  [data-theme='fey'] .rail::before {
+    left: 28px;
+    width: 2px;
+    background: repeating-linear-gradient(180deg, var(--accent) 0 3px, transparent 3px 14px);
+    opacity: 0.5;
+  }
+  [data-theme='fey'] .rail__marker {
+    background: radial-gradient(circle at 40% 35%, var(--surface-hi), var(--surface));
+    border: 1px solid var(--line);
+    color: var(--ink-faint);
+    font: 700 22px var(--f-stencil);
+  }
+  [data-theme='fey'] .rail__stop--done .rail__marker {
+    background: radial-gradient(circle at 40% 35%, #fff, var(--accent) 45%, var(--accent-deep));
+    border-color: var(--accent);
+    color: #1b0b29;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.35), 0 0 28px var(--accent);
+  }
+  [data-theme='fey'] .rail .plate__head {
+    justify-content: flex-start;
+    text-align: left;
+  }
+  [data-theme='fey'] .rail .plate__title::after {
+    margin-left: 0;
+  }
+
+  /* ── Skills ── */
+  [data-theme='fey'] .meter {
+    height: 26px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+  }
+  [data-theme='fey'] .meter__fill {
+    border-radius: 99px;
+    background: var(--sheen);
+    box-shadow: 0 0 16px -2px var(--accent);
+  }
+  [data-theme='fey'] .meter__fill.is-over {
+    background: var(--danger);
+  }
+  [data-theme='fey'] .meter__text {
+    font: 600 16px/24px var(--f-cond);
+    color: var(--ink);
+  }
+  [data-theme='fey'] .pyramid__row {
+    background: rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-radius: 99px;
+    padding: 4px 14px;
+  }
+  [data-theme='fey'] .pyramid__row.is-bad {
+    background: rgba(255, 107, 139, 0.12);
+    box-shadow: inset 0 0 0 1px var(--danger);
+  }
+  [data-theme='fey'] .pyramid__rank {
+    font: 500 12px var(--f-label);
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+  }
+  [data-theme='fey'] .pyramid__rank .mono {
+    font-family: var(--f-cond);
+    font-size: 17px;
+    color: var(--accent);
+  }
+  [data-theme='fey'] .chip {
+    padding: 2px 12px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    clip-path: none;
+    border-radius: 14px 2px 14px 2px;
+    color: var(--accent);
+    font: italic 600 17px var(--f-cond);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  [data-theme='fey'] .skill {
+    border-left: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  [data-theme='fey'] .skill__name {
+    font: 500 13px var(--f-label);
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .skill.is-set .skill__name {
+    color: var(--accent);
+    text-shadow: 0 0 12px var(--sky-glow);
+  }
+  [data-theme='fey'] .skill.is-bad .skill__name {
+    color: var(--danger);
+  }
+
+  /* ── Lists ── */
+  [data-theme='fey'] .power,
+  [data-theme='fey'] .bonus,
+  [data-theme='fey'] .rote,
+  [data-theme='fey'] .gear {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  [data-theme='fey'] .power__name {
+    background: transparent;
+    border-color: transparent;
+    font: 700 19px var(--f-stencil);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+  [data-theme='fey'] .cost {
+    font-family: var(--f-cond);
+    color: var(--accent-2);
+  }
+  [data-theme='fey'] .cost--refund {
+    color: #9be3c2;
+  }
+
+  /* ── Stress: blossoms (Summer) and snow-stars (Winter) ── */
+  [data-theme='fey'] .track {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  [data-theme='fey'] .track__head h3 {
+    font: 500 17px var(--f-label);
+    letter-spacing: 0.14em;
+    color: var(--ink);
+  }
+  [data-theme='fey'] .track__math {
+    font: italic 15px var(--f-cond);
+  }
+  [data-theme='fey'] .track__boxes {
+    gap: 10px;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.4));
+  }
+  [data-theme='fey'] .box {
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0 30%, rgba(255, 255, 255, 0.05) 31% 100%);
+    box-shadow: none;
+    clip-path: path('M24 2 C31 2 33 11 28 17 C36 12 46 16 46 24 C46 32 36 36 28 31 C33 37 31 46 24 46 C17 46 15 37 20 31 C12 36 2 32 2 24 C2 16 12 12 20 17 C15 11 17 2 24 2 Z');
+    color: var(--ink-dim);
+    font: 600 16px var(--f-cond);
+    font-variant-numeric: lining-nums;
+  }
+  [data-variant='winter'] .box {
+    clip-path: polygon(50% 0, 61% 30%, 93% 25%, 72% 50%, 93% 75%, 61% 70%, 50% 100%, 39% 70%, 7% 75%, 28% 50%, 7% 25%, 39% 30%);
+  }
+  [data-theme='fey'] .box:hover {
+    transform: scale(1.08) rotate(8deg);
+  }
+  [data-theme='fey'] .box.is-on,
+  [data-theme='fey'] .track--mental .box.is-on,
+  [data-theme='fey'] .track--hunger .box.is-on {
+    background: radial-gradient(circle at 50% 50%, #fff 0 14%, var(--accent) 34%, var(--accent-2) 62%, var(--accent-deep));
+    border: 0;
+    box-shadow: none;
+    color: #1b0b29;
+    animation: bloom 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+  [data-theme='fey'] .track--hunger .box.is-on {
+    background: radial-gradient(circle, #fff 0 12%, #ff6b8b 40%, #6d0a2a);
+  }
+  [data-theme='fey'] .track__boxes:has(.is-on) {
+    filter: drop-shadow(0 0 10px var(--sky-glow));
+  }
+
+  /* ── Consequences sealed in wax ── */
+  [data-theme='fey'] .conseq {
+    background: rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-radius: 18px;
+    overflow: visible;
+  }
+  [data-theme='fey'] .conseq__value {
+    font: 600 26px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .conseq.is-logged .conseq__value {
+    color: var(--danger);
+  }
+  [data-theme='fey'] .conseq--extreme {
+    background: rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 107, 139, 0.35);
+  }
+  [data-theme='fey'] .conseq__body small {
+    font-style: italic;
+  }
+  [data-theme='fey'] .stamp {
+    top: 50%;
+    right: -10px;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin-top: -27px;
+    padding: 0;
+    border: 0;
+    border-radius: 48% 52% 50% 46% / 52% 46% 54% 48%;
+    background: radial-gradient(circle at 38% 34%, #ff9bb3, #b0164a 55%, #5e0624);
+    box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.18), inset 0 0 0 6px rgba(255, 255, 255, 0.12), 2px 4px 6px rgba(0, 0, 0, 0.45);
+    color: rgba(255, 230, 236, 0.9);
+    font: 500 9px var(--f-label);
+    letter-spacing: 0.12em;
+    opacity: 1;
+    transform: rotate(-12deg);
+  }
+  [data-variant='winter'] .stamp {
+    background: radial-gradient(circle at 38% 34%, #d8ecff, #3d6bc1 55%, #142a5e);
+    color: #eef6ff;
+  }
+  [data-theme='fey'] .conseq.is-logged {
+    padding-right: 54px;
+  }
+
+  /* ── Magic ── */
+  [data-theme='fey'] .magic {
+    border-color: var(--line);
+  }
+  [data-theme='fey'] .art-stat {
+    background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.08), transparent 70%);
+    border: 1px solid var(--line);
+    border-radius: 999px 999px 24px 24px / 120px 120px 24px 24px;
+    padding-top: 24px;
+    font: 500 13px var(--f-label);
+    letter-spacing: 0.14em;
+  }
+  [data-theme='fey'] .art-stat__n {
+    font: 600 48px var(--f-cond);
+    font-variant-numeric: lining-nums;
+    color: var(--accent);
+    text-shadow: 0 0 22px var(--accent);
+  }
+  [data-theme='fey'] .art-stat small {
+    font: italic 15px var(--f-cond);
+    letter-spacing: 0;
+  }
+  [data-theme='fey'] .casting {
+    font: 600 18px var(--f-cond);
+    font-variant-numeric: lining-nums;
+  }
+  [data-theme='fey'] .casting caption,
+  [data-theme='fey'] .casting thead th {
+    font: 500 12px var(--f-label);
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .casting th,
+  [data-theme='fey'] .casting td {
+    border-color: var(--line);
+  }
+  [data-theme='fey'] .casting tbody th {
+    color: var(--accent);
+  }
+  [data-theme='fey'] .portrait {
+    border: 1px solid var(--accent);
+    border-radius: 999px 999px 18px 18px / 160px 160px 18px 18px;
+    filter: saturate(0.9);
+    transform: none;
+    box-shadow: 0 0 40px -8px var(--accent);
+  }
+
+  /* ── Dialogs ── */
+  [data-theme='fey'] dialog::backdrop {
+    background: rgba(5, 2, 10, 0.65);
+    backdrop-filter: none;
+  }
+  [data-theme='fey'] .palette,
+  [data-theme='fey'] .drawer {
+    background: linear-gradient(170deg, #2a1238, #160a20);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 80px #000, 0 0 60px -20px var(--accent);
+  }
+  [data-variant='winter'] .palette,
+  [data-variant='winter'] .drawer {
+    background: linear-gradient(170deg, #0f1f45, #060d22);
+  }
+  [data-theme='fey'] .palette {
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  [data-theme='fey'] .palette__search {
+    color: var(--accent);
+    border-color: var(--line);
+  }
+  [data-theme='fey'] .palette__search input {
+    background: transparent;
+    border: 0;
+    font: italic 500 22px var(--f-cond);
+    box-shadow: none;
+  }
+  [data-theme='fey'] .palette__cat {
+    font: 500 11px var(--f-label);
+    color: var(--accent-2);
+  }
+  [data-theme='fey'] .palette__item {
+    font: 500 19px var(--f-cond);
+  }
+  [data-theme='fey'] .palette__item.is-cursor {
+    background: linear-gradient(90deg, var(--accent-deep), transparent);
+    color: var(--accent);
+  }
+  [data-theme='fey'] .palette__item.is-cursor .cost {
+    color: var(--accent);
+  }
+  [data-theme='fey'] .palette__foot,
+  [data-theme='fey'] .drawer__foot {
+    font: italic 15px var(--f-cond);
+    color: var(--ink-faint);
+    border-color: var(--line);
+  }
+  [data-theme='fey'] .drawer {
+    border-radius: 0 28px 28px 0;
+  }
+  [data-theme='fey'] .drawer__head h2 {
+    font: 700 30px var(--f-stencil);
+    text-transform: none;
+  }
+  [data-theme='fey'] .file {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  [data-theme='fey'] .file.is-active {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px -8px var(--accent);
+  }
+  [data-theme='fey'] .file__name {
+    font: italic 600 22px var(--f-cond);
+    color: var(--accent);
+  }
+  [data-theme='fey'] .file__meta {
+    font: 14px var(--f-cond);
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .foot {
+    font: italic 14px var(--f-cond);
+    color: var(--ink-faint);
+  }
+  [data-theme='fey'] .save-fail {
+    background: #8a1538;
+    font-family: var(--f-cond);
+  }
+
+  @media (max-width: 720px) {
+    [data-theme='fey'] .tabs {
+      gap: 4px;
+      margin: 0;
+      background: #0d0614;
+      border-top: 1px solid var(--line);
+    }
+    [data-variant='winter'] .tabs {
+      background: #020617;
+    }
+    [data-theme='fey'] .tabs__tab {
+      padding: 10px 4px 6px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      border-radius: 999px 999px 0 0 / 26px 26px 0 0;
+    }
+    [data-theme='fey'] .tabs__glyph {
+      display: block;
+    }
+    [data-theme='fey'] .plate {
+      padding: 26px 18px;
+      border-radius: 22px;
+    }
+    [data-theme='fey'] .box {
+      width: 44px;
+      height: 44px;
+    }
+    [data-theme='fey'] .fey__vine {
+      display: none;
+    }
+  }
+}
+
+@keyframes bloom {
+  0% {
+    transform: scale(0.4) rotate(-60deg);
+    filter: brightness(2);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@media screen {
+  .moon figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  [data-theme='fey'] .meter__text {
+    text-shadow: 0 0 3px #000, 0 0 8px #000, 0 1px 2px #000;
+  }
+}

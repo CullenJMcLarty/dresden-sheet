@@ -4,6 +4,7 @@ import type { Analysis } from '../model/rules'
 import type { CastingBonus, Character, Rote } from '../model/types'
 import type { Updater } from '../store/useRoster'
 import { Btn, Plate, Stepper } from './ui'
+import { useCopy } from '../themes/ThemeContext'
 
 const BONUS_FIELDS = [
   ['offensivePower', 'Off. power'],
@@ -14,6 +15,7 @@ const BONUS_FIELDS = [
 
 export function MagicTab({ c, a, update }: { c: Character; a: Analysis; update: Updater }) {
   const m = a.magic
+  const copy = useCopy()
   if (!m) return null
 
   const newBonus = (kind: CastingBonus['kind']): CastingBonus => ({
@@ -31,7 +33,7 @@ export function MagicTab({ c, a, update }: { c: Character; a: Analysis; update: 
 
   return (
     <div className="stack">
-      <Plate title="The Art" kicker="Copper wards · verdigris" className="magic">
+      <Plate title={copy.magicTitle} kicker={copy.magicKicker} className="magic">
         <div className="art-stats">
           <div className="art-stat">
             <span className="art-stat__n">{signed(m.conviction)}</span>
@@ -54,7 +56,7 @@ export function MagicTab({ c, a, update }: { c: Character; a: Analysis; update: 
 
       <Plate
         title="Foci & Specializations"
-        kicker={`${m.slotsUsed} bonus${m.slotsUsed === 1 ? '' : 'es'} in use`}
+        kicker={`${copy.fociKicker} · ${m.slotsUsed} bonus${m.slotsUsed === 1 ? '' : 'es'} in use`}
         className="magic"
         warnings={m.warnings}
         actions={
@@ -139,7 +141,7 @@ export function MagicTab({ c, a, update }: { c: Character; a: Analysis; update: 
 
       <Plate
         title="Rotes"
-        kicker="Spells worn smooth"
+        kicker={copy.rotesKicker}
         className="magic"
         actions={<Btn onClick={() => update((d) => void d.magic.rotes.push(newRote()))}>+ Rote</Btn>}
       >

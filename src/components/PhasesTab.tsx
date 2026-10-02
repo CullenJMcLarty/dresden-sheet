@@ -1,11 +1,13 @@
 import type { Character } from '../model/types'
 import type { Updater } from '../store/useRoster'
 import { Area, Field, Plate } from './ui'
+import { useCopy } from '../themes/ThemeContext'
 
 export function PhasesTab({ c, update }: { c: Character; update: Updater }) {
+  const copy = useCopy()
   return (
     <div className="stack">
-      <Plate title="The Concept" kicker="Form 7-A · Who are you?">
+      <Plate title={copy.conceptTitle} kicker={copy.conceptKicker}>
         <div className="grid-2">
           <Field
             label="High Concept"

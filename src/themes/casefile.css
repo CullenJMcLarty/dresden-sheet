@@ -1,0 +1,1003 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Case File: a wizard PI's desk after midnight.
+   Typed labels, ballpoint aspects, red-pen corrections, sticky-note warnings,
+   and a corkboard with red string for the phases. Everything static.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media screen {
+  [data-theme='casefile'] {
+    color-scheme: light;
+    --paper: #f4ecd6;
+    --paper-hi: #fbf6e8;
+    --manila: #e2c88f;
+    --manila-dark: #c9a964;
+    --wood: #2b1d14;
+    --ink: #1f1b16;
+    --ink-dim: #5c5345;
+    --ink-faint: #8f8575;
+    --ballpoint: #1f3d9a;
+    --redpen: #b3261e;
+    --pencil: #6e6a64;
+    --seam: #cdbf9f;
+    --gold: var(--redpen);
+    --molten: var(--redpen);
+    --danger: var(--redpen);
+
+    --f-stencil: 'Special Elite', 'Courier New', monospace;
+    --f-cond: 'Courier Prime', 'Courier New', monospace;
+    --f-mono: 'Courier Prime', 'Courier New', monospace;
+    --f-marker: 'Caveat', 'Segoe Print', cursive;
+    --cut: 0px;
+  }
+
+  [data-theme='casefile'] body {
+    font-size: 16px;
+    color: var(--ink);
+    /* desk lamp pool of light over dark wood grain */
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 8%, rgba(255, 214, 150, 0.28), transparent 70%),
+      radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.6), transparent 60%),
+      repeating-linear-gradient(91deg, rgba(0, 0, 0, 0) 0 18px, rgba(0, 0, 0, 0.08) 18px 19px, rgba(0, 0, 0, 0) 19px 47px, rgba(255, 220, 170, 0.04) 47px 49px),
+      repeating-linear-gradient(90deg, #2e1f15 0 140px, #33231a 140px 260px, #291b12 260px 400px);
+  }
+  [data-theme='casefile'] body::after {
+    display: none;
+  }
+  [data-theme='casefile'] ::selection {
+    background: #ffe97a;
+    color: var(--ink);
+  }
+
+  /* ── Desk props ── */
+  .backdrop--desk svg {
+    fill: none;
+  }
+  .desk__ring {
+    position: absolute;
+    stroke: rgba(92, 52, 20, 0.5);
+    stroke-width: 7;
+    filter: blur(0.6px);
+  }
+  .desk__ring .desk__ring-inner {
+    stroke-width: 2;
+    stroke: rgba(92, 52, 20, 0.35);
+  }
+  .desk__ring .desk__drip {
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+  .desk__ring--a {
+    width: 230px;
+    right: 3vw;
+    top: 120px;
+  }
+  .desk__ring--b {
+    width: 190px;
+    left: 1vw;
+    bottom: 6vh;
+    opacity: 0.7;
+  }
+  .desk__doodle {
+    position: absolute;
+    width: 160px;
+    left: 2vw;
+    top: 38vh;
+    stroke: rgba(240, 230, 210, 0.16);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    transform: rotate(-12deg);
+  }
+  .desk__matchbook {
+    position: absolute;
+    right: 4vw;
+    bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 110px;
+    background: linear-gradient(180deg, #7d1d17 0 72%, #e9dcc1 72% 76%, #7d1d17 76%);
+    color: #f1d9a6;
+    font: 11px var(--f-stencil);
+    letter-spacing: 0.1em;
+    transform: rotate(18deg);
+    box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0.85;
+  }
+  .desk__matchbook b {
+    font: 700 16px var(--f-marker);
+    letter-spacing: 0;
+  }
+
+  /* ── Top bar: the folder's edge ── */
+  [data-theme='casefile'] .topbar {
+    background: linear-gradient(180deg, var(--manila) 0%, #d8bc7e 100%);
+    border-bottom: 0;
+    box-shadow: 0 3px 0 var(--manila-dark), 0 10px 18px rgba(0, 0, 0, 0.45);
+  }
+  [data-theme='casefile'] .topbar__files {
+    background: var(--paper-hi);
+    color: var(--ink);
+    clip-path: none;
+    border: 1px solid var(--manila-dark);
+    font-family: var(--f-stencil);
+    box-shadow: 2px 2px 0 var(--manila-dark);
+  }
+  [data-theme='casefile'] .topbar__eyebrow {
+    color: var(--redpen);
+    font-family: var(--f-stencil);
+    letter-spacing: 0.12em;
+  }
+  [data-theme='casefile'] .topbar__name {
+    display: inline-block;
+    max-width: 100%;
+    margin-top: 2px;
+    padding: 2px 12px 0;
+    background: var(--paper-hi);
+    color: var(--ink);
+    font-family: var(--f-stencil);
+    font-size: clamp(20px, 2.6vw, 30px);
+    text-transform: none;
+    text-shadow: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+    transform: rotate(-0.8deg);
+  }
+  [data-theme='casefile'] .topbar__stats div {
+    background: transparent;
+    border-left: 1px dashed var(--manila-dark);
+  }
+  [data-theme='casefile'] .topbar__stats dt {
+    color: var(--ink-dim);
+    font-family: var(--f-stencil);
+  }
+  [data-theme='casefile'] .topbar__stats dd {
+    font-family: var(--f-marker);
+    font-size: 28px;
+    color: var(--ballpoint);
+  }
+  [data-theme='casefile'] .topbar__stats .is-bad,
+  [data-theme='casefile'] .topbar__stats .is-warn dd {
+    color: var(--redpen);
+    background: none;
+    animation: none;
+  }
+  [data-theme='casefile'] .topbar__stats .is-bad dd {
+    color: var(--redpen);
+    text-decoration: underline wavy;
+  }
+  [data-theme='casefile'] .theme-btn,
+  [data-theme='casefile'] .topbar__export {
+    border-color: var(--manila-dark);
+    color: var(--ink-dim);
+    font-family: var(--f-stencil);
+  }
+
+  /* ── Tabs: folder dividers ── */
+  [data-theme='casefile'] .tabs {
+    gap: 2px;
+  }
+  [data-theme='casefile'] .tabs__tab {
+    clip-path: none;
+    padding: 10px 22px 8px;
+    border: 0;
+    border-radius: 10px 10px 0 0;
+    background: #b89a5c;
+    color: #3a2c17;
+    font-family: var(--f-stencil);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    box-shadow: inset 0 -6px 8px -6px rgba(0, 0, 0, 0.4);
+  }
+  [data-theme='casefile'] .tabs__tab:hover {
+    transform: translateY(-2px);
+    background: #c8aa6c;
+  }
+  [data-theme='casefile'] .tabs__tab.is-on {
+    background: var(--manila);
+    color: var(--ink);
+    transform: translateY(-4px);
+    box-shadow: none;
+  }
+  [data-theme='casefile'] .tabs__glyph {
+    display: none;
+  }
+
+  /* the tab name as a big red rubber stamp */
+  [data-theme='casefile'] .stencil-banner {
+    top: -6px;
+    right: 40px;
+    padding: 4px 20px;
+    font-family: var(--f-stencil);
+    font-size: clamp(40px, 6vw, 80px);
+    color: transparent;
+    -webkit-text-stroke: 0;
+    color: rgba(179, 38, 30, 0.13);
+    border: 6px double rgba(179, 38, 30, 0.13);
+    transform: rotate(-7deg);
+  }
+
+  /* ── Plates become paper sheets ── */
+  [data-theme='casefile'] .plate {
+    clip-path: none;
+    padding: 26px 26px 26px 54px;
+    border-top: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, transparent 38px, rgba(179, 38, 30, 0.35) 38px 39.5px, transparent 39.5px),
+      radial-gradient(ellipse at 30% 10%, var(--paper-hi), var(--paper) 60%, #ebdfbf);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 10px 22px rgba(0, 0, 0, 0.45);
+  }
+  [data-theme='casefile'] .stack > .plate:nth-child(odd),
+  [data-theme='casefile'] .sheet > .plate {
+    transform: rotate(-0.25deg);
+  }
+  [data-theme='casefile'] .stack > .plate:nth-child(even) {
+    transform: rotate(0.3deg);
+  }
+  /* paperclip */
+  [data-theme='casefile'] .plate::before {
+    top: -14px;
+    bottom: auto;
+    left: 22px;
+    width: 18px;
+    height: 58px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 58'%3E%3Cpath d='M6 40 V10 a4 4 0 0 1 8 0 V46 a6 6 0 0 1 -12 0 V14' fill='none' stroke='%238d9196' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;
+    filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, 0.35));
+  }
+  [data-theme='casefile'] .rivet {
+    display: none;
+  }
+  [data-theme='casefile'] .plate__kicker {
+    order: 2;
+    font-family: var(--f-marker);
+    font-size: 19px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--pencil);
+    transform: rotate(-1deg);
+  }
+  [data-theme='casefile'] .plate__head > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  /* typed label stuck on the page */
+  [data-theme='casefile'] .plate__title {
+    display: inline-block;
+    align-self: flex-start;
+    margin: 0;
+    padding: 4px 12px 2px;
+    background: #fffef8;
+    border: 1px solid #ddd3bb;
+    color: var(--ink);
+    font-family: var(--f-stencil);
+    font-size: clamp(22px, 2.2vw, 28px);
+    letter-spacing: 0.04em;
+    text-shadow: 0.5px 0 0 rgba(31, 27, 22, 0.6);
+    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.08);
+    transform: rotate(-0.6deg);
+  }
+  [data-theme='casefile'] .plate--hot {
+    animation: none;
+    background:
+      linear-gradient(90deg, transparent 37px, var(--redpen) 37px 40px, transparent 40px),
+      radial-gradient(ellipse at 30% 10%, var(--paper-hi), var(--paper) 60%, #ebdfbf);
+  }
+
+  /* warnings: a sticky note slapped on the page */
+  [data-theme='casefile'] .hazard {
+    position: relative;
+    margin: 0 0 16px auto;
+    max-width: 380px;
+    padding: 18px 16px 12px;
+    background: linear-gradient(180deg, #fff59a, #ffe96b);
+    color: #2b2410;
+    box-shadow: 0 8px 12px -6px rgba(0, 0, 0, 0.45);
+    transform: rotate(1.6deg);
+  }
+  [data-theme='casefile'] .hazard__tape {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 90px;
+    height: 20px;
+    margin-left: -45px;
+    background: rgba(240, 235, 215, 0.75);
+    box-shadow: none;
+    transform: rotate(-3deg);
+  }
+  [data-theme='casefile'] .hazard__lead {
+    display: block;
+    font: 700 22px var(--f-marker);
+    color: var(--redpen);
+  }
+  [data-theme='casefile'] .hazard__list {
+    padding: 0 0 0 18px;
+    background: none;
+    border: 0;
+    font: 500 20px/1.15 var(--f-marker);
+    color: #2b2410;
+  }
+  [data-theme='casefile'] .hazard__list li::before {
+    content: '→ ';
+    color: var(--redpen);
+    margin-left: -18px;
+  }
+
+  /* ── Fields: typed onto form lines ── */
+  [data-theme='casefile'] .field label,
+  [data-theme='casefile'] .conseq__body label,
+  [data-theme='casefile'] .stepper__label {
+    font-family: var(--f-stencil);
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+  [data-theme='casefile'] input,
+  [data-theme='casefile'] select {
+    padding: 6px 4px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #a99c80;
+    color: var(--ink);
+    font-family: var(--f-mono);
+    font-size: 16px;
+  }
+  [data-theme='casefile'] textarea {
+    padding: 0 4px;
+    background: repeating-linear-gradient(180deg, transparent 0 27px, rgba(31, 61, 154, 0.22) 27px 28px);
+    border: 0;
+    line-height: 28px;
+    color: var(--ballpoint);
+    font: 500 21px/28px var(--f-marker);
+  }
+  [data-theme='casefile'] input:focus,
+  [data-theme='casefile'] textarea:focus,
+  [data-theme='casefile'] select:focus {
+    background-color: rgba(255, 233, 107, 0.3);
+    border-bottom-color: var(--ink);
+    box-shadow: none;
+  }
+  [data-theme='casefile'] input::placeholder,
+  [data-theme='casefile'] textarea::placeholder {
+    color: #b3a88f;
+  }
+  /* aspects in blue ballpoint */
+  [data-theme='casefile'] .field--aspect input,
+  [data-theme='casefile'] .conseq input {
+    border-bottom: 1px solid #a99c80;
+    color: var(--ballpoint);
+    font: 600 25px var(--f-marker);
+    transform: none;
+  }
+  [data-theme='casefile'] .field--aspect input:focus {
+    background: rgba(255, 233, 107, 0.3);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* ── Buttons: typed, with red-ink "stamp" for primary ── */
+  [data-theme='casefile'] .btn {
+    background: var(--paper-hi);
+    border: 1px solid var(--ink-dim);
+    border-bottom-width: 2px;
+    color: var(--ink);
+    font-family: var(--f-stencil);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+  [data-theme='casefile'] .btn:hover {
+    background: #fff;
+  }
+  [data-theme='casefile'] .btn--primary {
+    background: transparent;
+    border: 2px solid var(--redpen);
+    color: var(--redpen);
+    transform: rotate(-1.5deg);
+  }
+  [data-theme='casefile'] .btn--primary:hover {
+    background: rgba(179, 38, 30, 0.06);
+  }
+  [data-theme='casefile'] .btn--ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ink-dim);
+  }
+  [data-theme='casefile'] .stepper button,
+  [data-theme='casefile'] .stepper__value {
+    background: transparent;
+    border-color: #b9ab8c;
+    color: var(--ink);
+  }
+  [data-theme='casefile'] .stepper button:hover:not(:disabled) {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  [data-theme='casefile'] .stepper__value {
+    font-family: var(--f-marker);
+    font-size: 20px;
+    color: var(--ballpoint);
+  }
+
+  /* power level: circled in red pen */
+  [data-theme='casefile'] .seg {
+    gap: 10px 18px;
+  }
+  [data-theme='casefile'] .seg button {
+    position: relative;
+    padding: 6px 6px;
+    background: none;
+    border: 0;
+    transform: none;
+    color: var(--ink-dim);
+    font-family: var(--f-mono);
+  }
+  [data-theme='casefile'] .seg button.is-on {
+    background: none;
+    color: var(--ink);
+  }
+  [data-theme='casefile'] .seg button.is-on::after {
+    content: '';
+    position: absolute;
+    inset: -4px -10px;
+    border: 2px solid var(--redpen);
+    border-radius: 50% 46% 52% 44% / 60% 50% 55% 48%;
+    transform: rotate(-3deg);
+  }
+
+  [data-theme='casefile'] .toggle {
+    color: var(--ink-dim);
+    font-family: var(--f-mono);
+    text-transform: none;
+  }
+  [data-theme='casefile'] .toggle__switch {
+    width: 22px;
+    height: 22px;
+    background: transparent;
+    border: 1.5px solid var(--ink);
+  }
+  [data-theme='casefile'] .toggle__switch::after {
+    inset: 0;
+    width: auto;
+    height: auto;
+    background: none;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  [data-theme='casefile'] .toggle input:checked + .toggle__switch::after {
+    content: '✓';
+    display: grid;
+    place-items: center;
+    background: none;
+    color: var(--ballpoint);
+    font: 700 22px/1 var(--f-marker);
+  }
+  [data-theme='casefile'] .tag {
+    border-color: var(--ink-faint);
+    color: var(--ink-dim);
+    font-family: var(--f-mono);
+  }
+  [data-theme='casefile'] .tag--warn {
+    border-color: var(--redpen);
+    color: var(--redpen);
+  }
+  [data-theme='casefile'] .empty,
+  [data-theme='casefile'] .hint {
+    font: 20px var(--f-marker);
+    color: var(--pencil);
+  }
+
+  /* ── Intake ── */
+  [data-theme='casefile'] .intake__dials {
+    background: #fffef8;
+    border: 1px solid #ddd3bb;
+    background-image: repeating-linear-gradient(180deg, transparent 0 23px, rgba(31, 61, 154, 0.15) 23px 24px);
+    box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.06);
+    transform: rotate(1deg);
+  }
+  [data-theme='casefile'] .readout dt {
+    color: var(--ink-faint);
+    font-family: var(--f-stencil);
+  }
+  [data-theme='casefile'] .readout dd {
+    color: var(--ballpoint);
+    font: 20px var(--f-marker);
+  }
+
+  /* tally marks */
+  .tally {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .tally svg {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 64px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+  .tally__marks path {
+    stroke: var(--ballpoint);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    fill: none;
+  }
+  .tally__circle {
+    fill: none;
+    stroke: var(--redpen);
+    stroke-width: 2.4;
+    transform: rotate(-4deg);
+    transform-origin: center;
+  }
+  .tally figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2px 8px;
+  }
+  .tally__value {
+    font: 700 40px/1 var(--f-marker);
+    color: var(--ballpoint);
+  }
+  .tally__of {
+    font: 20px var(--f-marker);
+    color: var(--pencil);
+  }
+  .tally__label {
+    width: 100%;
+    font: 12px var(--f-stencil);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .tally--danger .tally__value {
+    color: var(--redpen);
+  }
+  .tally__scrawl {
+    width: 100%;
+    font: 700 22px var(--f-marker);
+    color: var(--redpen);
+    transform: rotate(-4deg);
+  }
+
+  /* ── Phases: corkboard, index cards, pushpins and red string ── */
+  [data-theme='casefile'] .rail {
+    padding: 28px 22px 28px 74px;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.12) 0 1px, transparent 2px) 0 0 / 9px 9px,
+      radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.09) 0 1px, transparent 2px) 0 0 / 7px 7px,
+      linear-gradient(135deg, #b98552, #a8743f 50%, #b4804c);
+    border: 14px solid #5a3a22;
+    border-image: linear-gradient(135deg, #6b4529, #4a2f1b) 1;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35), 0 12px 24px rgba(0, 0, 0, 0.5);
+  }
+  [data-theme='casefile'] .rail::before {
+    left: 50px;
+    top: 50px;
+    bottom: 50px;
+    width: 3px;
+    background: #c1121f;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  }
+  [data-theme='casefile'] .rail__stop:nth-child(odd) .plate {
+    transform: rotate(-1deg);
+  }
+  [data-theme='casefile'] .rail__stop:nth-child(even) .plate {
+    transform: rotate(0.8deg);
+  }
+  /* index cards: white, blue rules, red header line */
+  [data-theme='casefile'] .rail .plate {
+    padding: 22px 24px 22px 26px;
+    background:
+      linear-gradient(180deg, transparent 62px, rgba(193, 18, 31, 0.5) 62px 64px, transparent 64px),
+      repeating-linear-gradient(180deg, transparent 0 27px, rgba(31, 61, 154, 0.16) 27px 28px) 0 64px / 100% 100% no-repeat,
+      #fffdf6;
+  }
+  [data-theme='casefile'] .rail .plate::before {
+    display: none;
+  }
+  [data-theme='casefile'] .rail__marker {
+    top: 18px;
+    left: -46px;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at 35% 30%, #ff7a7a, #c1121f 55%, #6d0a11);
+    border: 0;
+    color: #fff;
+    font: 700 15px var(--f-mono);
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.45);
+  }
+  [data-theme='casefile'] .rail__stop--done .rail__marker {
+    background: radial-gradient(circle at 35% 30%, #a6c8ff, #1f3d9a 55%, #0d1d4d);
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ── Skills ── */
+  [data-theme='casefile'] .meter {
+    height: 26px;
+    background: transparent;
+    border: 1px solid var(--ink-dim);
+  }
+  [data-theme='casefile'] .meter__fill {
+    background: repeating-linear-gradient(-45deg, rgba(31, 61, 154, 0.55) 0 2px, transparent 2px 7px);
+    box-shadow: none;
+  }
+  [data-theme='casefile'] .meter__fill.is-over {
+    background: repeating-linear-gradient(-45deg, rgba(179, 38, 30, 0.7) 0 2px, transparent 2px 6px);
+  }
+  [data-theme='casefile'] .meter__text {
+    color: var(--ink);
+    text-shadow: none;
+    line-height: 24px;
+  }
+  [data-theme='casefile'] .pyramid__row {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px dotted #b9ab8c;
+  }
+  [data-theme='casefile'] .pyramid__row.is-bad {
+    background: none;
+    text-decoration: underline wavy var(--redpen);
+  }
+  [data-theme='casefile'] .pyramid__row.is-bad .pyramid__rank::after {
+    content: ' ✗';
+    color: var(--redpen);
+    font-family: var(--f-marker);
+    font-size: 20px;
+  }
+  [data-theme='casefile'] .pyramid__rank {
+    color: var(--ink-dim);
+    font-family: var(--f-stencil);
+    font-weight: 400;
+  }
+  [data-theme='casefile'] .pyramid__rank .mono {
+    color: var(--ink);
+  }
+  [data-theme='casefile'] .chip {
+    padding: 0 4px;
+    background: none;
+    clip-path: none;
+    color: var(--ballpoint);
+    font: 600 22px var(--f-marker);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  [data-theme='casefile'] .chip + .chip::before {
+    content: '· ';
+    color: var(--ink-faint);
+  }
+  [data-theme='casefile'] .skill {
+    border-left: 0;
+    border-bottom: 1px dotted #cbbf9f;
+  }
+  [data-theme='casefile'] .skill__name {
+    color: var(--ink-faint);
+    font-family: var(--f-mono);
+    font-weight: 400;
+    font-size: 15px;
+  }
+  [data-theme='casefile'] .skill.is-set .skill__name {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  [data-theme='casefile'] .skill.is-bad .skill__name {
+    color: var(--redpen);
+    text-decoration: line-through;
+  }
+
+  /* ── Powers: clipped notes ── */
+  [data-theme='casefile'] .power,
+  [data-theme='casefile'] .bonus,
+  [data-theme='casefile'] .rote,
+  [data-theme='casefile'] .gear {
+    background: #fffef8;
+    border: 1px solid #ddd3bb;
+    border-left: 1px solid #ddd3bb;
+    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  [data-theme='casefile'] .power__name {
+    font-family: var(--f-stencil);
+    font-weight: 400;
+    font-size: 19px;
+  }
+  [data-theme='casefile'] .cost {
+    color: var(--redpen);
+  }
+  [data-theme='casefile'] .cost--refund {
+    color: #1b7a3a;
+  }
+
+  /* ── Stress: check boxes ticked in red pen ── */
+  [data-theme='casefile'] .track {
+    border-bottom: 1px dotted #b9ab8c;
+  }
+  [data-theme='casefile'] .track__head h3 {
+    font-family: var(--f-stencil);
+    font-weight: 400;
+    font-size: 19px;
+  }
+  [data-theme='casefile'] .box {
+    width: 38px;
+    height: 38px;
+    background: #fffef8;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    box-shadow: none;
+    color: var(--ink-faint);
+    font: 12px var(--f-mono);
+    place-items: start;
+    padding: 2px 4px;
+  }
+  [data-theme='casefile'] .box.is-on,
+  [data-theme='casefile'] .track--mental .box.is-on,
+  [data-theme='casefile'] .track--hunger .box.is-on {
+    background: #fffef8;
+    border-color: var(--ink);
+    box-shadow: none;
+    color: var(--ink-faint);
+    animation: none;
+  }
+  [data-theme='casefile'] .box.is-on::before,
+  [data-theme='casefile'] .box.is-on::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46px;
+    height: 3px;
+    margin: -1.5px 0 0 -23px;
+    background: var(--redpen);
+    border-radius: 2px;
+    transform: rotate(45deg) scaleX(1);
+    transform-origin: left center;
+    animation: pen-stroke 0.18s ease-out both;
+  }
+  [data-theme='casefile'] .box.is-on::after {
+    transform: rotate(-45deg);
+    animation-delay: 0.14s;
+  }
+  [data-theme='casefile'] .box.is-on::before,
+  [data-theme='casefile'] .box.is-on::after {
+    transform-origin: center;
+  }
+
+  /* ── Consequences: evidence log with a red FILED stamp ── */
+  [data-theme='casefile'] .conseq {
+    background: none;
+    border-left: 0;
+    border-bottom: 1px dotted #b9ab8c;
+  }
+  [data-theme='casefile'] .conseq__value {
+    color: var(--ink-faint);
+    font-family: var(--f-stencil);
+  }
+  [data-theme='casefile'] .conseq.is-logged .conseq__value {
+    color: var(--redpen);
+  }
+  [data-theme='casefile'] .conseq--extreme {
+    background: none;
+  }
+  [data-theme='casefile'] .stamp {
+    top: 4px;
+    right: 6px;
+    border: 3px double var(--redpen);
+    border-radius: 3px;
+    color: var(--redpen);
+    font-family: var(--f-stencil);
+    font-size: 16px;
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── Magic: pages from a graph-paper spell notebook ── */
+  [data-theme='casefile'] .magic {
+    background:
+      linear-gradient(rgba(31, 61, 154, 0.09) 1px, transparent 1px) 0 0 / 18px 18px,
+      linear-gradient(90deg, rgba(31, 61, 154, 0.09) 1px, transparent 1px) 0 0 / 18px 18px,
+      #f7f3e6;
+  }
+  [data-theme='casefile'] .magic .plate__title {
+    color: var(--ink);
+    text-shadow: none;
+  }
+  [data-theme='casefile'] .art-stat {
+    background: none;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    aspect-ratio: 1;
+    justify-content: center;
+    max-width: 170px;
+    justify-self: center;
+    width: 100%;
+    color: var(--ink);
+    font-family: var(--f-stencil);
+    font-weight: 400;
+  }
+  [data-theme='casefile'] .art-stat__n {
+    font: 700 44px var(--f-marker);
+    color: var(--ballpoint);
+  }
+  [data-theme='casefile'] .art-stat small {
+    color: var(--pencil);
+  }
+  [data-theme='casefile'] .casting,
+  [data-theme='casefile'] .casting thead th,
+  [data-theme='casefile'] .casting caption {
+    color: var(--ink);
+    font-family: var(--f-mono);
+  }
+  [data-theme='casefile'] .casting th,
+  [data-theme='casefile'] .casting td {
+    border-color: #b9ab8c;
+  }
+  [data-theme='casefile'] .casting tbody th {
+    color: var(--ballpoint);
+  }
+
+  [data-theme='casefile'] .portrait {
+    border: 10px solid #fff;
+    border-bottom-width: 36px;
+    filter: grayscale(1) contrast(1.1) sepia(0.15);
+    box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.4);
+    transform: rotate(2.5deg);
+  }
+
+  /* ── Dialogs ── */
+  [data-theme='casefile'] dialog::backdrop {
+    background: rgba(20, 12, 6, 0.6);
+    backdrop-filter: none;
+  }
+  [data-theme='casefile'] .palette,
+  [data-theme='casefile'] .drawer {
+    background: var(--manila);
+    color: var(--ink);
+    border-top: 0;
+    border-right: 0;
+    border-radius: 0;
+    box-shadow: 0 20px 60px #000;
+  }
+  [data-theme='casefile'] .palette__search {
+    color: var(--ink);
+    border-color: var(--manila-dark);
+  }
+  [data-theme='casefile'] .palette__cat {
+    color: var(--redpen);
+    font-family: var(--f-stencil);
+  }
+  [data-theme='casefile'] .palette__item {
+    background: #fffdf6;
+    border-bottom: 1px solid #e3d9c0;
+    font-family: var(--f-mono);
+  }
+  [data-theme='casefile'] .palette__item.is-cursor {
+    background: #fff59a;
+    color: var(--ink);
+  }
+  [data-theme='casefile'] .palette__item.is-cursor .cost {
+    color: var(--redpen);
+  }
+  [data-theme='casefile'] .palette__foot,
+  [data-theme='casefile'] .drawer__foot {
+    color: var(--ink-dim);
+    border-color: var(--manila-dark);
+  }
+  [data-theme='casefile'] .drawer__head h2 {
+    color: var(--ink);
+    font-family: var(--f-stencil);
+    font-size: 32px;
+  }
+  /* each character is a folder in the cabinet */
+  [data-theme='casefile'] .file {
+    position: relative;
+    margin-top: 12px;
+    background: #d5b979;
+    border-left: 0;
+    border-radius: 0 6px 6px 6px;
+    box-shadow: 0 2px 0 var(--manila-dark);
+  }
+  [data-theme='casefile'] .file::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 120px;
+    height: 12px;
+    background: inherit;
+    border-radius: 6px 6px 0 0;
+  }
+  [data-theme='casefile'] .file.is-active {
+    background: #f0dca6;
+  }
+  [data-theme='casefile'] .file__name {
+    font-family: var(--f-stencil);
+    font-size: 18px;
+    color: var(--ink);
+  }
+  [data-theme='casefile'] .file__meta {
+    color: var(--ink-dim);
+  }
+
+  [data-theme='casefile'] .foot {
+    color: rgba(240, 225, 195, 0.45);
+  }
+  [data-theme='casefile'] .save-fail {
+    background: var(--redpen);
+  }
+
+  @media (max-width: 720px) {
+    [data-theme='casefile'] .tabs {
+      background: var(--manila);
+      border-top: 0;
+      box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.4);
+    }
+    [data-theme='casefile'] .tabs__tab,
+    [data-theme='casefile'] .tabs__tab.is-on {
+      border-radius: 0;
+      transform: none;
+    }
+    [data-theme='casefile'] .tabs__tab.is-on {
+      background: var(--paper-hi);
+    }
+    [data-theme='casefile'] .tabs__glyph {
+      display: block;
+    }
+    [data-theme='casefile'] .plate {
+      padding: 22px 16px 20px 40px;
+      background:
+        linear-gradient(90deg, transparent 26px, rgba(179, 38, 30, 0.35) 26px 27.5px, transparent 27.5px),
+        radial-gradient(ellipse at 30% 10%, var(--paper-hi), var(--paper) 60%, #ebdfbf);
+    }
+    [data-theme='casefile'] .hazard {
+      margin-inline: 0;
+    }
+    [data-theme='casefile'] .rail {
+      padding: 18px 10px 18px 44px;
+      border-width: 8px;
+    }
+    [data-theme='casefile'] .rail::before {
+      left: 20px;
+    }
+    [data-theme='casefile'] .rail__marker {
+      left: -36px;
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+    }
+    .desk__matchbook,
+    .desk__doodle {
+      display: none;
+    }
+  }
+}
+
+@keyframes pen-stroke {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media screen {
+  [data-theme='casefile'] .meter__text {
+    text-shadow: 0 0 3px var(--paper), 0 0 6px var(--paper), 0 0 10px var(--paper);
+    font-weight: 700;
+  }
+}
+
+@media screen {
+  [data-theme='casefile'] .art-stat {
+    padding: 14px 22px;
+    text-align: center;
+  }
+}
+/* The matchbook only fits beside the content on very wide screens. */
+@media screen and (max-width: 1640px) {
+  .desk__matchbook {
+    display: none;
+  }
+}

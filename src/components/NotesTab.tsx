@@ -2,17 +2,19 @@ import { uid } from '../model/character'
 import type { Character, GearItem } from '../model/types'
 import type { Updater } from '../store/useRoster'
 import { Area, Btn, Field, Plate, Stepper } from './ui'
+import { useCopy } from '../themes/ThemeContext'
 
 const KIND_LABEL: Record<GearItem['kind'], string> = { weapon: 'Weapon', armor: 'Armor', item: 'Item' }
 
 export function NotesTab({ c, update }: { c: Character; update: Updater }) {
+  const copy = useCopy()
   const add = (kind: GearItem['kind']) => update((d) => void d.gear.push({ id: uid(), name: '', kind, rating: kind === 'item' ? 0 : 1, notes: '' }))
 
   return (
     <div className="stack">
       <Plate
-        title="Gear"
-        kicker="Salvage manifest"
+        title={copy.gearTitle}
+        kicker={copy.gearKicker}
         actions={
           <>
             <Btn onClick={() => add('weapon')}>+ Weapon</Btn>
@@ -21,7 +23,7 @@ export function NotesTab({ c, update }: { c: Character; update: Updater }) {
           </>
         }
       >
-        {c.gear.length === 0 && <p className="empty">Nothing salvaged yet.</p>}
+        {c.gear.length === 0 && <p className="empty">{copy.gearEmpty}</p>}
         <div className="gear-list">
           {c.gear.map((g, i) => (
             <article key={g.id} className={`gear gear--${g.kind}`}>
@@ -45,7 +47,7 @@ export function NotesTab({ c, update }: { c: Character; update: Updater }) {
         </div>
       </Plate>
 
-      <Plate title="Field Notes" kicker="Contacts, debts, secrets">
+      <Plate title={copy.notesTitle} kicker={copy.notesKicker}>
         <Field
           label="Portrait URL"
           value={c.portraitUrl}

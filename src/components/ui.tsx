@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from 'react'
 import { ladderName, signed } from '../model/reference'
 import type { Warning } from '../model/rules'
+import { useCopy } from '../themes/ThemeContext'
 
 export function Plate({
   title,
@@ -18,6 +19,7 @@ export function Plate({
   children: ReactNode
 }) {
   const hot = warnings.length > 0
+  const { warningLead } = useCopy()
   return (
     <section className={`plate ${hot ? 'plate--hot' : ''} ${className}`}>
       <span className="rivet rivet--tl" />
@@ -34,6 +36,7 @@ export function Plate({
       {hot && (
         <div className="hazard" role="alert">
           <div className="hazard__tape" aria-hidden />
+          {warningLead && <div className="hazard__lead">{warningLead}</div>}
           <ul className="hazard__list">
             {warnings.map((w, i) => (
               <li key={i}>{w.message}</li>

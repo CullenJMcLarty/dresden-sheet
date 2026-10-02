@@ -2,10 +2,12 @@ import type { Analysis } from '../../model/rules'
 import type { Character } from '../../model/types'
 import type { Updater } from '../../store/useRoster'
 import { Plate, Stepper } from '../ui'
+import { useCopy } from '../../themes/ThemeContext'
 
 export function ConsequencesPlate({ c, a, update }: { c: Character; a: Analysis; update: Updater }) {
+  const copy = useCopy()
   return (
-    <Plate title="Consequences" kicker="Injury log" className="consequences">
+    <Plate title="Consequences" kicker={copy.consequencesKicker} className="consequences">
       <div className="conseq-list">
         {a.consequences.map((slot) => {
           const text = c.consequences[slot.id] ?? ''
@@ -25,7 +27,7 @@ export function ConsequencesPlate({ c, a, update }: { c: Character; a: Analysis;
               </div>
               {text.trim() && (
                 <span className="stamp" aria-hidden>
-                  Logged
+                  {copy.stamp}
                 </span>
               )}
             </div>

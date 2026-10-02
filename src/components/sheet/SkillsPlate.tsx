@@ -4,9 +4,11 @@ import type { Analysis } from '../../model/rules'
 import type { Character } from '../../model/types'
 import type { Updater } from '../../store/useRoster'
 import { Btn, Plate, Stepper } from '../ui'
+import { useCopy } from '../../themes/ThemeContext'
 
 export function SkillsPlate({ c, a, update }: { c: Character; a: Analysis; update: Updater }) {
   const s = a.skills
+  const copy = useCopy()
   const top = Math.max(s.cap, ...Object.values(c.skills), ...c.customSkills.map((k) => k.rating), 1)
   const rows = Array.from({ length: top }, (_, i) => top - i)
   const named = [
@@ -16,7 +18,7 @@ export function SkillsPlate({ c, a, update }: { c: Character; a: Analysis; updat
   const pct = Math.min(100, (s.spent / Math.max(1, s.total)) * 100)
 
   return (
-    <Plate title="Skills" kicker="Column rule in force" className="skills" warnings={s.warnings}>
+    <Plate title="Skills" kicker={copy.skillsKicker} className="skills" warnings={s.warnings}>
       <div className="meter" aria-label={`${s.spent} of ${s.total} skill points`}>
         <div className={`meter__fill ${s.spent > s.total ? 'is-over' : ''}`} style={{ width: `${pct}%` }} />
         <span className="meter__text">

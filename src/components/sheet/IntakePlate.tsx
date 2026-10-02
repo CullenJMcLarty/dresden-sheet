@@ -2,12 +2,14 @@ import { POWER_LEVELS, TEMPLATES } from '../../model/reference'
 import type { Analysis } from '../../model/rules'
 import type { Character, PowerLevelId } from '../../model/types'
 import type { Updater } from '../../store/useRoster'
-import { Gauge } from '../Gauge'
+import { RefreshMeter } from '../../themes/RefreshMeter'
+import { useCopy } from '../../themes/ThemeContext'
 import { Area, Field, Plate, Stepper, formatLadder } from '../ui'
 
 export function IntakePlate({ c, a, update }: { c: Character; a: Analysis; update: Updater }) {
+  const copy = useCopy()
   return (
-    <Plate title="Intake" kicker="Reconstruction Authority · Registered Practitioner" className="intake" warnings={a.refresh.warnings}>
+    <Plate title={copy.intakeTitle} kicker={copy.intakeKicker} className="intake" warnings={a.refresh.warnings}>
       <div className="intake__grid">
         <div className="stack">
           <Field label="Name" value={c.name} onChange={(v) => update((d) => void (d.name = v))} />
@@ -62,7 +64,7 @@ export function IntakePlate({ c, a, update }: { c: Character; a: Analysis; updat
         </div>
 
         <div className="intake__dials">
-          <Gauge value={a.refresh.adjusted} max={a.refresh.base} label="Adjusted refresh" />
+          <RefreshMeter a={a} />
           <dl className="readout">
             <div>
               <dt>Base</dt>

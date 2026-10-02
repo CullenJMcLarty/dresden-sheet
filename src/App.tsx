@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Backdrop } from './components/Backdrop'
 import { MagicTab } from './components/MagicTab'
 import { NotesTab } from './components/NotesTab'
 import { PhasesTab } from './components/PhasesTab'
@@ -13,6 +12,9 @@ import { StressPlate } from './components/sheet/StressPlate'
 import { analyze } from './model/rules'
 import { exportCharacter } from './store/storage'
 import { useRoster } from './store/useRoster'
+import { ThemeBackdrop } from './themes/Backdrops'
+import { useCopy } from './themes/ThemeContext'
+import { ThemePicker } from './themes/ThemePicker'
 
 type Tab = 'phases' | 'sheet' | 'magic' | 'notes'
 const TAB_KEY = 'steel-city-casefile:tab'
@@ -32,6 +34,7 @@ export default function App() {
   const a = useMemo(() => analyze(c), [c])
   const [tab, setTab] = useState<Tab>(loadTab)
   const [drawer, setDrawer] = useState(false)
+  const copy = useCopy()
 
   const tabs: { id: Tab; label: string; glyph: string }[] = [
     { id: 'phases', label: 'Phases', glyph: '◆' },
@@ -55,7 +58,7 @@ export default function App() {
 
   return (
     <>
-      <Backdrop />
+      <ThemeBackdrop />
       <header className="topbar">
         <button type="button" className="topbar__files" onClick={() => setDrawer(true)} aria-label="Open casefiles">
           <span className="topbar__burger" aria-hidden>
@@ -66,8 +69,10 @@ export default function App() {
           <span className="topbar__files-label">Files</span>
         </button>
         <div className="topbar__id">
-          <div className="topbar__eyebrow">Steel City Casefile · No. {c.id.slice(0, 6).toUpperCase()}</div>
-          <h1 className="topbar__name">{c.name || 'Unnamed Practitioner'}</h1>
+          <div className="topbar__eyebrow">
+            {copy.eyebrow} · No. {c.id.slice(0, 6).toUpperCase()}
+          </div>
+          <h1 className="topbar__name">{c.name || copy.unnamed}</h1>
         </div>
         <dl className="topbar__stats">
           <div className={a.refresh.adjusted < 1 ? 'is-bad' : ''}>
@@ -87,6 +92,7 @@ export default function App() {
             <dd>{a.warnings.length}</dd>
           </div>
         </dl>
+        <ThemePicker />
         <button type="button" className="btn btn--ghost topbar__export" onClick={() => exportCharacter(c)}>
           Export
         </button>

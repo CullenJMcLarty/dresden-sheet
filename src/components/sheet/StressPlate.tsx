@@ -2,12 +2,14 @@ import type { Analysis } from '../../model/rules'
 import type { Character } from '../../model/types'
 import type { Updater } from '../../store/useRoster'
 import { Btn, Plate, Stepper, Toggle } from '../ui'
+import { useCopy } from '../../themes/ThemeContext'
 
 export function StressPlate({ c, a, update }: { c: Character; a: Analysis; update: Updater }) {
+  const copy = useCopy()
   return (
     <Plate
       title="Stress"
-      kicker="Pressure on the line"
+      kicker={copy.stressKicker}
       className="stress"
       actions={
         <Btn
