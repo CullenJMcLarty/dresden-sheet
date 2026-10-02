@@ -151,9 +151,9 @@ select {
   height: 70vmax;
   top: -18vmax;
   right: -22vmax;
-  /* Stepped at ~10 updates/s: at 1.5°/s it looks identical to a smooth spin,
-     but a smooth one forces a full-screen composite every frame. */
-  animation: spin 240s steps(2400) infinite;
+  /* Stepped at 30 updates/s: visually smooth at 1.5°/s, but ~5x cheaper than
+     a full-screen composite on every frame of a high-refresh display. */
+  animation: spin 240s steps(7200) infinite;
 }
 .backdrop__ward--b {
   width: 46vmax;
@@ -162,7 +162,7 @@ select {
   left: -16vmax;
   stroke: var(--molten);
   opacity: 0.07;
-  animation: spin 180s steps(1800) infinite reverse;
+  animation: spin 180s steps(5400) infinite reverse;
 }
 @keyframes spin {
   to {
@@ -180,8 +180,7 @@ select {
   align-items: center;
   gap: 16px;
   padding: 10px var(--gutter);
-  background: linear-gradient(180deg, rgba(13, 12, 11, 0.97), rgba(13, 12, 11, 0.88));
-  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(13, 12, 11, 0.98), rgba(13, 12, 11, 0.93));
   border-bottom: 3px solid var(--gold);
   box-shadow: 0 6px 0 -3px var(--soot), 0 9px 0 -3px var(--rust);
 }
@@ -335,12 +334,12 @@ select {
   max-width: 1320px;
   margin: 0 auto;
   padding: 18px var(--gutter) 60px;
-  animation: slam-in 0.45s var(--ease-slam);
+  animation: slam-in 0.2s var(--ease-slam);
 }
 @keyframes slam-in {
   from {
-    opacity: 0;
-    transform: translateY(18px) skewY(1deg);
+    opacity: 0.4;
+    transform: translateY(10px) skewY(0.6deg);
   }
 }
 
@@ -853,7 +852,7 @@ select:focus {
 .gauge__needle {
   transform-box: view-box;
   transform-origin: 50px 50px;
-  transition: transform 0.7s var(--ease-slam);
+  transition: transform 0.35s var(--ease-slam);
   fill: var(--gold);
   filter: drop-shadow(0 0 3px rgba(255, 182, 18, 0.7));
 }
@@ -959,7 +958,7 @@ select:focus {
   inset: 0 auto 0 0;
   background: linear-gradient(90deg, var(--rust), var(--molten), var(--molten-hot));
   box-shadow: 0 0 16px var(--molten);
-  transition: width 0.4s var(--ease-slam);
+  transition: width 0.25s var(--ease-slam);
 }
 .meter__fill.is-over {
   background: repeating-linear-gradient(-45deg, var(--danger) 0 10px, #600 10px 20px);
@@ -1134,7 +1133,7 @@ dialog::backdrop {
   box-shadow: 0 30px 80px #000, 0 0 0 1px var(--seam);
 }
 .palette[open] {
-  animation: slam-in 0.3s var(--ease-slam);
+  animation: slam-in 0.16s var(--ease-slam);
 }
 .palette__inner {
   display: flex;
@@ -1493,7 +1492,7 @@ dialog::backdrop {
   box-shadow: 20px 0 60px #000;
 }
 .drawer[open] {
-  animation: drawer-in 0.35s var(--ease-slam);
+  animation: drawer-in 0.2s var(--ease-slam);
 }
 @keyframes drawer-in {
   from {
