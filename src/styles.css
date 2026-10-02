@@ -151,7 +151,9 @@ select {
   height: 70vmax;
   top: -18vmax;
   right: -22vmax;
-  animation: spin 240s linear infinite;
+  /* Stepped at ~10 updates/s: at 1.5°/s it looks identical to a smooth spin,
+     but a smooth one forces a full-screen composite every frame. */
+  animation: spin 240s steps(2400) infinite;
 }
 .backdrop__ward--b {
   width: 46vmax;
@@ -160,7 +162,7 @@ select {
   left: -16vmax;
   stroke: var(--molten);
   opacity: 0.07;
-  animation: spin 180s linear infinite reverse;
+  animation: spin 180s steps(1800) infinite reverse;
 }
 @keyframes spin {
   to {
@@ -263,7 +265,7 @@ select {
 .topbar__stats .is-bad {
   border-color: var(--danger);
   color: var(--danger);
-  animation: throb 1.2s ease-in-out infinite;
+  animation: throb 1.2s steps(2) infinite;
 }
 .topbar__stats .is-warn {
   border-color: var(--molten);
@@ -884,7 +886,7 @@ select:focus {
 }
 .gauge--danger .gauge__needle {
   fill: var(--danger);
-  animation: shake 0.15s linear infinite;
+  animation: shake 0.3s steps(2) infinite;
 }
 .gauge--danger .gauge__value {
   color: var(--danger);

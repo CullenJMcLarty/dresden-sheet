@@ -87,7 +87,8 @@ export function RosterDrawer({
         )}
 
         <ul className="files">
-          {characters.map((c) => {
+          {/* Skip analyzing every character on each keystroke while closed. */}
+          {open && characters.map((c) => {
             const a = analyze(c)
             return (
               <li key={c.id} className={`file ${c.id === activeId ? 'is-active' : ''}`}>
