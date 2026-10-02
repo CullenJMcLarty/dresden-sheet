@@ -103,8 +103,8 @@
     width: 72px;
     fill: none;
     stroke: var(--accent);
-    stroke-width: 1.5;
-    opacity: 0.22;
+    stroke-width: 1.8;
+    opacity: 0.3;
   }
   .fey__vine--l {
     left: 0;
@@ -115,6 +115,15 @@
   .fey__leaf {
     fill: var(--accent);
     stroke: none;
+  }
+  .fey__leaf--1 {
+    fill: var(--accent-2);
+  }
+  .fey__vein {
+    fill: none;
+    stroke: var(--accent-deep);
+    stroke-width: 1.2;
+    stroke-linecap: round;
   }
   .fey__motes {
     inset: 0;
@@ -1173,5 +1182,29 @@
     fill: none;
     stroke: var(--accent);
     stroke-width: 1.5;
+  }
+}
+
+@media screen {
+  /* autumn vines turn: a mix of amber, crimson and gold leaves */
+  [data-variant='fall'] .fey__leaf--0 {
+    fill: #e8742c;
+  }
+  [data-variant='fall'] .fey__leaf--1 {
+    fill: #c43d22;
+  }
+  [data-variant='fall'] .fey__leaf--2 {
+    fill: #e8b33c;
+  }
+}
+
+@media screen {
+  /* spring vines are fresh green, whatever the blossom accent */
+  [data-variant='spring'] .fey__leaf--0,
+  [data-variant='spring'] .fey__leaf--2 {
+    fill: #7fca86;
+  }
+  [data-variant='spring'] .fey__leaf--1 {
+    fill: #b8f0a0;
   }
 }

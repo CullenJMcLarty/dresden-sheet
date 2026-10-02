@@ -1,5 +1,6 @@
 import { Backdrop as SteelBackdrop } from '../components/Backdrop'
 import { useTheme } from './ThemeContext'
+import { VeilBackdrop } from './VeilBackdrop'
 
 export function ThemeBackdrop() {
   const { theme } = useTheme()
@@ -103,26 +104,6 @@ function SanctumBackdrop() {
   )
 }
 
-/** Fog, a moonlit window, and the faint oval of a portrait that watches back. */
-function VeilBackdrop() {
-  return (
-    <div className="backdrop backdrop--veil" aria-hidden>
-      <svg className="veil__window" viewBox="0 0 200 300">
-        <circle cx="132" cy="82" r="26" className="veil__moon" />
-        <path d="M10 300 V110 C10 40 60 10 100 10 C140 10 190 40 190 110 V300" />
-        <path d="M100 10 V300 M10 150 H190 M10 225 H190" />
-      </svg>
-      <svg className="veil__portrait" viewBox="0 0 120 160">
-        <ellipse cx="60" cy="80" rx="54" ry="74" />
-        <ellipse cx="60" cy="80" rx="46" ry="66" />
-        <path d="M60 46 c-14 0 -20 12 -20 24 c0 14 8 22 20 22 c12 0 20 -8 20 -22 c0 -12 -6 -24 -20 -24 Z M30 140 c4 -26 18 -36 30 -36 c12 0 26 10 30 36" className="veil__sitter" />
-      </svg>
-      <div className="veil__fog veil__fog--a" />
-      <div className="veil__fog veil__fog--b" />
-    </div>
-  )
-}
-
 // ── Fey vines: leaves are placed on the curve itself so every one attaches ──
 
 type Pt = [number, number]
@@ -156,17 +137,24 @@ function Vine({ side, segments }: { side: 'l' | 'r'; segments: Segment[] }) {
   const leaves = segments.flatMap((seg, si) =>
     [0.22, 0.52, 0.82].map((t, li) => {
       const { p, angle } = bezier(seg, t)
-      const flip = (si * 3 + li) % 2 === 0 ? 1 : -1
-      return { p, rot: angle + flip * 55, key: `${si}-${li}` }
+      const n = si * 3 + li
+      const flip = n % 2 === 0 ? 1 : -1
+      // vary size a little so the vine doesn't look stamped
+      return { p, rot: angle + flip * 50, scale: 0.85 + ((n * 7) % 4) * 0.1, tone: n % 3, key: `${si}-${li}` }
     }),
   )
   return (
     <svg className={`fey__vine fey__vine--${side}`} viewBox="0 0 120 900" preserveAspectRatio={side === 'l' ? 'xMinYMin slice' : 'xMaxYMin slice'}>
       <path d={d} />
-      {leaves.map(({ p, rot, key }) => (
-        <g key={key} transform={`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${rot.toFixed(1)})`}>
-          <path className="fey__petiole" d="M0 0 L6 0" />
-          <path className="fey__leaf" d="M5 0 Q 13 -8 25 0 Q 13 8 5 0 Z" />
+      {leaves.map(({ p, rot, scale, tone, key }) => (
+        <g key={key} transform={`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${scale})`}>
+          <path className="fey__petiole" d="M0 0 L7 0" />
+          {/* three-lobed ivy leaf pointing along +x, with midrib and side veins */}
+          <path
+            className={`fey__leaf fey__leaf--${tone}`}
+            d="M6 0 C 5 -6 9 -10 15 -10 Q 21 -13 28 -19 Q 29 -12 34 -9 Q 40 -6 47 0 Q 40 6 34 9 Q 29 12 28 19 Q 21 13 15 10 C 9 10 5 6 6 0 Z"
+          />
+          <path className="fey__vein" d="M7 0 L43 0 M16 0 L27 -15 M16 0 L27 15" />
         </g>
       ))}
     </svg>
