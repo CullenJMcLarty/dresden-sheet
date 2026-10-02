@@ -31,7 +31,9 @@ export function StressPlate({ c, a, update }: { c: Character; a: Analysis; updat
             <div className="track__head">
               <h3>{t.name}</h3>
               <span className="track__math mono">
-                2 base {t.fromSkill > 0 && `+${t.fromSkill} ${t.skill}`} {track.bonus !== 0 && `${track.bonus > 0 ? '+' : ''}${track.bonus} bonus`}
+                2 base {t.fromSkill > 0 && `+${t.fromSkill} ${t.skill}`}{' '}
+                {t.fromPowers.map((p) => `+${p.boxes} ${p.name}`).join(' ')}{' '}
+                {track.bonus !== 0 && `${track.bonus > 0 ? '+' : ''}${track.bonus} bonus`}
               </span>
             </div>
             <div className="track__boxes">

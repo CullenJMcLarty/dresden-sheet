@@ -1,3 +1,4 @@
+import { CATALOG } from './catalog'
 import { PHASE_DEFS, SKILLS } from './reference'
 import { SCHEMA_VERSION, type Character, type StressTrack } from './types'
 
@@ -107,7 +108,13 @@ export function normalizeCharacter(raw: unknown): Character {
     cost: 0,
     notes: '',
     catalogId: '',
+    physicalBoxes: 0,
   }))
+  // Powers saved before stress boxes were tracked get their catalog default.
+  const rawPowers = Array.isArray(raw.powers) ? raw.powers.filter(isObj) : []
+  c.powers.forEach((p, i) => {
+    if (typeof rawPowers[i]?.physicalBoxes !== 'number') p.physicalBoxes = CATALOG.find((e) => e.id === p.catalogId)?.physicalBoxes ?? 0
+  })
   c.magic.bonuses = items(c.magic.bonuses, () => ({
     id: '',
     name: '',

@@ -10,6 +10,8 @@ export interface CatalogEntry {
   category: PowerCategory
   cost: number
   variable?: boolean
+  /** Physical stress boxes granted (YS185-186). */
+  physicalBoxes?: number
 }
 
 const e = (
@@ -108,6 +110,10 @@ export const CATALOG: CatalogEntry[] = [
   ]),
   ...e('Items & Other', [['item-of-power', 'Item of Power', -2, true]]),
 ]
+
+// Toughness powers add physical stress capacity: +2 / +4 / +6 boxes (YS185-186).
+const TOUGHNESS_BOXES: Record<string, number> = { 'inhuman-toughness': 2, 'supernatural-toughness': 4, 'mythic-toughness': 6 }
+for (const entry of CATALOG) if (TOUGHNESS_BOXES[entry.id]) entry.physicalBoxes = TOUGHNESS_BOXES[entry.id]
 
 /** Catalog ids that make the Magic tab appear. */
 export const SPELLCASTING_IDS = new Set([

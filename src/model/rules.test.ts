@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { CATALOG } from './catalog'
 import { ImportError, newCharacter, normalizeCharacter } from './character'
 import { analyze, consequenceSlots, isCaster, magic, refresh, skills, stressBonusFromSkill, stressTracks } from './rules'
 
@@ -9,6 +10,7 @@ const power = (cost: number, catalogId = '') => ({
   cost,
   notes: '',
   catalogId,
+  physicalBoxes: 0,
 })
 
 describe('refresh', () => {
@@ -74,12 +76,14 @@ describe('skills', () => {
 
 describe('stress', () => {
   it('maps skill ratings to bonus boxes', () => {
-    expect(stressBonusFromSkill(0)).toEqual({ boxes: 0, extraMild: false })
-    expect(stressBonusFromSkill(1)).toEqual({ boxes: 1, extraMild: false })
-    expect(stressBonusFromSkill(2)).toEqual({ boxes: 1, extraMild: false })
-    expect(stressBonusFromSkill(3)).toEqual({ boxes: 2, extraMild: false })
-    expect(stressBonusFromSkill(4)).toEqual({ boxes: 2, extraMild: false })
-    expect(stressBonusFromSkill(5)).toEqual({ boxes: 2, extraMild: true })
+    expect(stressBonusFromSkill(0)).toEqual({ boxes: 0, extraMild: 0 })
+    expect(stressBonusFromSkill(1)).toEqual({ boxes: 1, extraMild: 0 })
+    expect(stressBonusFromSkill(2)).toEqual({ boxes: 1, extraMild: 0 })
+    expect(stressBonusFromSkill(3)).toEqual({ boxes: 2, extraMild: 0 })
+    expect(stressBonusFromSkill(4)).toEqual({ boxes: 2, extraMild: 0 })
+    expect(stressBonusFromSkill(5)).toEqual({ boxes: 2, extraMild: 1 })
+    expect(stressBonusFromSkill(6)).toEqual({ boxes: 2, extraMild: 1 })
+    expect(stressBonusFromSkill(7)).toEqual({ boxes: 2, extraMild: 2 })
   })
 
   it('builds tracks from linked skills plus manual bonus', () => {
@@ -102,6 +106,14 @@ describe('stress', () => {
     expect(stressTracks(c).find((t) => t.id === 'hunger')?.boxes).toBe(4)
   })
 
+  it('adds one extra mild slot per two full levels above Good', () => {
+    const c = newCharacter()
+    c.powerLevel = 'custom'
+    c.customLevel = { refresh: 10, skillPoints: 50, skillCap: 8 }
+    c.skills.Endurance = 7
+    expect(consequenceSlots(c).filter((s) => s.id.startsWith('mild-physical')).map((s) => s.id)).toEqual(['mild-physical', 'mild-physical-2'])
+  })
+
   it('adds extra mild consequence slots from Superb skills and manual extras', () => {
     const c = newCharacter()
     c.skills.Conviction = 5
@@ -114,6 +126,31 @@ describe('stress', () => {
       'severe',
       'extreme',
     ])
+  })
+})
+
+describe('toughness powers', () => {
+  it('add physical stress boxes on top of Endurance and the manual bonus', () => {
+    const c = newCharacter()
+    c.skills.Endurance = 3 // +2
+    c.stress.physical.bonus = 1
+    c.powers = [{ ...power(-2, 'inhuman-toughness'), name: 'Inhuman Toughness', physicalBoxes: 2 }]
+    const physical = stressTracks(c).find((t) => t.id === 'physical')!
+    expect(physical.boxes).toBe(2 + 2 + 1 + 2)
+    expect(physical.fromPowers).toEqual([{ name: 'Inhuman Toughness', boxes: 2 }])
+    expect(stressTracks(c).find((t) => t.id === 'mental')!.boxes).toBe(2)
+  })
+
+  it('takes default boxes from the catalog (YS185-186)', () => {
+    const boxes = (id: string) => CATALOG.find((e) => e.id === id)?.physicalBoxes
+    expect([boxes('inhuman-toughness'), boxes('supernatural-toughness'), boxes('mythic-toughness')]).toEqual([2, 4, 6])
+  })
+
+  it('gives older saved toughness powers their catalog boxes when loaded', () => {
+    const c = normalizeCharacter({ powers: [{ id: 'p', name: 'Supernatural Toughness', category: 'Toughness', cost: -4, catalogId: 'supernatural-toughness' }] })
+    expect(c.powers[0].physicalBoxes).toBe(4)
+    const edited = normalizeCharacter({ powers: [{ id: 'p', catalogId: 'supernatural-toughness', physicalBoxes: 1 }] })
+    expect(edited.powers[0].physicalBoxes).toBe(1)
   })
 })
 

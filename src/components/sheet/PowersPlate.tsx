@@ -25,7 +25,7 @@ export function PowersPlate({ c, a, update }: { c: Character; a: Analysis; updat
           </Btn>
           <Btn
             onClick={() =>
-              update((d) => void d.powers.push({ id: uid(), name: '', category: 'Mortal Stunt', cost: -1, notes: '', catalogId: '' }))
+              update((d) => void d.powers.push({ id: uid(), name: '', category: 'Mortal Stunt', cost: -1, notes: '', catalogId: '', physicalBoxes: 0 }))
             }
           >
             + Custom
@@ -74,6 +74,16 @@ export function PowersPlate({ c, a, update }: { c: Character; a: Analysis; updat
                 {cat?.variable && <span className="tag tag--warn">cost varies</span>}
                 {!cat && <span className="tag">custom</span>}
               </div>
+              {(p.category === 'Toughness' || p.physicalBoxes !== 0) && (
+                <Stepper
+                  label="Physical stress boxes"
+                  min={0}
+                  max={12}
+                  format={(n) => `+${n}`}
+                  value={p.physicalBoxes}
+                  onChange={(v) => update((d) => void (d.powers[i].physicalBoxes = v))}
+                />
+              )}
               <textarea
                 aria-label="Notes"
                 rows={2}
@@ -96,7 +106,15 @@ export function PowersPlate({ c, a, update }: { c: Character; a: Analysis; updat
           onPick={(entry) => {
             update(
               (d) =>
-                void d.powers.push({ id: uid(), name: entry.name, category: entry.category, cost: entry.cost, notes: '', catalogId: entry.id }),
+                void d.powers.push({
+                  id: uid(),
+                  name: entry.name,
+                  category: entry.category,
+                  cost: entry.cost,
+                  notes: '',
+                  catalogId: entry.id,
+                  physicalBoxes: entry.physicalBoxes ?? 0,
+                }),
             )
             setPicking(false)
           }}

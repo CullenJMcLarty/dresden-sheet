@@ -79,11 +79,15 @@ export function skills(c: Character) {
 // ── Stress & consequences ──────────────────────────────────────────────────
 
 /** Bonus stress boxes from the linked skill's rating. */
-export function stressBonusFromSkill(rating: number): { boxes: number; extraMild: boolean } {
-  if (rating >= 5) return { boxes: 2, extraMild: true }
-  if (rating >= 3) return { boxes: 2, extraMild: false }
-  if (rating >= 1) return { boxes: 1, extraMild: false }
-  return { boxes: 0, extraMild: false }
+/**
+ * Bonus stress boxes from the linked skill's rating (YS130): Average/Fair +1,
+ * Good and up +2, plus one extra mild consequence for each two full levels above Good.
+ */
+export function stressBonusFromSkill(rating: number): { boxes: number; extraMild: number } {
+  const extraMild = rating >= 5 ? Math.floor((rating - 3) / 2) : 0
+  if (rating >= 3) return { boxes: 2, extraMild }
+  if (rating >= 1) return { boxes: 1, extraMild: 0 }
+  return { boxes: 0, extraMild: 0 }
 }
 
 export interface TrackInfo {
@@ -92,14 +96,21 @@ export interface TrackInfo {
   skill: string
   boxes: number
   fromSkill: number
-  extraMild: boolean
+  /** Powers adding boxes to this track, e.g. Inhuman Toughness. */
+  fromPowers: { name: string; boxes: number }[]
+  extraMild: number
 }
 
 export function stressTracks(c: Character): TrackInfo[] {
   return STRESS_TRACKS.filter((t) => t.id !== 'hunger' || c.hungerEnabled).map((t) => {
     const fromSkill = stressBonusFromSkill(skillRating(c, t.skill))
-    const boxes = Math.max(0, 2 + fromSkill.boxes + c.stress[t.id].bonus)
-    return { id: t.id, name: t.name, skill: t.skill, boxes, fromSkill: fromSkill.boxes, extraMild: fromSkill.extraMild }
+    const fromPowers =
+      t.id === 'physical'
+        ? c.powers.filter((p) => p.physicalBoxes).map((p) => ({ name: p.name || 'Unnamed power', boxes: p.physicalBoxes }))
+        : []
+    const powerBoxes = fromPowers.reduce((sum, p) => sum + p.boxes, 0)
+    const boxes = Math.max(0, 2 + fromSkill.boxes + powerBoxes + c.stress[t.id].bonus)
+    return { id: t.id, name: t.name, skill: t.skill, boxes, fromSkill: fromSkill.boxes, fromPowers, extraMild: fromSkill.extraMild }
   })
 }
 
@@ -116,8 +127,9 @@ export function consequenceSlots(c: Character): ConsequenceSlot[] {
     { id: 'mild', severity: 'mild', value: 2, label: 'Mild', source: 'base' },
   ]
   for (const t of stressTracks(c)) {
-    if (t.extraMild) {
-      slots.push({ id: `mild-${t.id}`, severity: 'mild', value: 2, label: `Mild (${t.name} only)`, source: 'skill' })
+    for (let i = 1; i <= t.extraMild; i++) {
+      // First slot keeps its original id so saved consequence text still matches.
+      slots.push({ id: i === 1 ? `mild-${t.id}` : `mild-${t.id}-${i}`, severity: 'mild', value: 2, label: `Mild (${t.name} only)`, source: 'skill' })
     }
   }
   for (let i = 1; i <= Math.max(0, c.extraMildManual); i++) {

@@ -48,6 +48,8 @@ export interface PowerEntry {
   cost: number
   notes: string
   catalogId?: string
+  /** Extra physical stress boxes this power grants (e.g. the Toughness powers). */
+  physicalBoxes: number
 }
 
 export type StressTrackId = 'physical' | 'mental' | 'social' | 'hunger'
