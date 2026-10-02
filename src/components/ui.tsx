@@ -117,11 +117,12 @@ export function Stepper({
     <div className="stepper" role="group" aria-label={label}>
       {!hideLabel && <span className="stepper__label">{label}</span>}
       <button type="button" aria-label={`Decrease ${label}`} disabled={value <= min} onClick={() => onChange(clamp(value - 1))}>
-        −
+        {/* Drawn with CSS, not a text glyph, so it centers exactly in any font. */}
+        <span className="stepper__icon" aria-hidden />
       </button>
       <output className="stepper__value">{format(value)}</output>
       <button type="button" aria-label={`Increase ${label}`} disabled={value >= max} onClick={() => onChange(clamp(value + 1))}>
-        +
+        <span className="stepper__icon stepper__icon--plus" aria-hidden />
       </button>
     </div>
   )

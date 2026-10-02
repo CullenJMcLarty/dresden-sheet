@@ -1993,3 +1993,29 @@ dialog::backdrop {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ── Stepper +/− icons: drawn bars, centered regardless of font metrics ── */
+
+.stepper button {
+  display: grid;
+  place-items: center;
+}
+.stepper__icon {
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+.stepper__icon::before,
+.stepper__icon--plus::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 10px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+.stepper__icon--plus::after {
+  transform: rotate(90deg);
+}
