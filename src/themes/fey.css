@@ -1175,18 +1175,3 @@
     }
   }
 }
-
-@media screen {
-  [data-theme='fey'] {
-    --chip-radius: 12px 2px 12px 2px;
-    --k-physical: var(--accent-2);
-    --k-mental: #a9c8ff;
-    --k-social: var(--accent);
-    --k-hunger: #ff6b8b;
-  }
-  [data-theme='fey'] .conseq__kind {
-    font: italic 500 15px var(--f-cond);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-}

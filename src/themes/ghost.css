@@ -902,19 +902,3 @@
     }
   }
 }
-
-@media screen {
-  [data-theme='ghost'] {
-    --chip-radius: 99px;
-    --k-physical: #e8a3a3;
-    --k-mental: var(--ecto);
-    --k-social: var(--sepia);
-    --k-hunger: #ff6b6b;
-  }
-  [data-theme='ghost'] .conseq__kind {
-    border-style: dotted;
-    font: italic 15px var(--f-cond);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-}

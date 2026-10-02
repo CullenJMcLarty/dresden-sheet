@@ -109,8 +109,6 @@ export interface ConsequenceSlot {
   value: number
   label: string
   source: 'base' | 'skill' | 'manual'
-  /** Extra mild slots from a Superb skill only absorb that skill's track. */
-  lockedTo?: StressTrackId
 }
 
 export function consequenceSlots(c: Character): ConsequenceSlot[] {
@@ -119,7 +117,7 @@ export function consequenceSlots(c: Character): ConsequenceSlot[] {
   ]
   for (const t of stressTracks(c)) {
     if (t.extraMild) {
-      slots.push({ id: `mild-${t.id}`, severity: 'mild', value: 2, label: `Mild (${t.skill})`, source: 'skill', lockedTo: t.id })
+      slots.push({ id: `mild-${t.id}`, severity: 'mild', value: 2, label: `Mild (${t.name} only)`, source: 'skill' })
     }
   }
   for (let i = 1; i <= Math.max(0, c.extraMildManual); i++) {
@@ -131,11 +129,6 @@ export function consequenceSlots(c: Character): ConsequenceSlot[] {
     { id: 'extreme', severity: 'extreme', value: 8, label: 'Extreme', source: 'base' },
   )
   return slots
-}
-
-/** The kind of harm a consequence absorbed, or null if not yet marked. */
-export function consequenceKind(c: Character, slot: ConsequenceSlot): StressTrackId | null {
-  return slot.lockedTo ?? c.consequenceTypes[slot.id] ?? null
 }
 
 // ── Magic ──────────────────────────────────────────────────────────────────

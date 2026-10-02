@@ -1004,18 +1004,3 @@
     transform: scale(1.06);
   }
 }
-
-@media screen {
-  [data-theme='modern'] {
-    --k-physical: var(--t-physical);
-    --k-mental: var(--t-mental);
-    --k-social: var(--t-social);
-    --k-hunger: var(--t-hunger);
-    --chip-radius: 99px;
-  }
-  [data-theme='modern'] .conseq__kind {
-    font: 600 12px var(--f-cond);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-}
