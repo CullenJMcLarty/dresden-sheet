@@ -279,15 +279,6 @@
   [data-theme='fey'] .tabs__glyph {
     display: none;
   }
-  [data-theme='fey'] .stencil-banner {
-    top: -24px;
-    font-family: var(--f-stencil);
-    font-size: clamp(56px, 10vw, 140px);
-    -webkit-text-stroke: 0;
-    color: var(--accent);
-    opacity: 0.07;
-    transform: none;
-  }
 
   /* ── Plates with filigree corners ── */
   [data-theme='fey'] .plate {

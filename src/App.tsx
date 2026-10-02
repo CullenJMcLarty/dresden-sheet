@@ -138,9 +138,6 @@ export default function App() {
       </nav>
 
       <main className="main" key={c.id}>
-        <h2 className="stencil-banner" aria-hidden>
-          {tabs.find((t) => t.id === current)?.label}
-        </h2>
         {current === 'phases' && <PhasesTab c={c} update={update} />}
         {current === 'sheet' && (
           <div className="sheet">

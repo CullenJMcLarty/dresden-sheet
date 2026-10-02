@@ -201,15 +201,6 @@
   [data-theme='ghost'] .tabs__glyph {
     display: none;
   }
-  [data-theme='ghost'] .stencil-banner {
-    font-family: var(--f-stencil);
-    -webkit-text-stroke: 0;
-    color: var(--ecto);
-    opacity: 0.05;
-    text-transform: none;
-    transform: none;
-    filter: blur(1.5px);
-  }
 
   /* ── Mourning cards ── */
   [data-theme='ghost'] .plate {

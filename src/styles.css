@@ -343,24 +343,6 @@ select {
   }
 }
 
-.stencil-banner {
-  position: absolute;
-  top: -36px;
-  right: var(--gutter);
-  z-index: -1;
-  margin: 0;
-  font-family: var(--f-stencil);
-  font-weight: 400;
-  font-size: clamp(70px, 14vw, 200px);
-  line-height: 1;
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 182, 18, 0.18);
-  transform: rotate(-3deg);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
 
 .stack {
   display: flex;
@@ -1755,7 +1737,6 @@ dialog::backdrop {
   .tabs,
   .topbar__files,
   .topbar__export,
-  .stencil-banner,
   .plate__actions,
   .btn,
   .stepper button,

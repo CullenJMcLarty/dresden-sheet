@@ -193,15 +193,6 @@
   [data-theme='holy'] .tabs__glyph {
     display: none;
   }
-  [data-theme='holy'] .stencil-banner {
-    top: -30px;
-    font-family: var(--f-stencil);
-    -webkit-text-stroke: 0;
-    color: var(--gild);
-    opacity: 0.1;
-    text-transform: none;
-    transform: none;
-  }
 
   /* ── Pages ── */
   [data-theme='holy'] .plate {

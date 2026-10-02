@@ -193,9 +193,6 @@
   [data-theme='modern'] .tabs__glyph {
     display: none;
   }
-  [data-theme='modern'] .stencil-banner {
-    display: none;
-  }
 
   /* ── Cards with editorial section numbers ── */
   [data-theme='modern'] .plate {
