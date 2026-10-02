@@ -160,16 +160,19 @@ function Candles({ value, max, label }: { value: number; max: number; label: str
   const danger = value < 1
   return (
     <figure className={`candles ${danger ? 'candles--danger' : ''}`} aria-label={`${label}: ${value} of ${max}`}>
-      <svg viewBox={`0 0 ${width} 70`} aria-hidden>
+      <svg viewBox={`0 -8 ${width} 78`} aria-hidden>
         {Array.from({ length: total }, (_, i) => {
           const x = 2 + i * w + w / 2
           const h = 26 + ((i * 7) % 3) * 4 // slightly uneven, like real candles
           const on = i < lit
           return (
             <g key={i} className={`candle ${on ? 'is-lit' : 'is-out'}`} style={{ animationDelay: `${-(i * 0.37) % 1.3}s` }}>
-              <ellipse cx={x} cy={46 - h / 2 - 9} rx="9" ry="12" className="candle__halo" />
-              <path className="candle__flame" d={`M${x} ${46 - h - 14} C ${x + 4.5} ${46 - h - 7}, ${x + 3.5} ${46 - h - 1}, ${x} ${46 - h - 1} C ${x - 3.5} ${46 - h - 1}, ${x - 4.5} ${46 - h - 7}, ${x} ${46 - h - 14} Z`} />
-              <path className="candle__smoke" d={`M${x} ${46 - h - 2} c 3 -5 -3 -8 0 -13 c 3 -5 -2 -7 1 -11`} />
+              <ellipse cx={x} cy={46 - h - 9} rx="8" ry="11" className="candle__halo" />
+              <g className="candle__flame">
+                <path d={`M${x} ${46 - h - 18} C ${x + 5.5} ${46 - h - 9}, ${x + 4.5} ${46 - h - 1}, ${x} ${46 - h - 1} C ${x - 4.5} ${46 - h - 1}, ${x - 5.5} ${46 - h - 9}, ${x} ${46 - h - 18} Z`} />
+                <path className="candle__core" d={`M${x} ${46 - h - 9} C ${x + 2} ${46 - h - 5}, ${x + 1.6} ${46 - h - 2}, ${x} ${46 - h - 2} C ${x - 1.6} ${46 - h - 2}, ${x - 2} ${46 - h - 5}, ${x} ${46 - h - 9} Z`} />
+              </g>
+              <path className="candle__smoke" d={`M${x} ${46 - h - 3} c 2.5 -4 -2.5 -7 0 -11 c 2.5 -4 -1.5 -6 1 -10`} />
               <line x1={x} y1={46 - h} x2={x} y2={46 - h - 3} className="candle__wick" />
               <rect x={x - 6} y={46 - h} width="12" height={h} rx="2" className="candle__wax" />
               <rect x={x - 9} y="46" width="18" height="5" rx="1.5" className="candle__dish" />

@@ -966,3 +966,139 @@
     filter: brightness(1.6);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Illuminated design pass: centered manuscript headings, a refined marginal
+   vine with terminals, true lancet windows, tidier small graphics.
+   ───────────────────────────────────────────────────────────────────────── */
+@media screen {
+  /* Centered headings: drop-capped title, rubric caption, fleuron rule, actions. */
+  [data-theme='holy'] .plate__head {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+  [data-theme='holy'] .plate__head > div {
+    align-items: center;
+  }
+  [data-theme='holy'] .plate__head::after {
+    content: '❦';
+    order: 2;
+    width: min(260px, 70%);
+    font-size: 16px;
+    line-height: 1;
+    color: var(--rubric);
+    background:
+      linear-gradient(var(--gild), var(--gild)) left center / calc(50% - 16px) 1px no-repeat,
+      linear-gradient(var(--gild), var(--gild)) right center / calc(50% - 16px) 1px no-repeat;
+  }
+  [data-theme='holy'] .plate__actions {
+    order: 3;
+    justify-content: center;
+  }
+  [data-theme='holy'] .plate__title {
+    line-height: 1.2;
+    padding-top: 4px;
+  }
+  [data-theme='holy'] .plate__kicker {
+    margin-top: 4px;
+  }
+  /* the gilded capital stays within its own line */
+  [data-theme='holy'] .plate__title::first-letter {
+    padding: 1px 6px 2px;
+    font-size: 1.05em;
+  }
+
+  /* Marginal vine: continuous gold stem with ivy, flowers and bezants, plus terminals. */
+  [data-theme='holy'] .plate::before {
+    top: 46px;
+    bottom: 42px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 80'%3E%3Cpath d='M12 0 C 3 13, 21 27, 12 40 C 3 53, 21 67, 12 80' fill='none' stroke='%23c9a227' stroke-width='1.7'/%3E%3Cpath d='M10 22 C 4 20, 1 14, 2 9 C 7 11, 10 16, 10 22 Z' fill='%232e6b3a' stroke='%231d4a27' stroke-width='0.6'/%3E%3Cpath d='M10 22 L4 12' stroke='%231d4a27' stroke-width='0.5'/%3E%3Cpath d='M14 58 C 20 56, 23 50, 22 45 C 17 47, 14 52, 14 58 Z' fill='%232e6b3a' stroke='%231d4a27' stroke-width='0.6'/%3E%3Cpath d='M14 58 L20 48' stroke='%231d4a27' stroke-width='0.5'/%3E%3Cg transform='translate%2819 30%29'%3E%3Ccircle cx='0' cy='-2.3' r='1.9' fill='%23a4161a'/%3E%3Ccircle cx='2.3' cy='0' r='1.9' fill='%23a4161a'/%3E%3Ccircle cx='0' cy='2.3' r='1.9' fill='%23a4161a'/%3E%3Ccircle cx='-2.3' cy='0' r='1.9' fill='%23a4161a'/%3E%3Ccircle r='1.2' fill='%23c9a227'/%3E%3C/g%3E%3Cg transform='translate%285 68%29'%3E%3Ccircle cx='0' cy='-2.3' r='1.9' fill='%231f3a8a'/%3E%3Ccircle cx='2.3' cy='0' r='1.9' fill='%231f3a8a'/%3E%3Ccircle cx='0' cy='2.3' r='1.9' fill='%231f3a8a'/%3E%3Ccircle cx='-2.3' cy='0' r='1.9' fill='%231f3a8a'/%3E%3Ccircle r='1.2' fill='%23c9a227'/%3E%3C/g%3E%3Ccircle cx='5' cy='36' r='1.4' fill='%23c9a227'/%3E%3Ccircle cx='19' cy='8' r='1.4' fill='%23c9a227'/%3E%3Ccircle cx='19' cy='74' r='1.1' fill='%23c9a227'/%3E%3C/svg%3E") center top / 24px 80px repeat-y;
+  }
+  [data-theme='holy'] .plate::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    bottom: 20px;
+    left: 22px;
+    width: 24px;
+    pointer-events: none;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23c9a227' stroke='%238a6a0e' stroke-width='0.7'%3E%3Ccircle cx='12' cy='6' r='4.2'/%3E%3Ccircle cx='6' cy='12' r='4.2'/%3E%3Ccircle cx='18' cy='12' r='4.2'/%3E%3Ccircle cx='12' cy='18' r='4.2'/%3E%3C/g%3E%3Ccircle cx='12' cy='12' r='2.6' fill='%23a4161a'/%3E%3C/svg%3E") center top / 24px 24px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0 C 12 9, 4 11, 6 17 C 8 22, 15 21, 15 16 C 15 12, 10 12, 10 15' fill='none' stroke='%23c9a227' stroke-width='1.7' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='15' r='1.6' fill='%23a4161a'/%3E%3C/svg%3E") center bottom / 24px 24px no-repeat;
+  }
+
+  /* Lancet windows: a round arch, a mullion and transom; the number sits on a lead band. */
+  [data-theme='holy'] .box {
+    width: 34px;
+    height: 56px;
+    border-radius: 17px 17px 2px 2px;
+    padding: 0;
+    place-items: end center;
+    font-size: 12px;
+    background:
+      linear-gradient(var(--lead), var(--lead)) center bottom / 100% 14px no-repeat,
+      linear-gradient(90deg, transparent calc(50% - 1px), var(--lead) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) center top / 100% calc(100% - 14px) no-repeat,
+      linear-gradient(0deg, transparent 48%, var(--lead) 48% 52%, transparent 52%) center top / 100% calc(100% - 14px) no-repeat,
+      radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.55), transparent 30%),
+      var(--pane);
+    line-height: 14px;
+  }
+  [data-theme='holy'] .box.is-on,
+  [data-theme='holy'] .track--mental .box.is-on,
+  [data-theme='holy'] .track--hunger .box.is-on {
+    background:
+      linear-gradient(var(--lead), var(--lead)) center bottom / 100% 14px no-repeat,
+      linear-gradient(90deg, transparent calc(50% - 1px), var(--lead) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) center top / 100% calc(100% - 14px) no-repeat,
+      linear-gradient(0deg, transparent 48%, var(--lead) 48% 52%, transparent 52%) center top / 100% calc(100% - 14px) no-repeat,
+      var(--pane);
+  }
+  [data-theme='holy'] .box.is-on::before {
+    top: 10%;
+    height: 50%;
+  }
+  [data-theme='holy'] .box.is-on::after {
+    top: 26%;
+    height: 36%;
+  }
+
+  /* Candles: a bright core in each flame, gentler smoke. */
+  .candle__core {
+    fill: #fff6d6;
+  }
+  .candle__smoke {
+    stroke-width: 0.8;
+    stroke: rgba(200, 190, 175, 0.4);
+  }
+
+  /* Stat roundels keep their captions inside the circle. */
+  [data-theme='holy'] .art-stat {
+    padding: 0 22px;
+  }
+  [data-theme='holy'] .art-stat small {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  /* Name in the top bar: no clipped glow box. */
+  [data-theme='holy'] .topbar__name {
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+  }
+
+  @media (max-width: 720px) {
+    [data-theme='holy'] .plate::after {
+      left: 14px;
+      width: 18px;
+      background-size: 18px 18px, 18px 18px;
+    }
+  }
+}
+
+@media screen {
+  /* footnotes and empty-state notes follow the centered headings */
+  [data-theme='holy'] .plate .hint,
+  [data-theme='holy'] .plate .empty {
+    text-align: center;
+  }
+}
