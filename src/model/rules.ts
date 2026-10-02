@@ -27,18 +27,29 @@ export function skillRating(c: Character, name: string): number {
 
 // ── Refresh ────────────────────────────────────────────────────────────────
 
+export const isPureMortal = (c: Character) => c.template.trim().toLowerCase() === 'pure mortal'
+
 export function refresh(c: Character) {
-  const base = levelFor(c).refresh
+  // Pure mortals trade away supernatural powers for +2 starting refresh (YS73).
+  const pureMortalBonus = isPureMortal(c) ? 2 : 0
+  const base = levelFor(c).refresh + pureMortalBonus
   const spent = c.powers.reduce((sum, p) => sum + p.cost, 0)
   const adjusted = base + spent
   const warnings: Warning[] = []
+  const supernatural = isPureMortal(c) ? c.powers.filter((p) => p.category !== 'Mortal Stunt') : []
+  if (supernatural.length) {
+    warnings.push({
+      section: 'refresh',
+      message: `A Pure Mortal can't take supernatural powers: ${supernatural.map((p) => p.name || 'Unnamed power').join(', ')}.`,
+    })
+  }
   if (adjusted < 1) {
     warnings.push({
       section: 'refresh',
       message: `Adjusted refresh is ${adjusted}. Below 1, the character is no longer a playable PC.`,
     })
   }
-  return { base, spent, adjusted, warnings }
+  return { base, pureMortalBonus, spent, adjusted, warnings }
 }
 
 // ── Skills ─────────────────────────────────────────────────────────────────

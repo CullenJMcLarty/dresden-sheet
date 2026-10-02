@@ -36,6 +36,25 @@ describe('refresh', () => {
   })
 })
 
+describe('pure mortals', () => {
+  it('get +2 refresh (YS73)', () => {
+    const c = newCharacter() // Chest-Deep: 8
+    c.template = 'Pure Mortal'
+    expect(refresh(c).base).toBe(10)
+    c.template = '  pure mortal '
+    expect(refresh(c).base).toBe(10)
+  })
+
+  it('may take mortal stunts but are warned about supernatural powers', () => {
+    const c = newCharacter()
+    c.template = 'Pure Mortal'
+    c.powers = [{ ...power(-1), category: 'Mortal Stunt' as const }]
+    expect(refresh(c).warnings).toEqual([])
+    c.powers.push({ ...power(-2, 'inhuman-strength'), category: 'Strength' as const, name: 'Inhuman Strength' })
+    expect(refresh(c).warnings.map((w) => w.message).join(' ')).toMatch(/Pure Mortal.*Inhuman Strength/)
+  })
+})
+
 describe('skills', () => {
   it('counts points and checks the cap', () => {
     const c = newCharacter() // cap Great (4), 30 points

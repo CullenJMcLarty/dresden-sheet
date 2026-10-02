@@ -68,7 +68,10 @@ export function IntakePlate({ c, a, update }: { c: Character; a: Analysis; updat
           <dl className="readout">
             <div>
               <dt>Base</dt>
-              <dd>{a.refresh.base}</dd>
+              <dd title={a.refresh.pureMortalBonus ? `${a.refresh.base - a.refresh.pureMortalBonus} + ${a.refresh.pureMortalBonus} for Pure Mortal` : undefined}>
+                {a.refresh.base}
+                {a.refresh.pureMortalBonus > 0 && <small> (+{a.refresh.pureMortalBonus} mortal)</small>}
+              </dd>
             </div>
             <div>
               <dt>Powers</dt>
