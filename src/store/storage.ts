@@ -8,24 +8,61 @@ export interface Roster {
   characters: Character[]
 }
 
-export function loadRoster(): Roster {
+export interface LoadResult {
+  roster: Roster
+  /** How many stored characters couldn't be read; -1 if the whole store was unreadable. */
+  unreadable: number
+  /** localStorage key holding a raw copy of the store, when one was made. */
+  backupKey: string | null
+}
+
+export const STORAGE_KEY = KEY
+
+/** Keep an untouched copy of the raw store before anything can overwrite it. */
+function backup(raw: string): string | null {
   try {
-    const raw = localStorage.getItem(KEY)
-    if (!raw) return { activeId: null, characters: [] }
-    const parsed = JSON.parse(raw) as { activeId?: unknown; characters?: unknown }
-    const characters: Character[] = []
-    for (const c of Array.isArray(parsed.characters) ? parsed.characters : []) {
-      try {
-        characters.push(normalizeCharacter(c))
-      } catch {
-        // Skip a corrupt entry rather than losing the whole roster.
-      }
+    // Reloading while the problem persists shouldn't pile up identical copies.
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i)
+      if (k?.startsWith(`${KEY}:backup:`) && localStorage.getItem(k) === raw) return k
     }
-    const activeId = typeof parsed.activeId === 'string' ? parsed.activeId : null
-    return { activeId, characters }
+    const key = `${KEY}:backup:${new Date().toISOString()}`
+    localStorage.setItem(key, raw)
+    return key
   } catch {
-    return { activeId: null, characters: [] }
+    return null
   }
+}
+
+export function loadRoster(): LoadResult {
+  const empty: Roster = { activeId: null, characters: [] }
+  let raw: string | null
+  try {
+    raw = localStorage.getItem(KEY)
+  } catch {
+    return { roster: empty, unreadable: 0, backupKey: null }
+  }
+  if (!raw) return { roster: empty, unreadable: 0, backupKey: null }
+
+  let parsed: { activeId?: unknown; characters?: unknown }
+  try {
+    parsed = JSON.parse(raw)
+  } catch {
+    return { roster: empty, unreadable: -1, backupKey: backup(raw) }
+  }
+  if (!Array.isArray(parsed?.characters)) return { roster: empty, unreadable: -1, backupKey: backup(raw) }
+  const stored: unknown[] = parsed.characters
+  const characters: Character[] = []
+  for (const c of stored) {
+    try {
+      characters.push(normalizeCharacter(c))
+    } catch {
+      // Counted below; the caller pauses autosave so it isn't overwritten.
+    }
+  }
+  const unreadable = stored.length - characters.length
+  const activeId = typeof parsed?.activeId === 'string' ? parsed.activeId : null
+  return { roster: { activeId, characters }, unreadable, backupKey: unreadable ? backup(raw) : null }
 }
 
 /** Returns false if the browser refused the write (quota, private mode). */

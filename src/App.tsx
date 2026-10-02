@@ -28,7 +28,7 @@ function loadTab(): Tab {
 }
 
 export default function App() {
-  const { roster, active: c, update, select, add, duplicate, remove, saveFailed } = useRoster()
+  const { roster, active: c, update, select, add, duplicate, remove, saveFailed, loadProblem, resumeSaving } = useRoster()
   const a = useMemo(() => analyze(c), [c])
   const [tab, setTab] = useState<Tab>(loadTab)
   const [drawer, setDrawer] = useState(false)
@@ -91,6 +91,22 @@ export default function App() {
           Export
         </button>
       </header>
+
+      {loadProblem && (
+        <div className="save-fail" role="alert">
+          <p>
+            {loadProblem.unreadable < 0
+              ? "This browser's saved casefiles couldn't be read"
+              : `${loadProblem.unreadable} saved character${loadProblem.unreadable === 1 ? '' : 's'} couldn't be read`}{' '}
+            (maybe saved by a newer version of the sheet). Autosave is paused so nothing gets overwritten.
+            {loadProblem.backupKey ? ' A raw copy was kept in this browser.' : ''} Export anything you need, then
+            reload with the newer version, or:
+          </p>
+          <button type="button" className="btn btn--small" onClick={resumeSaving}>
+            Resume saving anyway
+          </button>
+        </div>
+      )}
 
       {saveFailed && (
         <p className="save-fail" role="alert">

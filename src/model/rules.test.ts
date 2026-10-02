@@ -144,6 +144,23 @@ describe('magic', () => {
   })
 })
 
+describe('magic: any-element bonuses', () => {
+  it('folds bonuses with no element into every element row', () => {
+    const c = newCharacter()
+    c.skills.Conviction = 4
+    c.skills.Discipline = 3
+    const bonus = { name: '', notes: '', kind: 'focus' as const, offensivePower: 0, offensiveControl: 0, defensivePower: 0, defensiveControl: 0 }
+    c.magic.bonuses = [
+      { ...bonus, id: 'rod', element: '', offensivePower: 1 },
+      { ...bonus, id: 'fire', element: 'Fire', offensiveControl: 1 },
+    ]
+    expect(magic(c).elements).toEqual([
+      { element: 'Fire', offensivePower: 5, offensiveControl: 4, defensivePower: 4, defensiveControl: 3 },
+      { element: 'Any element', offensivePower: 5, offensiveControl: 3, defensivePower: 4, defensiveControl: 3 },
+    ])
+  })
+})
+
 describe('analyze', () => {
   it('collects warnings from every section', () => {
     const c = newCharacter()

@@ -145,17 +145,30 @@ export function magic(c: Character) {
     (sum, b) => sum + b.offensivePower + b.offensiveControl + b.defensivePower + b.defensiveControl,
     0,
   )
-  const byElement = new Map<string, { offensivePower: number; offensiveControl: number; defensivePower: number; defensiveControl: number }>()
-  for (const b of c.magic.bonuses) {
-    const key = b.element.trim() || 'Any'
-    const cur = byElement.get(key) ?? { offensivePower: 0, offensiveControl: 0, defensivePower: 0, defensiveControl: 0 }
-    cur.offensivePower += b.offensivePower
-    cur.offensiveControl += b.offensiveControl
-    cur.defensivePower += b.defensivePower
-    cur.defensiveControl += b.defensiveControl
-    byElement.set(key, cur)
+  type Bonus = { offensivePower: number; offensiveControl: number; defensivePower: number; defensiveControl: number }
+  const zero = (): Bonus => ({ offensivePower: 0, offensiveControl: 0, defensivePower: 0, defensiveControl: 0 })
+  const add = (into: Bonus, b: Bonus) => {
+    into.offensivePower += b.offensivePower
+    into.offensiveControl += b.offensiveControl
+    into.defensivePower += b.defensivePower
+    into.defensiveControl += b.defensiveControl
   }
-  const elements = [...byElement.entries()].map(([element, bonus]) => ({
+  // Bonuses with no element apply to every element.
+  const any = zero()
+  const byElement = new Map<string, Bonus>()
+  for (const b of c.magic.bonuses) {
+    const key = b.element.trim()
+    if (!key) {
+      add(any, b)
+      continue
+    }
+    if (!byElement.has(key)) byElement.set(key, zero())
+    add(byElement.get(key)!, b)
+  }
+  for (const bonus of byElement.values()) add(bonus, any)
+  const rows: [string, Bonus][] = [...byElement.entries()]
+  if (c.magic.bonuses.some((b) => !b.element.trim())) rows.push(['Any element', any])
+  const elements = rows.map(([element, bonus]) => ({
     element,
     offensivePower: conviction + bonus.offensivePower,
     offensiveControl: discipline + bonus.offensiveControl,

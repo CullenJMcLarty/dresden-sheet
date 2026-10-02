@@ -78,8 +78,8 @@ export function IntakePlate({ c, a, update }: { c: Character; a: Analysis; updat
             </div>
           </dl>
           <Stepper label="Fate points" min={0} value={c.fatePoints} onChange={(v) => update((d) => void (d.fatePoints = v))} />
-          <button type="button" className="btn btn--ghost btn--small" onClick={() => update((d) => void (d.fatePoints = a.refresh.adjusted))}>
-            Refresh to {a.refresh.adjusted}
+          <button type="button" className="btn btn--ghost btn--small" onClick={() => update((d) => void (d.fatePoints = Math.max(0, a.refresh.adjusted)))}>
+            Refresh to {Math.max(0, a.refresh.adjusted)}
           </button>
         </div>
       </div>

@@ -1838,3 +1838,7 @@ dialog::backdrop {
     filter: none;
   }
 }
+
+.save-fail p {
+  margin: 0 0 8px;
+}
