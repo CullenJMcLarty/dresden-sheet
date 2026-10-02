@@ -48,7 +48,9 @@ export function SkillsPlate({ c, a, update }: { c: Character; a: Analysis; updat
           const v = c.skills[name] ?? 0
           return (
             <div key={name} className={`skill ${v > 0 ? 'is-set' : ''} ${s.overCap.includes(name) ? 'is-bad' : ''}`}>
-              <span className="skill__name">{name}</span>
+              <span className="skill__name" title={name}>
+                {name}
+              </span>
               <Stepper hideLabel label={name} min={0} max={8} value={v} format={(n) => (n ? signed(n) : '·')} onChange={(n) => update((d) => void (d.skills[name] = n))} />
             </div>
           )

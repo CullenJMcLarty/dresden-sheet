@@ -998,13 +998,15 @@ select:focus {
 
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
   gap: 4px 10px;
 }
+/* Name column flexes, stepper column is fixed at the right edge, so every
+   stepper in a column lines up no matter how long the skill name is. */
 .skill {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
   padding: 3px 0 3px 10px;
   border-left: 2px solid transparent;
@@ -1025,9 +1027,22 @@ select:focus {
 .skill.is-set .skill__name {
   color: var(--ink);
 }
+span.skill__name {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 input.skill__name {
-  flex: 1;
   padding: 4px 8px;
+}
+/* custom skills: the remove button goes first so the stepper stays last */
+.skill--custom {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.skill--custom > .btn {
+  order: -1;
+  padding: 4px 6px;
 }
 .skill .stepper button,
 .skill .stepper__value {
