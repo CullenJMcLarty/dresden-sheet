@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CATALOG } from './catalog'
+import { CATALOG, searchCatalog } from './catalog'
 import { POWER_LEVELS } from './reference'
 import { ImportError, newCharacter, normalizeCharacter } from './character'
 import { analyze, consequenceSlots, isCaster, magic, refresh, skills, stressBonusFromSkill, stressTracks } from './rules'
@@ -263,5 +263,25 @@ describe('normalizeCharacter', () => {
   it('rejects non-objects and newer schemas', () => {
     expect(() => normalizeCharacter('nope')).toThrow(ImportError)
     expect(() => normalizeCharacter({ schema: 999 })).toThrow(ImportError)
+  })
+})
+
+describe('catalog', () => {
+  it('has unique ids', () => {
+    const ids = CATALOG.map((e) => e.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('finds powers by effect name, e.g. incorporeal → Spirit Form (YS170)', () => {
+    expect(searchCatalog('incorporeal').map((e) => e.id)).toContain('spirit-form')
+    expect(searchCatalog('insubstantial').map((e) => e.id)).toEqual(expect.arrayContaining(['spirit-form', 'gaseous-form']))
+  })
+
+  it('uses the costs from the power table (YS160-161)', () => {
+    const cost = (id: string) => CATALOG.find((e) => e.id === id)?.cost
+    expect(cost('seelie-magic')).toBe(-4)
+    expect(cost('unseelie-magic')).toBe(-4)
+    expect(cost('cassandras-tears')).toBe(0)
+    expect(cost('soulgaze')).toBe(-1)
   })
 })
