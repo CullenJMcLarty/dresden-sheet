@@ -10,7 +10,7 @@ export interface StageArgs {
   root: HTMLElement
   roll: Roll
   cine: boolean
-  /** The theme variant, e.g. the Fey court. */
+  /** The theme variant, e.g. the Fey court or Baseball's vampire league. */
   variant?: string
 }
 export type Stage = (args: StageArgs) => void
@@ -47,7 +47,7 @@ export const CUBE: Record<Face, { x: number; y: number }> = { 1: { x: 0, y: 0 },
  * A CSS 3D die: `pos` moves it across the screen, `lift` raises and scales it, `cube` spins it.
  * Opposite faces match, as on a real Fate die.
  */
-export function buildDie(root: Element, size: number, skin: 'case' | 'fey' | 'steel') {
+export function buildDie(root: Element, size: number, skin: 'case' | 'fey' | 'steel' | 'ball') {
   const pos = el('div', 'die-pos', root)
   Object.assign(pos.style, { width: size + 'px', height: size + 'px', marginLeft: -size / 2 + 'px', marginTop: -size / 2 + 'px' })
   const shadow = el('div', skin === 'fey' ? 'die-glow' : 'die-shadow', pos)

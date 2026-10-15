@@ -1,4 +1,5 @@
 import type { Theme } from '../../themes/themes'
+import { baseballStage } from './baseball'
 import { casefileStage } from './casefile'
 import { feyStage } from './fey'
 import { holyStage } from './holy'
@@ -15,4 +16,5 @@ export const STAGES: Record<Theme['family'], Stage> = {
   fey: feyStage,
   holy: holyStage,
   ghost: veilStage,
+  baseball: baseballStage,
 }

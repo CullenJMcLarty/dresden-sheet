@@ -50,6 +50,14 @@
   --d-on-accent: var(--bg);
   --d-radius: 4px;
 }
+[data-theme='baseball'] .dice {
+  --d-panel: var(--paper);
+  --d-line: var(--line);
+  --d-accent: var(--accent);
+  --d-on-accent: #fff;
+  --d-display: var(--f-num);
+  --d-radius: 8px;
+}
 /* On phones the tabs become a bottom nav; sit above it. */
 @media (max-width: 720px) {
   .dice {
@@ -168,6 +176,45 @@
   color: var(--ecto);
   border: 1px solid var(--ecto);
   box-shadow: 0 0 26px rgba(159, 245, 214, 0.35);
+}
+/* Baseball: the button is a ball, and its seams spin when you reach for it. */
+[data-theme='baseball'] .dice-roll {
+  position: relative;
+  isolation: isolate;
+  background: var(--leather);
+  color: #1d2b4f;
+  box-shadow: inset -5px -7px 12px rgba(80, 60, 30, 0.25), 0 6px 16px rgba(0, 0, 0, 0.4);
+  font-size: 15px;
+  text-transform: uppercase;
+}
+[data-theme='baseball'] .dice-roll::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--stitch);
+  -webkit-mask: var(--seams) center / 100% 100% no-repeat;
+  mask: var(--seams) center / 100% 100% no-repeat;
+  transform: rotate(-24deg);
+  transition: transform 0.5s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+[data-theme='baseball'] .dice-roll:hover::before {
+  transform: rotate(150deg);
+}
+[data-theme='baseball'][data-variant='vampire'] .dice-roll {
+  color: #2a0a10;
+  box-shadow: inset -5px -7px 12px rgba(60, 30, 20, 0.3), 0 0 26px rgba(224, 38, 63, 0.45);
+}
+[data-theme='baseball'] .dice-pop__title {
+  font: 400 26px var(--f-stencil);
+}
+[data-theme='baseball'][data-variant='vampire'] .dice-pop__title {
+  font: 700 22px var(--f-stencil);
+}
+[data-theme='baseball'] .dice-stage__foot {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .dice-chip,
@@ -442,6 +489,23 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   transform: translate(-50%, -50%);
+}
+.die--ball span {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23c8102e' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.7 17.86C30 31 70 31 88.3 17.86M11.7 82.14C30 69 70 69 88.3 82.14' stroke-width='1.2' stroke-opacity='.45'/%3E%3Cpath d='M10.02 21.67L14.3 19.55L14.1 14.79M15.9 25L19.84 22.32L18.99 17.62M22.06 27.49L25.7 24.4L24.35 19.82M28.27 29.28L31.63 25.89L29.9 21.45M34.56 30.54L37.66 26.91L35.61 22.61M41.04 31.35L43.89 27.52L41.55 23.36M47.63 31.72L50.22 27.71L47.61 23.72M53.99 31.67L56.32 27.51L53.47 23.69M60.51 31.2L62.55 26.89L59.44 23.27M66.86 30.3L68.57 25.85L65.2 22.47M73.16 28.92L74.49 24.34L70.85 21.27M79.5 26.94L80.33 22.25L76.38 19.58M85.68 24.23L85.85 19.46L81.57 17.37M89.98 78.33L85.7 80.45L85.9 85.21M84.1 75L80.16 77.68L81.01 82.38M77.94 72.51L74.3 75.6L75.65 80.18M71.73 70.72L68.37 74.11L70.1 78.55M65.44 69.46L62.34 73.09L64.39 77.39M58.96 68.65L56.11 72.48L58.45 76.64M52.37 68.28L49.78 72.29L52.39 76.28M46.01 68.33L43.68 72.49L46.53 76.31M39.49 68.8L37.45 73.11L40.56 76.73M33.14 69.7L31.43 74.15L34.8 77.53M26.84 71.08L25.51 75.66L29.15 78.73M20.5 73.06L19.67 77.75L23.62 80.42M14.32 75.77L14.15 80.54L18.43 82.63' stroke-width='2.1'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat,
+    radial-gradient(circle at 36% 30%, #fff 0, #f6f1e6 40%, #e3dbca 85%, #d6ccb6 100%);
+  border: 1px solid #cdbf9f;
+  border-radius: 18%;
+  box-shadow: inset -4px -5px 10px rgba(80, 60, 30, 0.18);
+  color: #1d2b4f;
+  --gl: 40%;
+  --gt: 9%;
+  --gr: 2px;
+}
+/* after dark the leather is old bone */
+.dice-scene--night .die--ball span {
+  filter: sepia(0.35) brightness(0.9);
+  color: #2a0a10;
 }
 .die--steel span {
   background:
@@ -950,6 +1014,279 @@
   font-size: 17px;
   color: #c9b79c;
   white-space: nowrap;
+}
+
+/* Baseball: the diamond from behind home plate, and the scoreboard over the wall */
+.bb-park {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.bb-sky {
+  fill: #8fc3ea;
+}
+.bb-stands {
+  fill: #3d6b4f;
+}
+.bb-wall {
+  fill: #24502f;
+}
+.bb-ivy {
+  fill: #3f7a3a;
+}
+.bb-fan {
+  fill: #f6efdc;
+}
+.bb-fan--1 {
+  fill: #c8102e;
+}
+.bb-fan--2 {
+  fill: #1d2b4f;
+}
+.bb-fan--3 {
+  fill: #e8b13a;
+}
+.bb-fan--4 {
+  fill: #8fb8de;
+}
+.bb-wall-line {
+  fill: #e8b13a;
+}
+.bb-grass {
+  fill: #4f8f3f;
+}
+.bb-stripes path {
+  fill: rgba(255, 255, 255, 0.06);
+}
+.bb-wall-shadow {
+  fill: rgba(0, 0, 0, 0.14);
+}
+.bb-dirt {
+  fill: #c8794a;
+}
+.bb-chalk {
+  fill: none;
+  stroke: #f8f5ea;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.bb-chalk--thin {
+  stroke-width: 2.5;
+}
+.bb-chalk-fill,
+.bb-base {
+  fill: #fbfaf5;
+}
+.bb-shade {
+  inset: 0;
+  background: radial-gradient(ellipse 75% 65% at 50% 55%, transparent 45%, rgba(0, 24, 8, 0.4) 100%);
+}
+.bb-dust {
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(222, 160, 112, 0.95), rgba(200, 121, 74, 0));
+}
+.bb-board {
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: min(430px, calc(100vw - 28px));
+  padding: 0 16px 14px;
+  background: linear-gradient(180deg, #285a45, #1e4636 60%, #12291f);
+  border: 4px solid #0f241b;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(247, 243, 230, 0.12), 0 16px 40px rgba(0, 0, 0, 0.45);
+  color: #f7f3e6;
+}
+.bb-board__bulbs {
+  height: 14px;
+  margin: 0 -16px 8px;
+  background: radial-gradient(circle, #ffd36b 0 2.6px, rgba(255, 211, 107, 0.3) 3.4px, transparent 5px) 0 0 / 16px 14px repeat-x;
+}
+.bb-board__head {
+  display: flex;
+  justify-content: space-between;
+  font: 700 12px 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #ffd36b;
+}
+.bb-board__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.bb-plate {
+  position: relative;
+  flex: none;
+  width: 50px;
+  height: 58px;
+  background: #173a2c;
+  border: 2px solid #0f241b;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35);
+  color: #f7f3e6;
+  transform-origin: 50% 0;
+  --gl: 46%;
+  --gt: 10%;
+  --gr: 1px;
+}
+.bb-plate.is-minus {
+  color: #ffb4a8;
+}
+.bb-plate--total {
+  width: 86px;
+  display: grid;
+  place-items: center;
+  padding-top: 4px;
+  background: #f7f3e6;
+  color: #12291f;
+  font: 30px 'Graduate', serif;
+}
+.bb-eq {
+  font: 26px 'Graduate', serif;
+  color: #ffd36b;
+}
+.bb-board__call {
+  margin-top: 10px;
+  text-align: center;
+  font: 21px/1.2 'Graduate', serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffd36b;
+  text-shadow: 0 0 10px rgba(255, 211, 107, 0.7);
+}
+.bb-fx {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+/* after dark */
+.dice-scene--night .bb-sky {
+  fill: #0a0810;
+}
+.dice-scene--night .bb-stands {
+  fill: #121016;
+}
+.dice-scene--night .bb-wall {
+  fill: #08110b;
+}
+.dice-scene--night .bb-ivy {
+  fill: #142a1a;
+}
+.dice-scene--night .bb-fan {
+  fill: #221d27;
+}
+.bb-eye {
+  fill: #ff2a3a;
+}
+.dice-scene--night .bb-wall-line {
+  fill: #5e4c32;
+}
+.dice-scene--night .bb-grass {
+  fill: #142219;
+}
+.dice-scene--night .bb-stripes path {
+  fill: rgba(190, 210, 255, 0.035);
+}
+.dice-scene--night .bb-dirt {
+  fill: #3a2320;
+}
+.dice-scene--night .bb-chalk {
+  stroke: rgba(236, 232, 245, 0.55);
+}
+.dice-scene--night .bb-chalk-fill,
+.dice-scene--night .bb-base {
+  fill: #d8d0c2;
+}
+.bb-cone {
+  fill: url(#bbCone);
+}
+.bb-bank {
+  fill: #1c1820;
+  stroke: #050406;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 22px rgba(255, 240, 200, 0.45));
+}
+.bb-lamp {
+  fill: #fffbea;
+  filter: drop-shadow(0 0 4px #fff3c4);
+}
+.dice-scene--night .bb-shade {
+  background: radial-gradient(ellipse 75% 65% at 50% 55%, transparent 30%, rgba(0, 0, 0, 0.7) 100%);
+}
+.dice-scene--night .bb-dust {
+  background: radial-gradient(closest-side, rgba(220, 210, 235, 0.5), rgba(220, 210, 235, 0));
+}
+.bb-flash {
+  inset: 0;
+  background: #e8ecff;
+  opacity: 0;
+}
+/* the stadium lights catch the bats' edges */
+.bb-bats {
+  inset: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(255, 236, 214, 0.45));
+}
+.bb-bats i {
+  position: absolute;
+  left: -50px;
+  width: 34px;
+  height: 12px;
+  background: #050407;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -5 32 10'%3E%3Cpath d='M0 -2.5 C1.2 -2.5 1.8 -1.6 1.9 -0.6 L3.2 -2.2 C5 -3.6 8 -4.2 11 -2.8 C12.6 -2 14 -0.8 15 0.8 C13.4 0.2 12.2 0.6 11.4 1.6 C10.2 0.8 8.6 0.8 7.6 1.8 C6.6 0.8 4.8 0.6 3.6 1.4 L1.6 2.4 C1 3.4 0.4 3.8 0 3.8 C-0.4 3.8 -1 3.4 -1.6 2.4 L-3.6 1.4 C-4.8 0.6 -6.6 0.8 -7.6 1.8 C-8.6 0.8 -10.2 0.8 -11.4 1.6 C-12.2 0.6 -13.4 0.2 -15 0.8 C-14 -0.8 -12.6 -2 -11 -2.8 C-8 -4.2 -5 -3.6 -3.2 -2.2 L-1.9 -0.6 C-1.8 -1.6 -1.2 -2.5 0 -2.5 Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -5 32 10'%3E%3Cpath d='M0 -2.5 C1.2 -2.5 1.8 -1.6 1.9 -0.6 L3.2 -2.2 C5 -3.6 8 -4.2 11 -2.8 C12.6 -2 14 -0.8 15 0.8 C13.4 0.2 12.2 0.6 11.4 1.6 C10.2 0.8 8.6 0.8 7.6 1.8 C6.6 0.8 4.8 0.6 3.6 1.4 L1.6 2.4 C1 3.4 0.4 3.8 0 3.8 C-0.4 3.8 -1 3.4 -1.6 2.4 L-3.6 1.4 C-4.8 0.6 -6.6 0.8 -7.6 1.8 C-8.6 0.8 -10.2 0.8 -11.4 1.6 C-12.2 0.6 -13.4 0.2 -15 0.8 C-14 -0.8 -12.6 -2 -11 -2.8 C-8 -4.2 -5 -3.6 -3.2 -2.2 L-1.9 -0.6 C-1.8 -1.6 -1.2 -2.5 0 -2.5 Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  animation:
+    bb-bat linear infinite,
+    bb-flap 0.32s linear infinite;
+}
+@keyframes bb-bat {
+  50% {
+    transform: translate(55vw, var(--dy));
+  }
+  to {
+    transform: translate(calc(100vw + 100px), 0);
+  }
+}
+@keyframes bb-flap {
+  0%,
+  49% {
+    scale: 1 1;
+  }
+  50%,
+  100% {
+    scale: 1 -0.6;
+  }
+}
+.dice-scene--night .bb-board {
+  background: linear-gradient(180deg, #1e1a22, #141117 60%, #09080b);
+  border-color: #050406;
+  box-shadow: inset 0 0 0 1px rgba(224, 38, 63, 0.2), 0 0 44px -10px rgba(224, 38, 63, 0.55);
+}
+.dice-scene--night .bb-board__bulbs {
+  background: radial-gradient(circle, #ff4258 0 2.6px, rgba(255, 66, 88, 0.3) 3.4px, transparent 5px) 0 0 / 16px 14px repeat-x;
+}
+.dice-scene--night .bb-board__head {
+  color: #b5a89b;
+}
+.dice-scene--night .bb-plate {
+  background: #0d0b0f;
+  border-color: #050406;
+  color: #ff4258;
+}
+.dice-scene--night .bb-plate--total {
+  background: #ede5d8;
+  color: #2a0a10;
+}
+.dice-scene--night .bb-eq,
+.dice-scene--night .bb-board__call {
+  color: #ff4258;
+  text-shadow: 0 0 10px rgba(255, 66, 88, 0.75);
 }
 
 @media print {

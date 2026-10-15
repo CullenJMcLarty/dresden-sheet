@@ -8,6 +8,8 @@ export type ThemeId =
   | 'fey-winter'
   | 'illuminated'
   | 'ghost'
+  | 'baseball-day'
+  | 'baseball-vampire'
 
 /** Flavor text that changes with the theme. Game terms (Aspects, Skills…) stay fixed. */
 export interface ThemeCopy {
@@ -38,11 +40,8 @@ export interface ThemeCopy {
   refreshLabel: string
 }
 
-export interface Theme {
+interface ThemeBase {
   id: ThemeId
-  /** The CSS family, set as html[data-theme]. Fey courts share one family. */
-  family: 'steel' | 'casefile' | 'modern' | 'fey' | 'holy' | 'ghost'
-  variant?: FeyCourt
   name: string
   tagline: string
   /** Swatches for the picker preview. */
@@ -50,6 +49,17 @@ export interface Theme {
   sampleFont: string
   copy: ThemeCopy
 }
+
+/**
+ * `family` is the CSS family, set as html[data-theme]. Families with subthemes (the Fey courts,
+ * Baseball's day and vampire games) share one family and set html[data-variant] as well.
+ */
+export type Theme = ThemeBase &
+  (
+    | { family: 'steel' | 'casefile' | 'modern' | 'holy' | 'ghost'; variant?: undefined }
+    | { family: 'fey'; variant: FeyCourt }
+    | { family: 'baseball'; variant: BallGame }
+  )
 
 const steel: ThemeCopy = {
   eyebrow: 'Steel City Casefile',
@@ -222,6 +232,63 @@ const ghost: ThemeCopy = {
   refreshLabel: 'The board answers',
 }
 
+/** Baseball plays a day game, or a night game in the vampire league. */
+export type BallGame = 'day' | 'vampire'
+
+const baseballDay: ThemeCopy = {
+  eyebrow: 'Now batting',
+  unnamed: 'Player to Be Named Later',
+  intakeTitle: 'Player Card',
+  intakeKicker: 'Name, number & position',
+  conceptTitle: 'At Bat',
+  conceptKicker: 'Your swing, and the hole in it',
+  aspectsKicker: 'Signed on the sweet spot',
+  skillsKicker: 'Five tools and then some',
+  stressKicker: 'Taking one for the team',
+  consequencesKicker: 'The injured list',
+  stamp: 'Sidelined',
+  magicTitle: 'The Art',
+  magicKicker: 'Curveballs that really curve',
+  fociKicker: 'Lucky bats & rally caps',
+  rotesKicker: 'Signature pitches',
+  gearTitle: 'Equipment Bag',
+  gearKicker: 'Bats, gloves & the rest',
+  gearEmpty: "Bag's empty. Borrow a glove.",
+  notesTitle: 'Scouting Report',
+  notesKicker: 'Rivals, debts, tendencies',
+  warningLead: 'Error on the play:',
+  drawerTitle: 'The Roster',
+  rollsTitle: 'Box score',
+  refreshLabel: 'Bats in the rack',
+}
+
+const baseballVampire: ThemeCopy = {
+  eyebrow: 'Now batting, after dark',
+  unnamed: 'Rookie, Recently Turned',
+  intakeTitle: 'The Contract',
+  intakeKicker: 'Signed in blood · no free agency',
+  conceptTitle: 'At Bat',
+  conceptKicker: 'What you are, and what you crave',
+  aspectsKicker: 'Autographed in red',
+  skillsKicker: 'Five tools and two fangs',
+  stressKicker: 'How much blood you can spare',
+  consequencesKicker: "Wounds that won't close by dawn",
+  stamp: 'Bitten',
+  magicTitle: 'The Art',
+  magicKicker: 'Old blood, older magic',
+  fociKicker: 'Talismans & lucky bats',
+  rotesKicker: 'Signature pitches',
+  gearTitle: 'Equipment Coffin',
+  gearKicker: 'Bats, stakes & a good umbrella',
+  gearEmpty: 'Nothing but grave dirt.',
+  notesTitle: 'Scouting Report',
+  notesKicker: 'Rivals, thralls, debts of blood',
+  warningLead: 'Bad blood:',
+  drawerTitle: 'The Night Roster',
+  rollsTitle: 'Box score',
+  refreshLabel: 'Bats in the belfry',
+}
+
 export const THEMES: Theme[] = [
   {
     id: 'steel',
@@ -307,6 +374,26 @@ export const THEMES: Theme[] = [
     swatch: ['#0c1012', '#9ff5d6', '#c9b79c'],
     sampleFont: "'IM Fell English SC'",
     copy: ghost,
+  },
+  {
+    id: 'baseball-day',
+    family: 'baseball',
+    variant: 'day',
+    name: 'Baseball · Day Game',
+    tagline: 'Ivy on the wall, a hand-turned scoreboard, pinstripes',
+    swatch: ['#f4ecd8', '#1d2b4f', '#c8102e'],
+    sampleFont: "'Damion'",
+    copy: baseballDay,
+  },
+  {
+    id: 'baseball-vampire',
+    family: 'baseball',
+    variant: 'vampire',
+    name: 'Baseball · Vampire League',
+    tagline: 'A night game in a thunderstorm. Bats of both kinds.',
+    swatch: ['#0e0b12', '#ece3d4', '#e0263f'],
+    sampleFont: "'Grenze Gotisch'",
+    copy: baseballVampire,
   },
 ]
 

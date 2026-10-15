@@ -19,6 +19,8 @@ export function RefreshMeter({ a }: { a: Analysis }) {
       return <Candles value={value} max={max} label={label} />
     case 'ghost':
       return <SpiritBoard value={value} max={max} label={label} />
+    case 'baseball':
+      return <BatRack value={value} max={max} label={label} belfry={theme.variant === 'vampire'} />
     default:
       return <Gauge value={value} max={max} label={label} />
   }
@@ -228,6 +230,78 @@ function SpiritBoard({ value, max, label }: { value: number; max: number; label:
       <figcaption>
         <span className="board__value">{value}</span>
         <span className="board__label">{label}</span>
+      </figcaption>
+    </figure>
+  )
+}
+
+// ── Baseball: bats in the dugout rack, or hanging in the belfry after dark ──
+
+/** A bat standing knob-down, its knob at the origin. */
+const RACK_BAT = 'M-3.6 -58.4 A3.6 3.6 0 0 1 3.6 -58.4 L3.6 -40 C3.6 -30 1.5 -26 1.5 -18 L1.5 -4 L-1.5 -4 L-1.5 -18 C-1.5 -26 -3.6 -30 -3.6 -40 Z'
+/** A bat hanging upside down by its claws, which sit at the origin. */
+const HANGING_BAT = 'M-1.9 2.6 C-6.6 4.6 -7.6 13 -6 20.5 C-5 24 -2.8 26 0 26 C2.8 26 5 24 6 20.5 C7.6 13 6.6 4.6 1.9 2.6 Z'
+const HANGING_HEAD = 'M0 25 A3.6 3.6 0 1 1 0 32.2 A3.6 3.6 0 1 1 0 25 Z M-2.7 30.6 L-3.8 35.4 L-0.9 31.9 Z M2.7 30.6 L3.8 35.4 L0.9 31.9 Z'
+
+function BatRack({ value, max, label, belfry }: { value: number; max: number; label: string; belfry: boolean }) {
+  const total = Math.max(max, value, 1)
+  const left = Math.max(0, value)
+  const w = 20
+  const width = total * w + 16
+  const danger = value < 1
+  const x = (i: number) => 8 + i * w + w / 2
+  return (
+    <figure className={`rack ${belfry ? 'rack--belfry' : ''} ${danger ? 'rack--danger' : ''}`} aria-label={`${label}: ${value} of ${max}`}>
+      <svg viewBox={`0 0 ${width} 80`} aria-hidden>
+        {belfry ? (
+          <>
+            <rect className="rack__beam" x="0" y="2" width={width} height="10" rx="2" />
+            {Array.from({ length: total }, (_, i) => (
+              <g key={i} transform={`translate(${x(i)} 12)`}>
+                {i < left ? (
+                  <g className="rack__hanger" style={{ animationDelay: `${-((i * 1.7) % 4)}s` }}>
+                    <path className="rack__claws" d="M-1.8 -1 V3.4 M1.8 -1 V3.4" />
+                    <path className="rack__wings" d={HANGING_BAT} />
+                    <path className="rack__ridges" d="M-4.8 6 C-5.6 12 -5.2 17 -3.6 22 M4.8 6 C5.6 12 5.2 17 3.6 22" />
+                    <path className="rack__wings" d={HANGING_HEAD} />
+                    <circle className="rack__eye" cx="-1.3" cy="28.4" r="0.8" />
+                    <circle className="rack__eye" cx="1.3" cy="28.4" r="0.8" />
+                  </g>
+                ) : (
+                  <path className="rack__ghost" d={HANGING_BAT} />
+                )}
+              </g>
+            ))}
+          </>
+        ) : (
+          <>
+            {Array.from({ length: total }, (_, i) => (
+              // Bats lean a little this way and that, the way they get dropped back in the rack.
+              <g key={i} transform={`translate(${x(i)} 69) rotate(${(((i * 7) % 5) - 2) * 1.3})`}>
+                {i < left ? (
+                  <g className={`rack__bat rack__bat--${i % 3}`}>
+                    <path className="rack__wood" d={RACK_BAT} />
+                    <ellipse className="rack__wood" cx="0" cy="-2.6" rx="3.3" ry="1.9" />
+                    <path className="rack__grain" d="M-1.4 -57 V-41" />
+                    <ellipse className="rack__brand" cx="0" cy="-49" rx="1.7" ry="3.4" />
+                    <path className="rack__tape" d="M-1.5 -15 L1.5 -16.6 M-1.5 -12.4 L1.5 -14 M-1.5 -9.8 L1.5 -11.4 M-1.5 -7.2 L1.5 -8.8" />
+                  </g>
+                ) : (
+                  <path className="rack__ghost" d={RACK_BAT} />
+                )}
+              </g>
+            ))}
+            {/* the rack: a rail across the barrels and a floor board under the knobs */}
+            <rect className="rack__rail" x="2" y="22" width={width - 4} height="7" rx="2" />
+            <rect className="rack__floor" x="0" y="70" width={width} height="8" rx="2" />
+          </>
+        )}
+      </svg>
+      <figcaption>
+        <span className="rack__value">{value}</span>
+        <span className="rack__of">of {max}</span>
+        <span className="rack__label">{label}</span>
+        {danger && <span className="rack__omen">{belfry ? 'The belfry is empty. Dawn is coming.' : 'Benched for good'}</span>}
       </figcaption>
     </figure>
   )

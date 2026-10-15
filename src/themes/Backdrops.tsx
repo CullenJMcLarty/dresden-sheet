@@ -1,4 +1,5 @@
 import { Backdrop as SteelBackdrop } from '../components/Backdrop'
+import { BallparkBackdrop } from './BallparkBackdrop'
 import { useTheme } from './ThemeContext'
 import type { FeyCourt } from './themes'
 import { DeskBackdrop } from './DeskBackdrop'
@@ -12,19 +13,20 @@ export function ThemeBackdrop() {
     case 'modern':
       return <div className="backdrop backdrop--modern" aria-hidden />
     case 'fey':
-      return <FeyBackdrop />
+      return <FeyBackdrop court={theme.variant} />
     case 'holy':
       return <SanctumBackdrop />
     case 'ghost':
       return <VeilBackdrop />
+    case 'baseball':
+      return <BallparkBackdrop night={theme.variant === 'vampire'} />
     default:
       return <SteelBackdrop />
   }
 }
 
 /** Twilight glade: a faint fairy ring and a handful of drifting motes (petals or snow). */
-function FeyBackdrop() {
-  const court = useTheme().theme.variant ?? 'summer'
+function FeyBackdrop({ court }: { court: FeyCourt }) {
   const motes = Array.from({ length: 14 }, (_, i) => {
     // Spread motes deterministically across the screen with varied timing.
     const left = (i * 37 + 11) % 100
